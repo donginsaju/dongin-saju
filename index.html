@@ -901,7 +901,8 @@
       const currentTerm = prevTerm;
       const monthBranchIdx = currentTerm.monthBranch;
       const monthBranchOffset = (monthBranchIdx - 2 + 12) % 12;
-      const monthStemStart = (yearStemIdx % 5) * 2;
+      // 정통 오호둔월법(五虎遁月法): 甲己년->丙寅(2), 乙庚년->戊寅(4), 丙辛년->庚寅(6), 丁壬년->壬寅(8), 戊癸년->甲寅(0)
+      const monthStemStart = ((yearStemIdx % 5) * 2 + 2) % 10;
       const monthStemIdx = (monthStemStart + monthBranchOffset) % 10;
 
       let dayCalcDate = new Date(year, month - 1, day);
@@ -909,9 +910,10 @@
         dayCalcDate.setDate(dayCalcDate.getDate() + 1);
       }
 
-      const baseDate = new Date(2000, 0, 1);
-      const diffTime = dayCalcDate.getTime() - baseDate.getTime();
-      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      // 브라우저 타임존 및 서머타임 오프셋 왜곡 없는 순수 UTC 일수 정밀 연산
+      const baseUtc = Date.UTC(2000, 0, 1);
+      const targetUtc = Date.UTC(dayCalcDate.getFullYear(), dayCalcDate.getMonth(), dayCalcDate.getDate());
+      const diffDays = Math.round((targetUtc - baseUtc) / 86400000);
       
       let dayStemIdx = (4 + diffDays) % 10;
       if (dayStemIdx < 0) dayStemIdx += 10;
