@@ -1420,7 +1420,9 @@
       currentFortuneData = fortuneData;
       renderDailyFortuneUI(fortuneData);
 
-      document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (shouldScroll) {
+        document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
 
     function buildA4ReportElement(data, fortuneData) {
@@ -2172,7 +2174,7 @@
       updatePreviews();
     }
 
-    function handleCalculateForm(e) {
+    function handleCalculateForm(e, isInitial = false) {
       if (e) e.preventDefault();
 
       const userName = document.getElementById('userName').value.trim() || '홍길동';
@@ -2205,8 +2207,10 @@
       });
 
       currentSajuData = sajuData;
-      renderSajuResult(sajuData);
-      showToast('사주팔자 및 오늘의 일진 분석이 완료되었습니다.');
+      renderSajuResult(sajuData, !isInitial);
+      if (!isInitial) {
+        showToast('사주팔자 및 오늘의 일진 분석이 완료되었습니다.');
+      }
     }
 
     function copyResultText() {
@@ -2335,7 +2339,7 @@
       });
       window.addEventListener('resize', adjustModalScale);
 
-      handleCalculateForm();
+      handleCalculateForm(null, true);
     });
   </script>
 </body>
