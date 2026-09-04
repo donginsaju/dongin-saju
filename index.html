@@ -493,12 +493,13 @@
 
         <div class="pt-4 border-t border-slate-800">
           <div class="flex items-center justify-between mb-3">
-            <div>
+            <div class="flex flex-wrap items-center gap-1.5">
               <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
                 <i data-lucide="trending-up" class="w-4 h-4 text-amber-400"></i>
                 10년 주기 대운(大運) 흐름
               </span>
               <span id="daeunDirection" class="text-[11px] text-amber-400"></span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 border border-amber-500/30 text-amber-300 font-semibold">◀ 우측(적은 나이) ➔ 좌측(많은 나이) 전통 간명</span>
             </div>
             <span class="text-[11px] text-slate-400 hidden sm:inline">대운수(大運數) 기준</span>
             <span class="text-[10px] text-amber-400/80 sm:hidden">👈 좌우 스크롤</span>
@@ -820,35 +821,44 @@
     ];
 
     function findTermTime(year, termAngle) {
-      let t = new Date(Date.UTC(year, 1, 1, 0, 0, 0));
-      if (termAngle === 285) t = new Date(Date.UTC(year, 0, 1, 0, 0, 0));
-      else if (termAngle === 315) t = new Date(Date.UTC(year, 1, 1, 0, 0, 0));
-      else if (termAngle === 345) t = new Date(Date.UTC(year, 2, 1, 0, 0, 0));
-      else if (termAngle === 15)  t = new Date(Date.UTC(year, 3, 1, 0, 0, 0));
-      else if (termAngle === 45)  t = new Date(Date.UTC(year, 4, 1, 0, 0, 0));
-      else if (termAngle === 75)  t = new Date(Date.UTC(year, 5, 1, 0, 0, 0));
-      else if (termAngle === 105) t = new Date(Date.UTC(year, 6, 1, 0, 0, 0));
-      else if (termAngle === 135) t = new Date(Date.UTC(year, 7, 1, 0, 0, 0));
-      else if (termAngle === 165) t = new Date(Date.UTC(year, 8, 1, 0, 0, 0));
-      else if (termAngle === 195) t = new Date(Date.UTC(year, 9, 1, 0, 0, 0));
-      else if (termAngle === 225) t = new Date(Date.UTC(year, 10, 1, 0, 0, 0));
-      else if (termAngle === 255) t = new Date(Date.UTC(year, 11, 1, 0, 0, 0));
+      const monthMap = {
+        285: 0, 315: 1, 345: 2, 15: 3, 45: 4, 75: 5,
+        105: 6, 135: 7, 165: 8, 195: 9, 225: 10, 255: 11
+      };
+      const startMonth = monthMap[termAngle] !== undefined ? monthMap[termAngle] : 0;
+      let low = Date.UTC(year, startMonth, 1, 0, 0, 0);
+      let high = Date.UTC(year, startMonth, 16, 0, 0, 0);
 
-      for (let day = 0; day < 31; day++) {
-        const testDate = new Date(t.getTime() + day * 86400000);
-        const L = getSolarLongitude(testDate);
-        let diff = (L - termAngle + 360) % 360;
-        if (diff < 2 || diff > 358) {
-          for (let hour = 0; hour < 24; hour++) {
-            const hDate = new Date(testDate.getTime() + hour * 3600000);
-            const hDiff = (getSolarLongitude(hDate) - termAngle + 360) % 360;
-            if (hDiff < 0.5 || hDiff > 359.5) {
-              return hDate;
-            }
-          }
+      // 24회 이분 탐색으로 분/초 단위까지 정밀 수렴
+      for (let i = 0; i < 24; i++) {
+        const mid = Math.floor((low + high) / 2);
+        const L = getSolarLongitude(new Date(mid));
+        const diff = (L - termAngle + 360) % 360;
+        if (diff > 180) {
+          low = mid;
+        } else {
+          high = mid;
         }
       }
-      return t;
+      return new Date(high);
+    }
+
+    function getSurroundingTerms(year) {
+      const list = [];
+      [-1, 0, 1].forEach(yOffset => {
+        const y = year + yOffset;
+        MAJOR_TERMS.forEach(term => {
+          const termDate = findTermTime(y, term.angle);
+          list.push({
+            name: term.name,
+            angle: term.angle,
+            monthBranch: term.monthBranch,
+            date: termDate
+          });
+        });
+      });
+      list.sort((a, b) => a.date.getTime() - b.date.getTime());
+      return list;
     }
 
     function calculateSaju(year, month, day, hour, minute, options) {
@@ -862,7 +872,9 @@
         }
       }
 
-      let birthDate = new Date(year, month - 1, day, calcHour, calcMinute);
+      // KST(UTC+9) 기준 절대 시각(Epoch) 생성 (브라우저 로컬 타임존 왜곡 방지)
+      const kstEpoch = Date.UTC(year, month - 1, day, calcHour, calcMinute) - (9 * 3600 * 1000);
+      const birthDate = new Date(kstEpoch);
       const originalDate = new Date(year, month - 1, day, hour, minute);
 
       let solarYear = year;
@@ -873,33 +885,27 @@
       const yearStemIdx = (solarYear - 4) % 10 < 0 ? ((solarYear - 4) % 10) + 10 : (solarYear - 4) % 10;
       const yearBranchIdx = (solarYear - 4) % 12 < 0 ? ((solarYear - 4) % 12) + 12 : (solarYear - 4) % 12;
 
-      const sunLong = getSolarLongitude(birthDate);
-      let currentTerm = MAJOR_TERMS[1];
-      for (let i = 0; i < MAJOR_TERMS.length; i++) {
-        const t1 = MAJOR_TERMS[i].angle;
-        const t2 = (t1 + 30) % 360;
-        if (t1 < t2) {
-          if (sunLong >= t1 && sunLong < t2) {
-            currentTerm = MAJOR_TERMS[i];
-            break;
-          }
-        } else {
-          if (sunLong >= t1 || sunLong < t2) {
-            currentTerm = MAJOR_TERMS[i];
-            break;
-          }
+      // 생년월일 전후 24절기 중 직전 절기(prevTerm)와 직후 절기(nextTerm) 정밀 탐색
+      const allTerms = getSurroundingTerms(solarYear);
+      let prevTerm = allTerms[0];
+      let nextTerm = allTerms[1];
+
+      for (let i = 0; i < allTerms.length - 1; i++) {
+        if (birthDate >= allTerms[i].date && birthDate < allTerms[i + 1].date) {
+          prevTerm = allTerms[i];
+          nextTerm = allTerms[i + 1];
+          break;
         }
       }
 
+      const currentTerm = prevTerm;
       const monthBranchIdx = currentTerm.monthBranch;
       const monthBranchOffset = (monthBranchIdx - 2 + 12) % 12;
       const monthStemStart = (yearStemIdx % 5) * 2;
       const monthStemIdx = (monthStemStart + monthBranchOffset) % 10;
 
-      let dayCalcDate = new Date(birthDate.getTime());
-      if (options.useNightZi && calcHour === 23) {
-        // 야자시
-      } else if (!options.useNightZi && calcHour >= 23) {
+      let dayCalcDate = new Date(year, month - 1, day);
+      if (!options.useNightZi && calcHour >= 23) {
         dayCalcDate.setDate(dayCalcDate.getDate() + 1);
       }
 
@@ -925,8 +931,23 @@
       const isMale = options.gender === 'male';
       const isForward = (isMale && isYearStemYang) || (!isMale && !isYearStemYang);
 
+      // 정통 명리학 3일 1년 사사오입 대운수(大運數) 계산
+      let termDiffMs = 0;
+      if (isForward) {
+        // 순행: 출생 시각부터 다음 절입 시각까지
+        termDiffMs = Math.max(0, nextTerm.date.getTime() - birthDate.getTime());
+      } else {
+        // 역행: 출생 시각부터 이전 절입 시각까지
+        termDiffMs = Math.max(0, birthDate.getTime() - prevTerm.date.getTime());
+      }
+
+      const termDiffDays = termDiffMs / (1000 * 60 * 60 * 24);
+      let calculatedDaeun = Math.round(termDiffDays / 3);
+      if (calculatedDaeun < 1) calculatedDaeun = 1;
+      if (calculatedDaeun > 10) calculatedDaeun = 10;
+
+      const daeunNumber = calculatedDaeun;
       const daeunList = [];
-      const daeunNumber = 3;
 
       for (let step = 1; step <= 8; step++) {
         let sIdx, bIdx;
@@ -953,6 +974,7 @@
         solarYear,
         isForward,
         termName: currentTerm.name,
+        daeunNumber,
         pillars: {
           year: {
             stem: HEAVENLY_STEMS[yearStemIdx],
@@ -1356,11 +1378,14 @@
       supportEl.innerText = isDeukRyeong ? '득령 (得令 - 강한 지지)' : '실령 (失令 - 설기/극)';
       supportEl.className = isDeukRyeong ? 'text-emerald-400 font-bold' : 'text-slate-400 font-normal';
 
-      document.getElementById('daeunDirection').innerText = `(${data.isForward ? '순행 順行' : '역행 逆行'})`;
+      document.getElementById('daeunDirection').innerText = `(${data.isForward ? '순행 順行' : '역행 逆行'} · 대운수 ${data.daeunNumber})`;
       const daeunContainer = document.getElementById('daeunRow');
       daeunContainer.innerHTML = '';
 
-      data.daeunList.forEach(item => {
+      // 전통 사주 간명 방식: 적은 나이(1대운)가 맨 우측, 많은 나이가 좌측에 오도록 역순([71세 ... 1세]) 배치
+      const reversedDaeunList = [...data.daeunList].reverse();
+
+      reversedDaeunList.forEach(item => {
         const stemElem = ELEMENT_NAMES[item.stem.element];
         const branchElem = ELEMENT_NAMES[item.branch.element];
         const tenGod = getTenGod(dayStemIdx, item.stemIdx);
@@ -1380,6 +1405,13 @@
         `;
         daeunContainer.appendChild(card);
       });
+
+      // 모바일 등 좁은 화면에서 첫 대운(우측)이 먼저 보이도록 스크롤을 우측 끝으로 이동
+      if (daeunContainer.parentElement) {
+        setTimeout(() => {
+          daeunContainer.parentElement.scrollLeft = daeunContainer.parentElement.scrollWidth;
+        }, 60);
+      }
 
       const targetDateVal = document.getElementById('targetFortuneDate').value;
       const fortuneData = calculateDailyFortune(data, targetDateVal ? new Date(targetDateVal) : new Date());
@@ -1574,11 +1606,11 @@
 
             <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; background: #fafafa;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <span style="font-size: 10px; font-weight: 800; color: #334155;">10년 주기 대운(大運) 흐름표 (${data.isForward ? '순행 順行' : '역행 逆行'})</span>
+                <span style="font-size: 10px; font-weight: 800; color: #334155;">10년 주기 대운(大運) 흐름표 (${data.isForward ? '순행 順行' : '역행 逆行'} · 대운수 ${data.daeunNumber}) <span style="color: #b45309; font-size: 8px;">◀ 우측(적은 나이) ➔ 좌측(많은 나이) 전통 간명</span></span>
                 <span style="font-size: 8px; color: #94a3b8;">대운수 기준</span>
               </div>
               <div style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px;">
-                ${data.daeunList.map(item => {
+                ${[...data.daeunList].reverse().map(item => {
                   const sCol = printColors[item.stem.element];
                   const bCol = printColors[item.branch.element];
                   const tg = getTenGod(dayStemIdx, item.stemIdx).substring(0, 2);
@@ -2200,7 +2232,7 @@
 육친: ${p.hour ? getTenGod(p.day.stemIdx, p.hour.stemIdx) : '-'} / 我(본원) / ${getTenGod(p.day.stemIdx, p.month.stemIdx)} / ${getTenGod(p.day.stemIdx, p.year.stemIdx)}
 운성: ${p.hour ? getTwelveStar(p.day.stemIdx, p.hour.branchIdx) : '-'} / ${getTwelveStar(p.day.stemIdx, p.day.branchIdx)} / ${getTwelveStar(p.day.stemIdx, p.month.branchIdx)} / ${getTwelveStar(p.day.stemIdx, p.year.branchIdx)}
 ----------------------------------------
-대운 방향: ${currentSajuData.isForward ? '순행(順行)' : '역행(逆行)'}
+대운 방향: ${currentSajuData.isForward ? '순행(順行)' : '역행(逆行)'} · 대운수 ${currentSajuData.daeunNumber}
 
 ■ [재미로 보는 오늘의 일진 맞춤 운세] (${f.dateStr})
 ----------------------------------------
