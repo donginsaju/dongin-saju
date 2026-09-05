@@ -211,7 +211,7 @@
         width: 100% !important;
         min-height: 100% !important;
       }
-      header, footer, main, #inputCard, #resultCard, #reportModal, #loadingOverlay, #toast, #mobilePdfModal, .no-print {
+      header, footer, main, #inputCard, #resultCard, #reportModal, #loadingOverlay, #toast, #mobilePdfModal, #printFallbackModal, .no-print {
         display: none !important;
       }
       #printReportWrapper {
@@ -994,35 +994,159 @@
     </div>
   </div>
 
-  <!-- 모바일 전용 PDF 저장 및 바로 열기 안내 모달 -->
-  <div id="mobilePdfModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 no-print">
+  <!-- 모바일 및 웹뷰 전용 감정서 저장 & 인쇄 센터 모달 -->
+  <div id="mobilePdfModal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 no-print">
+    <div class="bg-slate-900 border border-slate-700 w-full max-w-lg max-h-[92vh] rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in slide-in-from-bottom duration-200">
+      
+      <!-- 헤더 -->
+      <div class="px-5 py-3.5 bg-slate-850 border-b border-slate-800 flex items-center justify-between flex-shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30">
+            <i data-lucide="smartphone" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 id="mobileModalTitle" class="text-sm sm:text-base font-bold text-slate-100">모바일 감정서 저장 & 인쇄</h3>
+            <p class="text-[11px] text-amber-400 font-medium">사진첩 저장 · 카카오톡 공유 · 무선 인쇄</p>
+          </div>
+        </div>
+        <button id="btnCloseMobilePdfModal" type="button" class="p-1.5 text-slate-400 hover:text-slate-200 rounded-lg hover:bg-slate-800 cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- 본문 스크롤 영역 -->
+      <div class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 text-xs sm:text-sm">
+        
+        <!-- 옵션 1: 스마트폰 사진첩(갤러리)에 이미지로 저장 (모바일 추천 1위) -->
+        <div class="bg-gradient-to-br from-amber-500/15 via-slate-950 to-slate-950 p-3.5 rounded-2xl border border-amber-500/40 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-amber-300 flex items-center gap-1.5">
+              <i data-lucide="image" class="w-4 h-4 text-amber-400"></i>
+              스마트폰 사진첩(갤러리)에 즉시 저장
+            </span>
+            <span class="text-[10px] bg-amber-500 text-slate-950 font-black px-1.5 py-0.5 rounded">가장 찾기 쉬움</span>
+          </div>
+          <p class="text-xs text-slate-300 leading-snug">
+            파일을 찾기 힘드실 때는 <strong>스마트폰 사진첩</strong>에 이미지로 저장하세요! 갤러리 앱에서 즉시 열람하고 카카오톡으로도 바로 공유됩니다.
+          </p>
+
+          <div class="grid grid-cols-2 gap-2 pt-1">
+            <button id="btnSaveImgPage1" type="button" class="py-2.5 px-3 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-bold rounded-xl flex items-center justify-center gap-1.5 shadow cursor-pointer text-xs">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i>
+              <span>1쪽(원국) 사진 저장</span>
+            </button>
+            <button id="btnSaveImgPage2" type="button" class="py-2.5 px-3 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 font-bold rounded-xl flex items-center justify-center gap-1.5 shadow cursor-pointer text-xs">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i>
+              <span>2쪽(일진) 사진 저장</span>
+            </button>
+          </div>
+
+          <!-- 이미지 터치 롱프레스(길게 누르기) 미리보기 안내 -->
+          <div class="pt-2 border-t border-slate-800">
+            <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1.5">
+              <span>💡 이미지를 1초간 꾹 눌러 [사진에 저장]도 가능</span>
+              <span id="previewPageIndicator" class="text-amber-400 font-semibold">1 / 2 쪽</span>
+            </div>
+            <div class="relative w-full bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex justify-center items-center max-h-[220px]">
+              <img id="mobilePreviewImg" src="" alt="감정서 미리보기" class="w-auto h-auto max-h-[220px] object-contain cursor-pointer">
+              <div class="absolute bottom-2 right-2 flex gap-1.5">
+                <button type="button" id="btnPrevPreviewPage" class="p-1 rounded-md bg-slate-900/90 text-slate-200 border border-slate-700 hover:bg-slate-800 text-[11px] font-bold px-2 cursor-pointer">1쪽</button>
+                <button type="button" id="btnNextPreviewPage" class="p-1 rounded-md bg-slate-900/90 text-slate-200 border border-slate-700 hover:bg-slate-800 text-[11px] font-bold px-2 cursor-pointer">2쪽</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 옵션 2: 시스템 공유 (카카오톡, 파일에 저장, 무선 AirPrint 프린트) -->
+        <div class="bg-slate-950/70 p-3.5 rounded-2xl border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-200 flex items-center gap-1.5">
+              <i data-lucide="share-2" class="w-4 h-4 text-emerald-400"></i>
+              카카오톡 전송 / 파일에 저장 / 무선 프린트
+            </span>
+          </div>
+          <button id="mobileBtnShareNative" type="button" class="w-full py-2.5 px-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 text-white font-bold rounded-xl flex items-center justify-center gap-1.5 shadow cursor-pointer text-xs sm:text-sm">
+            <i data-lucide="share" class="w-4 h-4"></i>
+            <span>시스템 공유창 열기 (카카오톡 / 파일 / 프린트)</span>
+          </button>
+          <p class="text-[11px] text-slate-400 leading-snug">
+            스마트폰의 공유 창을 열어 <strong>카카오톡 나에게 보내기</strong>, <strong>[파일에 저장]</strong> 또는 <strong>[프린트(무선 인쇄)]</strong>를 곧바로 실행합니다.
+          </p>
+        </div>
+
+        <!-- 옵션 3: 무선 프린터 직접 인쇄 및 PDF 열기 -->
+        <div class="bg-slate-950/70 p-3.5 rounded-2xl border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-200 flex items-center gap-1.5">
+              <i data-lucide="printer" class="w-4 h-4 text-sky-400"></i>
+              모바일 직접 인쇄 & PDF 다운로드
+            </span>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <button id="mobileBtnDirectPrint" type="button" class="py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-100 font-bold rounded-xl flex items-center justify-center gap-1.5 border border-slate-700 cursor-pointer text-xs">
+              <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+              <span>모바일 인쇄 호출</span>
+            </button>
+            <a id="mobileBtnOpenPdfTab" href="#" target="_blank" class="py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-100 font-bold rounded-xl flex items-center justify-center gap-1.5 border border-slate-700 cursor-pointer text-xs">
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              <span>새 탭에서 열기</span>
+            </a>
+          </div>
+
+          <a id="mobileBtnDirectDownloadFile" href="#" download="사주팔자_감정서.pdf" class="w-full py-2 px-3 bg-slate-850 hover:bg-slate-800 text-slate-300 font-semibold rounded-xl flex items-center justify-center gap-1.5 border border-slate-800 cursor-pointer text-xs">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>PDF 파일 기기에 직접 다운로드</span>
+          </a>
+
+          <!-- 기종별 파일 저장 위치 상세 안내 -->
+          <div class="p-2.5 bg-slate-900/90 rounded-xl border border-slate-800/80 text-[11px] text-slate-300 space-y-1.5 leading-relaxed">
+            <div class="font-bold text-amber-300 flex items-center gap-1">
+              <i data-lucide="folder-search" class="w-3.5 h-3.5"></i>
+              스마트폰 다운로드 파일 찾는 위치
+            </div>
+            <div>
+              • <strong>아이폰(iOS):</strong> Safari 브라우저 상단(또는 하단) <strong>파란색 화살표(↓)</strong>를 누르시거나, 홈 화면의 <strong>[파일] 앱 ➔ [다운로드]</strong> 폴더를 확인하세요.
+            </div>
+            <div>
+              • <strong>갤럭시(Android):</strong> 상단 알림창을 아래로 쓸어내리시거나, <strong>[내 파일] 앱 ➔ [다운로드]</strong> 폴더에 보관되어 있습니다.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 하단 닫기 바 -->
+      <div class="p-3 bg-slate-950 border-t border-slate-800 text-center flex-shrink-0">
+        <button id="mobileModalCloseBtnBottom" type="button" class="w-full py-2 text-xs font-semibold text-slate-400 hover:text-slate-200 cursor-pointer">
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PC 전용 인쇄 안내 모달 (브라우저 iframe sandbox로 window.print 차단 시 노출) -->
+  <div id="printFallbackModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 no-print">
     <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-2xl p-5 sm:p-6 shadow-2xl space-y-4 text-center">
       <div class="w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto border border-amber-500/30">
-        <i data-lucide="file-check" class="w-6 h-6"></i>
+        <i data-lucide="printer" class="w-6 h-6"></i>
       </div>
       <div>
-        <h3 class="text-base sm:text-lg font-bold text-slate-100">A4 2페이지 사주 감정서 생성 완료</h3>
-        <p class="text-xs sm:text-sm text-slate-300 mt-1">모바일 기기에서는 아래 버튼을 눌러 PDF를 바로 열람하거나 내 기기에 저장하세요.</p>
+        <h3 class="text-base sm:text-lg font-bold text-slate-100">A4 2페이지 감정서 인쇄 안내</h3>
+        <p class="text-xs sm:text-sm text-slate-300 mt-1">현재 브라우저 보안 또는 웹뷰 환경으로 인해 인쇄 대화상자가 바로 열리지 않는 경우, 아래 방법으로 즉시 인쇄하실 수 있습니다.</p>
       </div>
 
       <div class="space-y-2 pt-1">
-        <a id="mobileBtnOpenPdf" href="#" target="_blank" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+        <button id="btnOpenPrintTabDirect" type="button" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-lg cursor-pointer">
           <i data-lucide="external-link" class="w-4 h-4"></i>
-          <span>새 탭에서 PDF 바로 열기</span>
-        </a>
-        <a id="mobileBtnDirectDownload" href="#" download="사주팔자_감정서.pdf" class="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 border border-slate-700 cursor-pointer">
+          <span>A4 인쇄 전용 새 창 열기 (즉시 인쇄)</span>
+        </button>
+        <button id="btnPrintModalSavePdf" type="button" class="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs flex items-center justify-center gap-2 border border-slate-700 cursor-pointer">
           <i data-lucide="download" class="w-4 h-4"></i>
-          <span>내 기기에 파일 직접 다운로드</span>
-        </a>
+          <span>고화질 A4 PDF 다운로드 후 인쇄하기</span>
+        </button>
       </div>
 
-      <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-left text-xs text-slate-400 space-y-1">
-        <div class="font-semibold text-amber-300">💡 파일 저장 팁</div>
-        <p>• <strong>아이폰(Safari):</strong> 'PDF 바로 열기' 후 하단의 <strong>[공유] 아이콘 ➔ '파일에 저장'</strong>을 누르시면 안전하게 보관됩니다.</p>
-        <p>• <strong>갤럭시(Chrome):</strong> '직접 다운로드' 후 상단 알림바 또는 <strong>'내 파일(다운로드)'</strong> 앱에서 확인하실 수 있습니다.</p>
-      </div>
-
-      <button id="btnCloseMobilePdfModal" type="button" class="w-full py-2 text-xs text-slate-400 hover:text-slate-200 cursor-pointer">
+      <button id="btnClosePrintFallbackModal" type="button" class="w-full py-2 text-xs text-slate-400 hover:text-slate-200 cursor-pointer">
         닫기
       </button>
     </div>
@@ -2312,6 +2436,11 @@
     let currentSajuData = null;
     let currentFortuneData = null;
     let currentGeneratedPdfBlobUrl = null;
+    let currentGeneratedPdfBlob = null;
+    let currentGeneratedPdfFile = null;
+    let currentImgPage1DataUrl = null;
+    let currentImgPage2DataUrl = null;
+    let currentPreviewPage = 1;
 
     function showToast(message, isError = false) {
       const toast = document.getElementById('toast');
@@ -2583,63 +2712,41 @@
       document.getElementById('reportModal').classList.add('hidden');
     }
 
-    async function executeSavePdf() {
-      if (!currentSajuData) {
-        showToast('먼저 사주 분석을 실행해 주세요.', true);
-        return;
+    // A4 2페이지 캔버스 및 이미지/PDF 일괄 렌더링 함수
+    async function renderA4PagesToCanvases() {
+      if (!currentSajuData) return null;
+
+      if (document.fonts) {
+        await document.fonts.ready;
       }
 
-      const overlay = document.getElementById('loadingOverlay');
-      overlay.classList.remove('hidden');
-      overlay.classList.add('flex');
+      const reportWrapper = buildA4ReportElement(currentSajuData, currentFortuneData);
+      const pages = reportWrapper.querySelectorAll('.a4-page');
 
-      const prevScrollX = window.scrollX || window.pageXOffset || 0;
-      const prevScrollY = window.scrollY || window.pageYOffset || 0;
-      let mountDiv = null;
+      if (!pages || pages.length === 0) {
+        throw new Error('감정서 페이지 요소를 구성할 수 없습니다.');
+      }
+
+      const mountDiv = document.createElement('div');
+      mountDiv.id = 'pdfRenderMount';
+      mountDiv.style.position = 'absolute';
+      mountDiv.style.top = '0px';
+      mountDiv.style.left = '0px';
+      mountDiv.style.width = '794px';
+      mountDiv.style.backgroundColor = '#ffffff';
+      mountDiv.style.zIndex = '9999';
+      mountDiv.style.overflow = 'visible';
+      document.body.appendChild(mountDiv);
+
+      const canvases = [];
 
       try {
-        if (document.fonts) {
-          await document.fonts.ready;
-        }
-
-        window.scrollTo(0, 0);
-
-        const reportWrapper = buildA4ReportElement(currentSajuData, currentFortuneData);
-        const pages = reportWrapper.querySelectorAll('.a4-page');
-
-        if (!pages || pages.length === 0) {
-          throw new Error('감정서 페이지 요소를 구성할 수 없습니다.');
-        }
-
-        mountDiv = document.createElement('div');
-        mountDiv.id = 'pdfRenderMount';
-        mountDiv.style.position = 'absolute';
-        mountDiv.style.top = '0px';
-        mountDiv.style.left = '0px';
-        mountDiv.style.width = '794px';
-        mountDiv.style.backgroundColor = '#ffffff';
-        mountDiv.style.zIndex = '9999';
-        mountDiv.style.overflow = 'visible';
-        document.body.appendChild(mountDiv);
-
-        const jsPDFConstructor = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : window.jsPDF;
-        if (!jsPDFConstructor) {
-          throw new Error('PDF 생성 모듈을 초기화할 수 없습니다.');
-        }
-
-        const pdf = new jsPDFConstructor({
-          orientation: 'portrait',
-          unit: 'mm',
-          format: 'a4',
-          compress: true
-        });
-
         for (let i = 0; i < pages.length; i++) {
           const page = pages[i];
           mountDiv.innerHTML = '';
           mountDiv.appendChild(page);
 
-          await new Promise(resolve => setTimeout(resolve, 80));
+          await new Promise(resolve => setTimeout(resolve, 60));
 
           const canvas = await html2canvas(mountDiv, {
             scale: 2,
@@ -2656,72 +2763,86 @@
             scrollY: 0,
             logging: false
           });
+          canvases.push(canvas);
+        }
+      } finally {
+        if (mountDiv && mountDiv.parentNode) {
+          mountDiv.parentNode.removeChild(mountDiv);
+        }
+      }
 
-          const imgData = canvas.toDataURL('image/jpeg', 0.95);
-          if (i > 0) {
-            pdf.addPage();
-          }
+      return canvases;
+    }
+
+    // PDF 생성 및 저장 실행 함수
+    async function executeSavePdf(isTriggeredFromPrint = false) {
+      if (!currentSajuData) {
+        showToast('먼저 사주 분석을 실행해 주세요.', true);
+        return;
+      }
+
+      const overlay = document.getElementById('loadingOverlay');
+      const loadTitle = document.getElementById('loadingTitle');
+      const loadSub = document.getElementById('loadingSubtitle');
+
+      loadTitle.innerText = "고화질 A4 2페이지 사주 감정서 생성 중";
+      loadSub.innerText = "원국 정본 및 오늘의 일진 감정서를 2장 규격으로 변환하고 있습니다...";
+
+      overlay.classList.remove('hidden');
+      overlay.classList.add('flex');
+
+      const prevScrollX = window.scrollX || window.pageXOffset || 0;
+      const prevScrollY = window.scrollY || window.pageYOffset || 0;
+
+      try {
+        window.scrollTo(0, 0);
+
+        const canvases = await renderA4PagesToCanvases();
+        if (!canvases || canvases.length === 0) {
+          throw new Error('캔버스 렌더링에 실패했습니다.');
+        }
+
+        currentImgPage1DataUrl = canvases[0].toDataURL('image/jpeg', 0.95);
+        currentImgPage2DataUrl = canvases[1] ? canvases[1].toDataURL('image/jpeg', 0.95) : currentImgPage1DataUrl;
+
+        const jsPDFConstructor = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : window.jsPDF;
+        if (!jsPDFConstructor) {
+          throw new Error('PDF 생성 모듈을 초기화할 수 없습니다.');
+        }
+
+        const pdf = new jsPDFConstructor({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4',
+          compress: true
+        });
+
+        for (let i = 0; i < canvases.length; i++) {
+          const imgData = canvases[i].toDataURL('image/jpeg', 0.95);
+          if (i > 0) pdf.addPage();
           pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
         }
 
         const fileName = `${currentSajuData.name}_동인명리학_사주팔자_오늘의일진_감정서.pdf`;
-        const pdfBlob = pdf.output('blob');
+        currentGeneratedPdfBlob = pdf.output('blob');
 
-        // 이전 Blob URL 해제 및 신규 생성
         if (currentGeneratedPdfBlobUrl) {
           URL.revokeObjectURL(currentGeneratedPdfBlobUrl);
         }
-        currentGeneratedPdfBlobUrl = URL.createObjectURL(pdfBlob);
+        currentGeneratedPdfBlobUrl = URL.createObjectURL(currentGeneratedPdfBlob);
+
+        if (window.File) {
+          currentGeneratedPdfFile = new File([currentGeneratedPdfBlob], fileName, { type: 'application/pdf' });
+        }
 
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
 
-        // 1. 모바일 환경의 경우: Web Share API(파일 공유)가 지원되면 즉시 시스템 공유창(파일에 저장, 카톡 등) 호출
-        let sharedSuccessfully = false;
-        if (isMobile && navigator.canShare && window.File) {
-          try {
-            const pdfFile = new File([pdfBlob], fileName, { type: 'application/pdf' });
-            if (navigator.canShare({ files: [pdfFile] })) {
-              overlay.classList.add('hidden');
-              overlay.classList.remove('flex');
-              await navigator.share({
-                files: [pdfFile],
-                title: `${currentSajuData.name} 사주 감정서`,
-                text: `${currentSajuData.name} 님의 동인명리학 사주팔자 및 오늘의 일진 감정서입니다.`
-              });
-              sharedSuccessfully = true;
-              showToast('✅ 감정서 공유 및 저장이 완료되었습니다.');
-              return;
-            }
-          } catch (shareErr) {
-            // 사용자가 공유창 취소를 누른 경우 등
-            console.debug('Native share cancelled or not allowed:', shareErr);
-          }
-        }
-
-        // 2. 모바일 환경에서 공유창이 뜨지 않았거나 일반 다운로드 경로인 경우: 모바일 전용 PDF 안내 모달 호출
-        if (isMobile) {
-          const mobileModal = document.getElementById('mobilePdfModal');
-          const btnOpen = document.getElementById('mobileBtnOpenPdf');
-          const btnDownload = document.getElementById('mobileBtnDirectDownload');
-
-          btnOpen.href = currentGeneratedPdfBlobUrl;
-          btnDownload.href = currentGeneratedPdfBlobUrl;
-          btnDownload.download = fileName;
-
-          // 모바일 백업 다운로드 트리거도 1회 시도
-          try {
-            const a = document.createElement('a');
-            a.href = currentGeneratedPdfBlobUrl;
-            a.download = fileName;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-          } catch (dlErr) {}
-
-          mobileModal.classList.remove('hidden');
-          showToast('📄 모바일 PDF가 준비되었습니다. 새 창으로 열거나 다운로드하세요.');
+        if (isMobile || isTriggeredFromPrint) {
+          // 모바일 기기이거나 웹뷰인 경우 모바일 전용 저장 & 인쇄 센터 오픈
+          openMobilePdfModal();
+          showToast('📱 모바일 감정서가 준비되었습니다. 사진첩 저장 또는 공유를 선택하세요.');
         } else {
-          // 3. PC 환경: 일반 다운로드 실행
+          // PC 환경: 일반 다운로드 실행
           pdf.save(fileName);
           showToast('✅ A4 2페이지 사주 및 일진 감정서 PDF가 다운로드되었습니다.');
         }
@@ -2730,15 +2851,65 @@
         console.error('PDF Generation failed:', err);
         showToast('PDF 생성 중 오류가 발생했습니다. 인쇄 기능을 이용해 주세요.', true);
       } finally {
-        if (mountDiv && mountDiv.parentNode) {
-          mountDiv.parentNode.removeChild(mountDiv);
-        }
         window.scrollTo(prevScrollX, prevScrollY);
         overlay.classList.add('hidden');
         overlay.classList.remove('flex');
       }
     }
 
+    // 모바일 전용 저장 & 인쇄 센터 모달 열기 및 데이터 바인딩
+    function openMobilePdfModal() {
+      const modal = document.getElementById('mobilePdfModal');
+      const btnOpenTab = document.getElementById('mobileBtnOpenPdfTab');
+      const btnDownloadFile = document.getElementById('mobileBtnDirectDownloadFile');
+      const previewImg = document.getElementById('mobilePreviewImg');
+
+      if (currentGeneratedPdfBlobUrl) {
+        btnOpenTab.href = currentGeneratedPdfBlobUrl;
+        btnDownloadFile.href = currentGeneratedPdfBlobUrl;
+        btnDownloadFile.download = `${currentSajuData.name}_사주팔자_감정서.pdf`;
+      }
+
+      currentPreviewPage = 1;
+      updateMobilePreviewImage();
+
+      modal.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function updateMobilePreviewImage() {
+      const previewImg = document.getElementById('mobilePreviewImg');
+      const indicator = document.getElementById('previewPageIndicator');
+      if (currentPreviewPage === 1) {
+        previewImg.src = currentImgPage1DataUrl || '';
+        indicator.innerText = '1 / 2 쪽 (원국·대운)';
+      } else {
+        previewImg.src = currentImgPage2DataUrl || '';
+        indicator.innerText = '2 / 2 쪽 (오늘의 일진)';
+      }
+    }
+
+    // 모바일에서 이미지로 사진첩에 저장 (1쪽 또는 2쪽)
+    function downloadPageImage(pageNumber) {
+      const dataUrl = (pageNumber === 1) ? currentImgPage1DataUrl : currentImgPage2DataUrl;
+      if (!dataUrl) {
+        showToast('이미지 데이터를 준비 중입니다. 잠시 후 다시 시도해 주세요.', true);
+        return;
+      }
+      const pageTitle = pageNumber === 1 ? '1쪽_원국대운' : '2쪽_오늘의일진';
+      const fileName = `${currentSajuData ? currentSajuData.name : '홍길동'}_사주감정서_${pageTitle}.jpg`;
+
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      showToast(`📸 ${pageNumber}쪽 이미지를 저장했습니다. 스마트폰 사진첩(갤러리)을 확인하세요!`);
+    }
+
+    // 인쇄 실행 함수 (PC 및 모바일 완벽 지원)
     function executePrint() {
       if (!currentSajuData) {
         showToast('먼저 사주 분석을 실행해 주세요.', true);
@@ -2748,153 +2919,99 @@
       closeReportPreview();
       const a4Report = buildA4ReportElement(currentSajuData, currentFortuneData);
 
-      // 방법 1: 독립된 인쇄 전용 윈도우 생성 시도 (PC 및 모바일 브라우저 iframe 제약 완전 극복)
-      let printWindow = null;
-      try {
-        printWindow = window.open('', '_blank');
-      } catch (e) {
-        printWindow = null;
-      }
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
 
-      if (printWindow) {
-        const printDoc = printWindow.document;
-        printDoc.open();
-        printDoc.write(`
-          <!DOCTYPE html>
-          <html lang="ko">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>${currentSajuData.name} 사주팔자 & 오늘의 일진 감정서 - 동인명리학</title>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-            <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&display=swap" rel="stylesheet">
-            <style>
-              @page { size: A4 portrait; margin: 0; }
-              *, *::before, *::after { box-sizing: border-box; }
-              body {
-                margin: 0;
-                padding: 0;
-                background: #f1f5f9;
-                font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, sans-serif;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                color: #0f172a;
-              }
-              .no-print-bar {
-                width: 100%;
-                background: #0f172a;
-                color: #ffffff;
-                padding: 12px 16px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-                position: sticky;
-                top: 0;
-                z-index: 9999;
-              }
-              .btn-print-action {
-                background: linear-gradient(135deg, #f59e0b, #d97706);
-                color: #000;
-                font-weight: 800;
-                padding: 8px 18px;
-                border-radius: 8px;
-                border: none;
-                cursor: pointer;
-                font-size: 14px;
-              }
-              .btn-close-action {
-                background: #334155;
-                color: #e2e8f0;
-                font-weight: 600;
-                padding: 8px 14px;
-                border-radius: 8px;
-                border: 1px solid #475569;
-                cursor: pointer;
-                margin-left: 8px;
-                font-size: 14px;
-              }
-              .print-container {
-                width: 794px;
-                margin: 20px auto;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-              }
-              .a4-page {
-                width: 794px;
-                height: 1122px;
-                padding: 24px 28px;
-                box-sizing: border-box;
-                background: #ffffff;
-                color: #0f172a;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                page-break-after: always;
-                break-after: page;
-              }
-              .a4-page:last-child {
-                page-break-after: auto;
-                break-after: auto;
-              }
-              @media print {
-                .no-print-bar { display: none !important; }
-                body { background: #ffffff !important; }
-                .print-container { margin: 0 !important; box-shadow: none !important; width: 100% !important; }
-                .a4-page { width: 100% !important; height: 100vh !important; padding: 18mm 14mm !important; }
-              }
-            </style>
-          </head>
-          <body>
-            <div class="no-print-bar">
-              <div>
-                <strong>🖨️ A4 2페이지 감정서 인쇄 창</strong>
-                <span style="font-size: 12px; color: #94a3b8; margin-left: 8px;">(용지 방향: 세로 / 여백: 없음 권장)</span>
-              </div>
-              <div>
-                <button class="btn-print-action" onclick="window.focus(); window.print();">지금 인쇄하기</button>
-                <button class="btn-close-action" onclick="window.close();">창 닫기</button>
-              </div>
-            </div>
-            <div class="print-container">
-              ${a4Report.innerHTML}
-            </div>
-            <script>
-              window.addEventListener('load', function() {
-                setTimeout(function() {
-                  window.focus();
-                  try { window.print(); } catch(e) {}
-                }, 350);
-              });
-            <\/script>
-          </body>
-          </html>
-        `);
-        printDoc.close();
-        showToast('🖨️ 인쇄 전용 창이 열렸습니다.');
+      if (isMobile) {
+        // 모바일 브라우저의 경우: 모바일 전용 저장 & 인쇄 센터 오픈 (PDF/이미지가 없으면 즉시 생성)
+        if (!currentImgPage1DataUrl || !currentGeneratedPdfBlobUrl) {
+          executeSavePdf(true);
+        } else {
+          openMobilePdfModal();
+          showToast('🖨️ 모바일 인쇄 및 사진첩 저장을 선택하실 수 있습니다.');
+        }
         return;
       }
 
-      // 방법 2: 팝업이 차단된 경우 현재 창의 printReportWrapper를 활성화하여 window.print 호출
+      // PC 환경의 경우: 순수 인페이지 인쇄 엔진 적용
       const printWrapper = document.getElementById('printReportWrapper');
       printWrapper.innerHTML = '';
       printWrapper.appendChild(a4Report.cloneNode(true));
       printWrapper.classList.remove('hidden');
 
+      let printExecuted = false;
+
       setTimeout(() => {
-        window.focus();
         try {
+          window.focus();
           window.print();
+          printExecuted = true;
+          showToast('🖨️ 인쇄 대화상자가 실행되었습니다.');
         } catch (err) {
-          console.warn('In-page window.print failed:', err);
-          showToast('인쇄 대화상자를 열 수 없습니다. [PDF 저장]을 이용해 주세요.', true);
+          console.warn('In-page window.print failed due to sandbox restrictions:', err);
+          printExecuted = false;
         } finally {
           setTimeout(() => {
             printWrapper.classList.add('hidden');
             printWrapper.innerHTML = '';
           }, 1000);
+
+          // iframe sandbox 등으로 window.print가 차단된 경우 PC 전용 인쇄 도우미 모달 호출
+          if (!printExecuted) {
+            document.getElementById('printFallbackModal').classList.remove('hidden');
+          }
         }
-      }, 200);
+      }, 150);
+    }
+
+    // 독립된 새 탭 인쇄 창 열기 함수
+    function openDedicatedPrintWindow() {
+      if (!currentSajuData) return;
+      const a4Report = buildA4ReportElement(currentSajuData, currentFortuneData);
+      const printWin = window.open('', '_blank');
+      if (!printWin) {
+        showToast('팝업 차단이 감지되었습니다. 팝업을 허용해 주세요.', true);
+        return;
+      }
+
+      const printDoc = printWin.document;
+      printDoc.open();
+      printDoc.write(`
+        <!DOCTYPE html>
+        <html lang="ko">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>${currentSajuData.name} 사주팔자 & 오늘의 일진 감정서 - 동인명리학</title>
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&display=swap" rel="stylesheet">
+          <style>
+            @page { size: A4 portrait; margin: 0; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box; }
+            body {
+              margin: 0; padding: 0; background: #ffffff; color: #0f172a;
+              font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, sans-serif;
+            }
+            .a4-page {
+              width: 100%; height: 100vh; padding: 18mm 14mm; box-sizing: border-box;
+              page-break-after: always; break-after: page;
+            }
+            .a4-page:last-child { page-break-after: auto; break-after: auto; }
+          </style>
+        </head>
+        <body>
+          ${a4Report.innerHTML}
+          <script>
+            window.addEventListener('load', function() {
+              setTimeout(function() {
+                window.focus();
+                try { window.print(); } catch(e) {}
+              }, 300);
+            });
+          <\/script>
+        </body>
+        </html>
+      `);
+      printDoc.close();
     }
 
     function copyResultText() {
@@ -3035,9 +3152,82 @@
       document.getElementById('modalBtnPrint').addEventListener('click', executePrint);
       document.getElementById('btnCopyText').addEventListener('click', copyResultText);
 
-      // 모바일 PDF 안내 모달 닫기
+      // 모바일 모달 버튼 이벤트 바인딩
       document.getElementById('btnCloseMobilePdfModal').addEventListener('click', () => {
         document.getElementById('mobilePdfModal').classList.add('hidden');
+      });
+      document.getElementById('mobileModalCloseBtnBottom').addEventListener('click', () => {
+        document.getElementById('mobilePdfModal').classList.add('hidden');
+      });
+
+      // 1쪽 / 2쪽 사진첩(갤러리) 이미지 다운로드
+      document.getElementById('btnSaveImgPage1').addEventListener('click', () => downloadPageImage(1));
+      document.getElementById('btnSaveImgPage2').addEventListener('click', () => downloadPageImage(2));
+
+      // 모바일 미리보기 1쪽/2쪽 토글
+      document.getElementById('btnPrevPreviewPage').addEventListener('click', () => {
+        currentPreviewPage = 1;
+        updateMobilePreviewImage();
+      });
+      document.getElementById('btnNextPreviewPage').addEventListener('click', () => {
+        currentPreviewPage = 2;
+        updateMobilePreviewImage();
+      });
+
+      // 시스템 네이티브 공유 API (직접 터치 이벤트이므로 권한 에러 없이 100% 작동)
+      document.getElementById('mobileBtnShareNative').addEventListener('click', async () => {
+        if (!currentGeneratedPdfFile && !currentImgPage1DataUrl) {
+          showToast('공유할 파일을 준비 중입니다.', true);
+          return;
+        }
+
+        if (navigator.share) {
+          try {
+            if (currentGeneratedPdfFile && navigator.canShare && navigator.canShare({ files: [currentGeneratedPdfFile] })) {
+              await navigator.share({
+                files: [currentGeneratedPdfFile],
+                title: `${currentSajuData.name} 사주 감정서`,
+                text: `${currentSajuData.name} 님의 동인명리학 사주팔자 및 오늘의 일진 감정서입니다.`
+              });
+              showToast('✅ 공유가 완료되었습니다.');
+              return;
+            }
+          } catch (shareErr) {
+            console.debug('Native file share failed or cancelled:', shareErr);
+          }
+        }
+
+        // fallback: 클립보드 복사 또는 새 탭 열기
+        if (currentGeneratedPdfBlobUrl) {
+          window.open(currentGeneratedPdfBlobUrl, '_blank');
+          showToast('새 탭에서 감정서가 열렸습니다. 브라우저 공유 버튼을 사용하세요.');
+        }
+      });
+
+      // 모바일 직접 인쇄 호출
+      document.getElementById('mobileBtnDirectPrint').addEventListener('click', () => {
+        document.getElementById('mobilePdfModal').classList.add('hidden');
+        setTimeout(() => {
+          window.focus();
+          try {
+            window.print();
+          } catch (e) {
+            openDedicatedPrintWindow();
+          }
+        }, 200);
+      });
+
+      // PC 인쇄 대체 모달 이벤트
+      document.getElementById('btnOpenPrintTabDirect').addEventListener('click', () => {
+        document.getElementById('printFallbackModal').classList.add('hidden');
+        openDedicatedPrintWindow();
+      });
+      document.getElementById('btnPrintModalSavePdf').addEventListener('click', () => {
+        document.getElementById('printFallbackModal').classList.add('hidden');
+        executeSavePdf();
+      });
+      document.getElementById('btnClosePrintFallbackModal').addEventListener('click', () => {
+        document.getElementById('printFallbackModal').classList.add('hidden');
       });
 
       document.getElementById('reportModal').addEventListener('click', (e) => {
@@ -3049,6 +3239,7 @@
         if (e.key === 'Escape') {
           closeReportPreview();
           document.getElementById('mobilePdfModal').classList.add('hidden');
+          document.getElementById('printFallbackModal').classList.add('hidden');
         }
       });
       window.addEventListener('resize', adjustModalScale);
