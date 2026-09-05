@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>동인명리학 만세력 (四柱八字) - 동방의 제갈량</title>
+  <title>동인명리학 만세력 (四柱八字) & 오늘의 일진</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -13,11 +13,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-  <!-- Pretendard Variable & Noto Serif KR Webfonts -->
+  <!-- Pretendard & Noto Serif KR Fonts -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after {
@@ -25,17 +25,19 @@
     }
     html {
       font-size: 16px;
+      scroll-behavior: smooth;
     }
     body {
-      font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-      background-color: #0b0f19;
-      color: #e2e8f0;
+      font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background-color: #0d121d;
+      color: #f1f5f9;
       -webkit-tap-highlight-color: transparent;
       word-break: keep-all;
       overflow-wrap: break-word;
-      line-height: 1.7;
+      line-height: 1.65;
     }
 
+    /* 한글 단어 단위 개행 및 가독성 타이포 */
     .saju-text-flow {
       word-break: keep-all;
       overflow-wrap: break-word;
@@ -43,130 +45,136 @@
     .saju-headline {
       word-break: keep-all;
       text-wrap: balance;
-      letter-spacing: -0.025em;
-      line-height: 1.4;
+      letter-spacing: -0.02em;
+      line-height: 1.35;
     }
     .saju-body {
       word-break: keep-all;
       text-wrap: pretty;
-      letter-spacing: -0.015em;
+      letter-spacing: -0.01em;
       line-height: 1.7;
-      max-width: 65ch;
     }
 
     .hanja-font {
-      font-family: 'Noto Serif KR', 'Pretendard Variable', Georgia, serif;
+      font-family: 'Noto Serif KR', 'Pretendard Variable', serif;
     }
 
+    /* 고대비 프리미엄 오행 색상 토큰 (다크모드 전용) */
     .elem-wood {
-      background-color: #EBFDF5 !important;
-      color: #065F46 !important;
-      border-color: #065F46 !important;
+      background: linear-gradient(145deg, rgba(6, 78, 59, 0.85), rgba(4, 47, 46, 0.95)) !important;
+      color: #a7f3d0 !important;
+      border-color: #10b981 !important;
+      box-shadow: 0 4px 14px -2px rgba(16, 185, 129, 0.25);
     }
     .elem-fire {
-      background-color: #FEF2F2 !important;
-      color: #991B1B !important;
-      border-color: #991B1B !important;
+      background: linear-gradient(145deg, rgba(153, 27, 27, 0.85), rgba(69, 10, 10, 0.95)) !important;
+      color: #fecaca !important;
+      border-color: #ef4444 !important;
+      box-shadow: 0 4px 14px -2px rgba(239, 68, 68, 0.25);
     }
     .elem-earth {
-      background-color: #FFFBEB !important;
-      color: #92400E !important;
-      border-color: #92400E !important;
+      background: linear-gradient(145deg, rgba(146, 64, 14, 0.85), rgba(69, 26, 3, 0.95)) !important;
+      color: #fde68a !important;
+      border-color: #f59e0b !important;
+      box-shadow: 0 4px 14px -2px rgba(245, 158, 11, 0.25);
     }
     .elem-metal {
-      background-color: #F8FAFC !important;
-      color: #334155 !important;
-      border-color: #334155 !important;
+      background: linear-gradient(145deg, rgba(51, 65, 85, 0.9), rgba(15, 23, 42, 0.95)) !important;
+      color: #ffffff !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 4px 14px -2px rgba(203, 213, 225, 0.2);
     }
     .elem-water {
-      background-color: #EFF6FF !important;
-      color: #1E40AF !important;
-      border-color: #1E40AF !important;
+      background: linear-gradient(145deg, rgba(30, 64, 175, 0.85), rgba(15, 23, 42, 0.95)) !important;
+      color: #bfdbfe !important;
+      border-color: #3b82f6 !important;
+      box-shadow: 0 4px 14px -2px rgba(59, 130, 246, 0.25);
     }
 
+    /* 황금빛 그라데이션 타이틀 */
     .gold-gradient-text {
-      background: linear-gradient(135deg, #fef08a 0%, #facc15 50%, #ca8a04 100%);
+      background: linear-gradient(135deg, #fffbeb 0%, #fde047 30%, #eab308 70%, #ca8a04 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       display: inline-block;
-      padding-top: 0.1em;
-      padding-bottom: 0.22em;
-      line-height: 1.35;
     }
 
+    /* 프리미엄 글래스 카드 */
     .glass-card {
-      background: rgba(17, 24, 39, 0.93);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 10px 32px -10px rgba(0, 0, 0, 0.7);
+      background: rgba(18, 24, 38, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(245, 158, 11, 0.18);
+      box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.65);
     }
 
+    /* 입력 폼 전용 */
     .custom-select, .form-input-safe {
       font-size: 16px !important;
     }
     .custom-select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23f59e0b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
       background-repeat: no-repeat;
-      background-position: right 0.75rem center;
-      background-size: 1.1rem;
+      background-position: right 0.85rem center;
+      background-size: 1.15rem;
       appearance: none;
       -webkit-appearance: none;
     }
 
+    /* 시니어 및 저시력자를 위한 큰 글씨 모드 */
+    body.senior-mode {
+      font-size: 18px;
+    }
+    body.senior-mode .senior-text-scale {
+      font-size: 1.18rem !important;
+      line-height: 1.7 !important;
+    }
+    body.senior-mode .saju-hanja-cell {
+      font-size: 2.8rem !important;
+    }
+    body.senior-mode .saju-badge {
+      font-size: 0.95rem !important;
+      padding: 0.35rem 0.6rem !important;
+    }
+
+    /* 수평 스크롤 캐러셀 */
     .snap-carousel {
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: thin;
-      scrollbar-color: #475569 transparent;
-    }
-    .snap-carousel-item {
-      scroll-snap-align: center;
+      scrollbar-color: #d97706 transparent;
     }
     .snap-carousel::-webkit-scrollbar {
-      height: 6px;
+      height: 7px;
     }
     .snap-carousel::-webkit-scrollbar-thumb {
-      background-color: #475569;
-      border-radius: 4px;
+      background-color: #b45309;
+      border-radius: 9999px;
     }
 
-    @keyframes phone-ring {
+    /* 전화 및 유튜브 맥동 애니메이션 */
+    @keyframes phone-shake {
       0%, 100% { transform: rotate(0deg) scale(1); }
-      10%, 30% { transform: rotate(-14deg) scale(1.1); }
-      20%, 40% { transform: rotate(14deg) scale(1.1); }
+      10%, 30% { transform: rotate(-15deg) scale(1.1); }
+      20%, 40% { transform: rotate(15deg) scale(1.1); }
       50% { transform: rotate(0deg) scale(1); }
     }
     .animate-phone-ring {
-      animation: phone-ring 1.8s infinite ease-in-out;
+      animation: phone-shake 1.8s infinite ease-in-out;
     }
-    @keyframes call-glow {
+    @keyframes pulse-amber-glow {
       0%, 100% {
-        box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.75), 0 4px 16px rgba(234, 179, 8, 0.35);
-        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.75), 0 4px 18px rgba(245, 158, 11, 0.4);
       }
       50% {
-        box-shadow: 0 0 0 7px rgba(250, 204, 21, 0), 0 6px 22px rgba(234, 179, 8, 0.6);
-        transform: scale(1.02);
+        box-shadow: 0 0 0 8px rgba(245, 158, 11, 0), 0 6px 24px rgba(245, 158, 11, 0.6);
       }
     }
-    .btn-call-pulse {
-      animation: call-glow 1.9s infinite cubic-bezier(0.4, 0, 0.6, 1);
-    }
-    @keyframes youtube-glow {
-      0%, 100% {
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7), 0 4px 14px rgba(220, 38, 38, 0.4);
-        transform: scale(1);
-      }
-      50% {
-        box-shadow: 0 0 0 7px rgba(239, 68, 68, 0), 0 6px 20px rgba(220, 38, 38, 0.6);
-        transform: scale(1.02);
-      }
-    }
-    .btn-youtube-pulse {
-      animation: youtube-glow 2.2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+    .btn-call-glow {
+      animation: pulse-amber-glow 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
     }
 
+    /* A4 출력용 고정 규격 스타일 */
     .a4-page {
       width: 794px;
       height: 1122px;
@@ -180,7 +188,6 @@
       page-break-after: always;
       break-after: page;
       position: relative;
-      line-height: 1.6;
     }
     .a4-page:last-child {
       page-break-after: auto;
@@ -195,7 +202,6 @@
       * {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
-        box-sizing: border-box;
       }
       html, body {
         background: #ffffff !important;
@@ -203,7 +209,6 @@
         padding: 0 !important;
         margin: 0 !important;
         width: 100% !important;
-        min-height: 100% !important;
       }
       header, footer, main, #inputCard, #resultCard, #reportModal, #loadingOverlay, #toast, #saveCenterModal, #printFallbackModal, .no-print {
         display: none !important;
@@ -211,18 +216,14 @@
       #printReportWrapper {
         display: block !important;
         width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
       }
       .a4-page {
         width: 100% !important;
         height: 100vh !important;
         max-height: 100vh !important;
-        page-break-after: always !important;
-        break-after: page !important;
-        box-shadow: none !important;
         margin: 0 !important;
         padding: 18mm 14mm !important;
+        box-shadow: none !important;
       }
     }
   </style>
@@ -230,85 +231,96 @@
 
 <body class="min-h-screen py-4 sm:py-8 px-3 sm:px-6 lg:px-8 flex flex-col items-center">
 
+  <!-- 최상단 헤더 -->
   <header class="w-full max-w-4xl text-center mb-6 sm:mb-8 no-print pt-1">
-    <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-semibold mb-2">
-      <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
-      정통 천문 역법 만세력 (1900년~2050년) & 양력·음력·윤달 완전 지원
+    
+    <!-- 뱃지 & 글자 크기 조정 버튼 -->
+    <div class="flex flex-wrap items-center justify-center gap-2 mb-3">
+      <div class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-400/40 text-amber-300 text-xs sm:text-sm font-bold shadow-sm">
+        <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
+        <span>정통 천문 역법 만세력 (1900년~2050년) & 양력·음력·윤달 완벽 지원</span>
+      </div>
+
+      <!-- 큰 글씨 가독성 모드 토글 버튼 -->
+      <button id="btnToggleSeniorMode" type="button" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 text-xs sm:text-sm font-bold transition shadow cursor-pointer active:scale-95" title="글자 크기 키우기">
+        <i data-lucide="zoom-in" class="w-4 h-4 text-amber-400"></i>
+        <span id="seniorModeText">글씨 크게 보기</span>
+      </button>
     </div>
     
-    <div class="my-1">
-      <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight gold-gradient-text hanja-font saju-headline">
+    <div class="my-2">
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight gold-gradient-text hanja-font saju-headline">
         동인명리학 만세력
       </h1>
     </div>
 
-    <p class="text-slate-300 text-sm sm:text-base mt-0.5 max-w-2xl mx-auto px-2 saju-body font-normal">
-      태양 황경 24절기 절입시각과 정통 60갑자 일진법을 적용하여 정밀한 사주팔자(四柱八字)와 오늘의 일진 운세를 산출합니다.
+    <p class="text-slate-200 text-sm sm:text-lg mt-1 max-w-2xl mx-auto px-2 saju-body font-medium">
+      태양 황경 24절기 절입시각과 정통 60갑자 연속 일진법을 적용하여 명쾌한 사주팔자(四柱八字)와 오늘의 일진 운세를 산출합니다.
     </p>
 
     <!-- 유튜브 채널 공식 홍보 배너 -->
-    <div class="mt-4 sm:mt-5 max-w-3xl mx-auto p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-red-950/80 via-slate-900/95 to-red-950/70 border border-red-500/40 shadow-xl shadow-red-950/30 backdrop-blur-md text-left transition-all hover:border-red-400/60">
+    <div class="mt-4 sm:mt-5 max-w-3xl mx-auto p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-red-950/90 via-slate-900/95 to-red-950/80 border border-red-500/50 shadow-xl shadow-red-950/40 backdrop-blur-md text-left transition-all">
       <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-        <div class="flex items-center gap-3 w-full sm:w-auto">
+        <div class="flex items-center gap-3.5 w-full sm:w-auto">
           <div class="relative flex-shrink-0">
-            <span class="inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-red-600 to-rose-700 text-white shadow-lg shadow-red-600/40 border border-red-400/30">
-              <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+            <span class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-red-600 to-rose-700 text-white shadow-lg shadow-red-600/40 border border-red-400/40">
+              <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
                 <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
               </svg>
             </span>
-            <span class="absolute -top-1 -right-1 flex h-3 w-3">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+            <span class="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-80"></span>
+              <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-red-500"></span>
             </span>
           </div>
-          <div class="flex-1 space-y-0.5 saju-text-flow">
+          <div class="flex-1 space-y-1 saju-text-flow">
             <div class="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
-              <span class="text-[11px] font-black uppercase px-2 py-0.5 rounded-full bg-red-600 text-white tracking-wider">공식 유튜브</span>
-              <span class="text-sm sm:text-base font-extrabold text-white tracking-tight">동방의 제갈량 동인선생</span>
+              <span class="text-xs font-black uppercase px-2.5 py-0.5 rounded-full bg-red-600 text-white tracking-wider">공식 유튜브</span>
+              <span class="text-base sm:text-lg font-black text-white tracking-tight">동방의 제갈량 동인선생</span>
             </div>
-            <p class="text-xs sm:text-sm text-red-200/90 saju-text-flow leading-snug">
+            <p class="text-xs sm:text-sm text-red-200 font-medium saju-text-flow leading-snug">
               정통 명리학 운세 비법과 인생 길흉화복 명쾌한 통찰! 무료 구독하고 매주 새로운 강의를 만나보세요.
             </p>
           </div>
         </div>
 
         <a href="https://www.youtube.com/@%EB%8F%99%EC%9D%B8%EC%84%A0%EC%83%9D-18z" target="_blank" rel="noopener noreferrer"
-           class="btn-youtube-pulse w-full sm:w-auto inline-flex items-center justify-center gap-1.5 text-white bg-gradient-to-r from-red-600 via-red-500 to-rose-600 hover:from-red-500 hover:to-rose-500 active:scale-95 font-extrabold px-4 py-2.5 rounded-xl border border-red-400/50 shadow-lg shadow-red-600/30 transition-all flex-shrink-0 cursor-pointer text-xs sm:text-sm"
+           class="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white bg-gradient-to-r from-red-600 via-red-500 to-rose-600 hover:from-red-500 hover:to-rose-500 active:scale-95 font-black px-5 py-3 rounded-xl border border-red-400/60 shadow-lg shadow-red-600/40 transition-all flex-shrink-0 cursor-pointer text-sm sm:text-base"
            title="동방의 제갈량 유튜브 채널 새 창 열기">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
             <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
           </svg>
           <span>유튜브 바로가기</span>
-          <i data-lucide="external-link" class="w-3.5 h-3.5 text-red-100"></i>
+          <i data-lucide="external-link" class="w-4 h-4 text-red-100"></i>
         </a>
       </div>
     </div>
 
     <!-- 1:1 전화 상담 안내 배너 -->
-    <div class="mt-3 max-w-3xl mx-auto p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-yellow-500/10 to-amber-600/15 border border-amber-400/50 shadow-lg shadow-amber-500/10 backdrop-blur-md text-left transition-all">
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-        <div class="flex items-center sm:items-start gap-3 w-full sm:w-auto">
-          <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-amber-500 text-slate-950 font-black flex-shrink-0 shadow mt-0.5">
-            <i data-lucide="phone-call" class="w-4 h-4 animate-phone-ring"></i>
+    <div class="mt-3.5 max-w-3xl mx-auto p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/20 via-yellow-500/15 to-amber-600/20 border-2 border-amber-400/60 shadow-xl shadow-amber-500/10 backdrop-blur-md text-left transition-all">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3.5 text-center sm:text-left">
+        <div class="flex items-center sm:items-start gap-3.5 w-full sm:w-auto">
+          <span class="inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-amber-400 text-slate-950 font-black flex-shrink-0 shadow-md mt-0.5">
+            <i data-lucide="phone-call" class="w-5 h-5 animate-phone-ring"></i>
           </span>
-          <div class="flex-1 space-y-0.5 saju-text-flow">
-            <p class="text-xs sm:text-sm font-semibold text-amber-200 leading-snug">
+          <div class="flex-1 space-y-1 saju-text-flow">
+            <p class="text-xs sm:text-sm md:text-base font-bold text-amber-200 leading-snug">
               "만세력과 함께 보실 수 있는 <span class="text-yellow-300 font-extrabold underline underline-offset-4 decoration-amber-400">오늘의 일진은 재미로 보는 것</span>입니다."
             </p>
-            <div class="text-xs sm:text-sm text-slate-200 flex flex-wrap items-center justify-center sm:justify-start gap-1 leading-normal">
+            <div class="text-xs sm:text-sm text-slate-100 flex flex-wrap items-center justify-center sm:justify-start gap-1 leading-normal">
               <span>자신의 운명이 궁금하신 분들은</span>
-              <a href="tel:01026228255" class="inline-flex items-center text-amber-300 hover:text-yellow-200 font-bold underline underline-offset-4 decoration-amber-400 transition" title="010-2622-8255 전화 걸기">
-                <strong>동인선생</strong>
+              <a href="tel:01026228255" class="inline-flex items-center text-amber-300 hover:text-yellow-200 font-black underline underline-offset-4 decoration-amber-400 transition" title="010-2622-8255 전화 걸기">
+                <strong class="text-amber-200">동인선생</strong>
               </a>에게 문의해 주세요.
             </div>
           </div>
         </div>
 
-        <a href="tel:01026228255" class="btn-call-pulse w-full sm:w-auto inline-flex items-center justify-center text-slate-950 bg-gradient-to-r from-yellow-300 via-amber-300 to-yellow-400 hover:from-yellow-200 hover:to-amber-200 active:scale-95 font-black px-4 py-2.5 rounded-xl border-2 border-yellow-200 shadow-xl transition-all flex-shrink-0 cursor-pointer" title="010-2622-8255 전화 연결">
-          <div class="flex items-center gap-1.5 text-xs sm:text-sm">
-            <span class="relative flex h-2 w-2">
+        <a href="tel:01026228255" class="btn-call-glow w-full sm:w-auto inline-flex items-center justify-center text-slate-950 bg-gradient-to-r from-yellow-300 via-amber-300 to-yellow-400 hover:from-yellow-200 hover:to-amber-200 active:scale-95 font-black px-5 py-3 rounded-xl border-2 border-yellow-100 shadow-xl transition-all flex-shrink-0 cursor-pointer" title="010-2622-8255 전화 연결">
+          <div class="flex items-center gap-2 text-sm sm:text-base">
+            <span class="relative flex h-2.5 w-2.5">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-85"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-600"></span>
             </span>
             <i data-lucide="phone-call" class="w-4 h-4 text-slate-950 animate-phone-ring"></i>
             <span class="tracking-wide font-black">010-2622-8255</span>
@@ -321,13 +333,13 @@
   <main class="w-full max-w-4xl space-y-6 sm:space-y-8">
 
     <!-- 1. 입력 카드 영역 -->
-    <div id="inputCard" class="glass-card rounded-2xl p-4 sm:p-7 md:p-8 no-print">
-      <div class="border-b border-slate-800 pb-3 mb-5 flex items-center justify-between">
-        <h2 class="text-base sm:text-lg font-bold text-slate-100 flex items-center gap-2">
-          <i data-lucide="calendar-search" class="w-5 h-5 text-amber-400"></i>
+    <div id="inputCard" class="glass-card rounded-2xl p-5 sm:p-8 no-print">
+      <div class="border-b border-slate-700/80 pb-3.5 mb-5 flex flex-wrap items-center justify-between gap-2">
+        <h2 class="text-lg sm:text-xl font-black text-slate-100 flex items-center gap-2.5">
+          <i data-lucide="calendar-check" class="w-5 h-5 text-amber-400"></i>
           명식 생년월일시 입력 (1900년 ~ 2050년)
         </h2>
-        <span class="text-xs sm:text-sm text-amber-400 font-semibold">양력 · 음력 · 윤달 지원</span>
+        <span class="text-xs sm:text-sm text-amber-300 font-bold bg-amber-500/15 px-3 py-1 rounded-full border border-amber-500/30">양력 · 음력 · 윤달 완전 지원</span>
       </div>
 
       <form id="sajuForm" class="space-y-5">
@@ -335,13 +347,13 @@
 
           <!-- 성명 입력 필드 -->
           <div>
-            <label for="userName" class="block text-xs sm:text-sm font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+            <label for="userName" class="block text-xs sm:text-sm font-bold text-slate-200 uppercase tracking-wider mb-2">
               성명 (이름)
             </label>
             <div class="relative">
               <input type="text" id="userName" value="홍길동" placeholder="이름을 입력하세요"
-                     class="form-input-safe w-full h-[50px] bg-slate-900 border border-slate-700 rounded-xl px-4 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium transition">
-              <div class="absolute right-3.5 top-3.5 text-slate-400 pointer-events-none">
+                     class="form-input-safe w-full h-[54px] bg-slate-900/90 border border-slate-700 rounded-xl px-4 text-slate-100 text-base font-semibold placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400 transition">
+              <div class="absolute right-4 top-4 text-slate-400 pointer-events-none">
                 <i data-lucide="user" class="w-5 h-5"></i>
               </div>
             </div>
@@ -349,15 +361,15 @@
 
           <!-- 성별 선택 필드 -->
           <div>
-            <label class="block text-xs sm:text-sm font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+            <label class="block text-xs sm:text-sm font-bold text-slate-200 uppercase tracking-wider mb-2">
               성별 (대운 순행/역행 기준)
             </label>
-            <div class="grid grid-cols-2 gap-2 h-[50px]">
-              <label class="flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900 p-2 text-sm sm:text-base font-semibold cursor-pointer transition active:scale-[0.98] hover:border-slate-500 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-500/15 has-[:checked]:text-amber-300">
+            <div class="grid grid-cols-2 gap-2.5 h-[54px]">
+              <label class="flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900/90 p-2 text-base font-bold cursor-pointer transition active:scale-[0.98] hover:border-amber-400 has-[:checked]:border-amber-400 has-[:checked]:bg-amber-500/20 has-[:checked]:text-amber-300 shadow-sm">
                 <input type="radio" name="gender" value="male" checked class="hidden">
                 <span>남성 (乾命)</span>
               </label>
-              <label class="flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900 p-2 text-sm sm:text-base font-semibold cursor-pointer transition active:scale-[0.98] hover:border-slate-500 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-500/15 has-[:checked]:text-amber-300">
+              <label class="flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900/90 p-2 text-base font-bold cursor-pointer transition active:scale-[0.98] hover:border-amber-400 has-[:checked]:border-amber-400 has-[:checked]:bg-amber-500/20 has-[:checked]:text-amber-300 shadow-sm">
                 <input type="radio" name="gender" value="female" class="hidden">
                 <span>여성 (坤命)</span>
               </label>
@@ -365,74 +377,74 @@
           </div>
 
           <!-- 생년월일 시스템 (1900~2050) -->
-          <div class="md:col-span-2 bg-slate-950/60 p-3.5 sm:p-4 rounded-xl border border-slate-800">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2.5">
-              <div class="flex items-center gap-3">
-                <span class="text-xs sm:text-sm font-bold text-slate-200">생년월일 달력 구분:</span>
-                <div class="inline-flex rounded-lg border border-slate-700 bg-slate-900 p-0.5">
-                  <button type="button" id="btnCalSolar" class="px-3 py-1 rounded-md text-xs sm:text-sm font-bold transition bg-amber-500 text-slate-950 shadow">
+          <div class="md:col-span-2 bg-slate-950/70 p-4 sm:p-5 rounded-2xl border border-slate-700/80 space-y-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              <div class="flex items-center gap-3 flex-wrap">
+                <span class="text-xs sm:text-sm font-extrabold text-slate-200">생년월일 달력 선택:</span>
+                <div class="inline-flex rounded-xl border border-slate-600 bg-slate-900 p-1">
+                  <button type="button" id="btnCalSolar" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-black transition bg-amber-500 text-slate-950 shadow cursor-pointer">
                     양력 (Solar)
                   </button>
-                  <button type="button" id="btnCalLunar" class="px-3 py-1 rounded-md text-xs sm:text-sm font-bold transition text-slate-300 hover:text-white">
+                  <button type="button" id="btnCalLunar" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-black transition text-slate-300 hover:text-white cursor-pointer">
                     음력 (Lunar)
                   </button>
                 </div>
 
-                <label id="leapMonthLabel" class="inline-flex items-center gap-1.5 cursor-pointer text-xs sm:text-sm text-slate-400 transition select-none opacity-50 pointer-events-none">
-                  <input type="checkbox" id="isLeapMonth" class="w-4 h-4 rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500/20">
-                  <span class="font-bold text-amber-300">윤달(閏月)</span>
+                <label id="leapMonthLabel" class="inline-flex items-center gap-1.5 cursor-pointer text-xs sm:text-sm text-slate-400 transition select-none opacity-40 pointer-events-none p-1 rounded-lg border border-transparent">
+                  <input type="checkbox" id="isLeapMonth" class="w-4 h-4 rounded bg-slate-800 border-slate-600 text-amber-500 focus:ring-amber-400">
+                  <span class="font-extrabold text-amber-300">윤달(閏月)</span>
                 </label>
               </div>
 
-              <span id="datePreview" class="text-xs sm:text-sm font-mono text-amber-300 bg-amber-500/10 px-2.5 py-1 rounded-md border border-amber-500/30 truncate font-semibold self-start sm:self-auto">
+              <span id="datePreview" class="text-xs sm:text-sm font-mono text-amber-300 bg-amber-500/15 px-3 py-1.5 rounded-lg border border-amber-400/40 truncate font-bold self-start sm:self-auto">
                 양력 1980.01.01 (庚申년)
               </span>
             </div>
 
-            <div class="grid grid-cols-3 gap-2">
+            <div class="grid grid-cols-3 gap-2 sm:gap-3">
               <div class="relative">
-                <select id="birthYear" class="custom-select form-input-safe w-full h-[48px] bg-slate-900 border border-slate-700 rounded-xl pl-3 pr-7 text-slate-100 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer">
+                <select id="birthYear" class="custom-select form-input-safe w-full h-[52px] bg-slate-900 border border-slate-700 rounded-xl pl-3 pr-8 text-slate-100 text-base font-bold focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer">
                 </select>
               </div>
               <div class="relative">
-                <select id="birthMonth" class="custom-select form-input-safe w-full h-[48px] bg-slate-900 border border-slate-700 rounded-xl pl-3 pr-7 text-slate-100 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer">
+                <select id="birthMonth" class="custom-select form-input-safe w-full h-[52px] bg-slate-900 border border-slate-700 rounded-xl pl-3 pr-8 text-slate-100 text-base font-bold focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer">
                 </select>
               </div>
               <div class="relative">
-                <select id="birthDay" class="custom-select form-input-safe w-full h-[48px] bg-slate-900 border border-slate-700 rounded-xl pl-3 pr-7 text-slate-100 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer">
+                <select id="birthDay" class="custom-select form-input-safe w-full h-[52px] bg-slate-900 border border-slate-700 rounded-xl pl-3 pr-8 text-slate-100 text-base font-bold focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer">
                 </select>
               </div>
             </div>
 
-            <div id="lunarNoticeBar" class="mt-2 text-[11px] text-slate-400 hidden flex items-center gap-1.5">
-              <i data-lucide="info" class="w-3.5 h-3.5 text-amber-400 flex-shrink-0"></i>
-              <span id="lunarConversionDetail" class="text-slate-300 font-mono">음력 1980년 1월 1일 ➔ 양력 1980년 2월 16일 변환 적용</span>
+            <div id="lunarNoticeBar" class="mt-2 text-xs sm:text-sm text-amber-300/90 hidden flex items-center gap-2 bg-amber-500/10 p-2.5 rounded-xl border border-amber-500/20">
+              <i data-lucide="info" class="w-4 h-4 text-amber-400 flex-shrink-0"></i>
+              <span id="lunarConversionDetail" class="font-mono font-medium leading-normal">음력 1980년 1월 1일 → 양력 1980년 2월 16일 변환 적용</span>
             </div>
           </div>
 
-          <!-- 出生 시각 필드 -->
+          <!-- 출생 시각 필드 -->
           <div class="md:col-span-2">
-            <div class="flex items-center justify-between mb-1.5">
-              <label class="block text-xs sm:text-sm font-semibold text-slate-300 uppercase tracking-wider">
+            <div class="flex items-center justify-between mb-2">
+              <label class="block text-xs sm:text-sm font-bold text-slate-200 uppercase tracking-wider">
                 출생 시각 (태어난 시간)
               </label>
-              <span id="time24Preview" class="text-xs sm:text-sm font-mono text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded border border-amber-500/20 font-semibold">
-                12:00 (오후 12시)
+              <span id="time24Preview" class="text-xs sm:text-sm font-mono text-amber-300 bg-amber-500/15 px-3 py-1 rounded-lg border border-amber-400/40 font-bold">
+                12:00 (오후 12시 00분)
               </span>
             </div>
             
-            <div class="grid grid-cols-12 gap-2 items-center">
-              <div class="col-span-4 sm:col-span-3 flex rounded-xl border border-slate-700 bg-slate-900 p-1 h-[48px]">
-                <button type="button" id="btnAm" class="flex-1 text-xs sm:text-sm font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200">
+            <div class="grid grid-cols-12 gap-2 sm:gap-3 items-center">
+              <div class="col-span-4 sm:col-span-3 flex rounded-xl border border-slate-700 bg-slate-900 p-1 h-[52px]">
+                <button type="button" id="btnAm" class="flex-1 text-xs sm:text-sm font-black rounded-lg transition-all text-slate-400 hover:text-slate-200 cursor-pointer">
                   오전
                 </button>
-                <button type="button" id="btnPm" class="flex-1 text-xs sm:text-sm font-bold rounded-lg transition-all bg-amber-500 text-slate-950 shadow">
+                <button type="button" id="btnPm" class="flex-1 text-xs sm:text-sm font-black rounded-lg transition-all bg-amber-500 text-slate-950 shadow cursor-pointer">
                   오후
                 </button>
               </div>
 
               <div class="col-span-5 sm:col-span-6 grid grid-cols-2 gap-2">
-                <select id="birthHourSelect" class="custom-select form-input-safe w-full h-[48px] bg-slate-900 border border-slate-700 rounded-xl pl-2.5 pr-6 text-slate-100 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer">
+                <select id="birthHourSelect" class="custom-select form-input-safe w-full h-[52px] bg-slate-900 border border-slate-700 rounded-xl pl-3 pr-7 text-slate-100 text-base font-bold focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer">
                   <option value="12" selected>12시</option>
                   <option value="1">01시</option>
                   <option value="2">02시</option>
@@ -447,14 +459,14 @@
                   <option value="11">11시</option>
                 </select>
 
-                <select id="birthMinSelect" class="custom-select form-input-safe w-full h-[48px] bg-slate-900 border border-slate-700 rounded-xl pl-2.5 pr-6 text-slate-100 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer">
+                <select id="birthMinSelect" class="custom-select form-input-safe w-full h-[52px] bg-slate-900 border border-slate-700 rounded-xl pl-3 pr-7 text-slate-100 text-base font-bold focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer">
                 </select>
               </div>
 
               <div class="col-span-3 sm:col-span-3">
-                <label class="flex items-center justify-center gap-1.5 cursor-pointer text-xs sm:text-sm text-slate-300 h-[48px] bg-slate-900/90 border border-slate-700 rounded-xl hover:border-slate-600 transition px-1">
-                  <input type="checkbox" id="unknownTime" class="w-4 h-4 rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500/20">
-                  <span class="whitespace-nowrap font-semibold">모름</span>
+                <label class="flex items-center justify-center gap-1.5 cursor-pointer text-xs sm:text-base text-slate-200 h-[52px] bg-slate-900 border border-slate-700 rounded-xl hover:border-slate-500 transition px-2 font-bold select-none">
+                  <input type="checkbox" id="unknownTime" class="w-4 h-4 rounded bg-slate-800 border-slate-600 text-amber-500 focus:ring-amber-400">
+                  <span class="whitespace-nowrap">모름</span>
                 </label>
               </div>
             </div>
@@ -462,57 +474,59 @@
 
         </div>
 
-        <div class="bg-slate-950/70 p-3.5 sm:p-4 rounded-xl border border-slate-800 space-y-2">
+        <!-- 정통 명리학 보정 옵션 -->
+        <div class="bg-slate-950/70 p-4 rounded-2xl border border-slate-800 space-y-2.5">
           <div class="text-xs sm:text-sm font-bold text-slate-300 flex items-center gap-2">
             <i data-lucide="compass" class="w-4 h-4 text-amber-400"></i>
-            정통 명리학 보정 옵션
+            정통 명리학 역법 보정 옵션
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm saju-text-flow">
-            <label class="flex items-center gap-2 p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-300 cursor-pointer hover:border-slate-700 transition">
-              <input type="checkbox" id="koreaTimeCorrection" checked class="w-4 h-4 rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500/20 flex-shrink-0">
-              <span class="leading-snug">동경 135° 표준시 보정 (-30분: 서울 127.5°)</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm saju-text-flow">
+            <label class="flex items-center gap-2.5 p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200 cursor-pointer hover:border-slate-700 transition">
+              <input type="checkbox" id="koreaTimeCorrection" checked class="w-4 h-4 rounded bg-slate-800 border-slate-600 text-amber-500 focus:ring-amber-400 flex-shrink-0">
+              <span class="leading-snug font-medium">동경 135° 표준시 보정 (-30분: 서울 127.5°)</span>
             </label>
-            <label class="flex items-center gap-2 p-2.5 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-300 cursor-pointer hover:border-slate-700 transition">
-              <input type="checkbox" id="useNightZi" class="w-4 h-4 rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500/20 flex-shrink-0">
-              <span class="leading-snug">야자시(夜子時) 적용 (23:30~24:00 당일 일진 유지)</span>
+            <label class="flex items-center gap-2.5 p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200 cursor-pointer hover:border-slate-700 transition">
+              <input type="checkbox" id="useNightZi" class="w-4 h-4 rounded bg-slate-800 border-slate-600 text-amber-500 focus:ring-amber-400 flex-shrink-0">
+              <span class="leading-snug font-medium">야자시(夜子時) 적용 (23:30~24:00 당일 일진 유지)</span>
             </label>
           </div>
         </div>
 
-        <button type="submit" class="w-full h-[52px] bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-[0.99] text-slate-950 font-black rounded-xl shadow-lg shadow-amber-500/20 transition-all flex items-center justify-center gap-2 text-base sm:text-lg cursor-pointer">
-          <i data-lucide="sparkles" class="w-5 h-5"></i>
+        <button type="submit" class="w-full h-[56px] bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 active:scale-[0.99] text-slate-950 font-black rounded-xl shadow-xl shadow-amber-500/25 transition-all flex items-center justify-center gap-2.5 text-base sm:text-xl cursor-pointer">
+          <i data-lucide="sparkles" class="w-6 h-6"></i>
           사주팔자 만세력 분석하기
         </button>
       </form>
     </div>
 
+    <!-- 2. 결과 카드 영역 -->
     <div id="resultCard" class="hidden space-y-6 sm:space-y-8">
 
-      <!-- 상단 컨트롤 바 (PDF 저장, 이미지 저장 분리 완료) -->
-      <div class="p-3 sm:p-4 glass-card rounded-2xl border border-amber-500/20 no-print flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+      <!-- 상단 액션 컨트롤 바 -->
+      <div class="p-4 sm:p-5 glass-card rounded-2xl border border-amber-500/30 no-print flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5">
         <div class="flex items-center gap-2.5">
-          <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
-          <span class="text-base sm:text-lg font-bold text-slate-100" id="resultPersonTitle">홍길동 님의 명식 분석</span>
+          <span class="w-3.5 h-3.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
+          <span class="text-base sm:text-xl font-black text-slate-100" id="resultPersonTitle">홍길동 님의 명식 분석</span>
         </div>
         
         <div class="grid grid-cols-2 sm:flex sm:items-center gap-2">
-          <button id="btnOpenReportModal" type="button" class="h-[40px] px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5 shadow cursor-pointer">
+          <button id="btnOpenReportModal" type="button" class="h-[44px] px-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 text-xs sm:text-sm font-black transition flex items-center justify-center gap-1.5 shadow cursor-pointer">
             <i data-lucide="file-text" class="w-4 h-4 flex-shrink-0"></i>
             <span>미리보기</span>
           </button>
-          <button id="btnSavePdf" type="button" class="h-[40px] px-3 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5 cursor-pointer" title="2장의 감정서 PDF 파일 저장">
+          <button id="btnSavePdf" type="button" class="h-[44px] px-3.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-amber-300 text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5 cursor-pointer" title="2장의 감정서 PDF 파일 저장">
             <i data-lucide="file-down" class="w-4 h-4 flex-shrink-0"></i>
             <span>PDF 저장</span>
           </button>
-          <button id="btnSaveImages" type="button" class="h-[40px] px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5 cursor-pointer" title="이미지 저장 센터 열기">
+          <button id="btnSaveImages" type="button" class="h-[44px] px-3.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/50 text-emerald-300 text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5 cursor-pointer" title="이미지 저장 센터 열기">
             <i data-lucide="image" class="w-4 h-4 flex-shrink-0"></i>
             <span>이미지 저장</span>
           </button>
-          <button id="btnPrint" type="button" class="h-[40px] px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-1.5 border border-slate-700 cursor-pointer" title="인쇄">
+          <button id="btnPrint" type="button" class="h-[44px] px-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5 border border-slate-600 cursor-pointer" title="인쇄">
             <i data-lucide="printer" class="w-4 h-4 flex-shrink-0"></i>
             <span>인쇄</span>
           </button>
-          <button id="btnCopyText" type="button" class="h-[40px] px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs sm:text-sm font-semibold transition flex items-center justify-center gap-1.5 border border-slate-700 cursor-pointer" title="텍스트 복사">
+          <button id="btnCopyText" type="button" class="h-[44px] px-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs sm:text-sm font-bold transition flex items-center justify-center gap-1.5 border border-slate-600 cursor-pointer" title="텍스트 복사">
             <i data-lucide="copy" class="w-4 h-4 flex-shrink-0"></i>
             <span>복사</span>
           </button>
@@ -522,213 +536,230 @@
       <!-- 사주 원국 본문 출력 영역 -->
       <div id="printArea" class="glass-card rounded-2xl p-4 sm:p-7 md:p-8 space-y-6 sm:space-y-8">
         
-        <div class="border-b border-slate-800 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+        <!-- 인적 사항 및 절기 헤더 -->
+        <div class="border-b border-slate-700/80 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h3 class="text-xl sm:text-2xl font-bold text-slate-100 hanja-font flex items-center gap-2.5">
-              <span id="displayPersonName" class="text-amber-400">홍길동</span> 命
-              <span id="displayGender" class="text-xs sm:text-sm px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-200 border border-slate-700 font-sans font-semibold">乾命 (남)</span>
+            <h3 class="text-2xl sm:text-3xl font-black text-slate-100 hanja-font flex items-center gap-3">
+              <span id="displayPersonName" class="text-amber-300">홍길동</span> 命
+              <span id="displayGender" class="text-xs sm:text-sm px-3 py-1 rounded-full bg-slate-800 text-amber-300 border border-slate-600 font-sans font-extrabold">乾命 (남)</span>
             </h3>
-            <p id="displaySolarLunar" class="text-xs sm:text-sm text-slate-300 mt-1 font-mono saju-text-flow">
+            <p id="displaySolarLunar" class="text-xs sm:text-base text-slate-300 mt-1.5 font-mono saju-text-flow font-medium">
               양력: 1980년 01월 01일 12:00 (보정시각: 11:30)
             </p>
           </div>
-          <div class="text-left sm:text-right border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-800/80">
-            <span class="text-xs sm:text-sm text-slate-400 block">절기 (節氣) 절입 기준</span>
-            <span id="displaySolarTerm" class="text-sm sm:text-base font-bold text-amber-300">
+          <div class="text-left sm:text-right border-t sm:border-t-0 pt-2.5 sm:pt-0 border-slate-800">
+            <span class="text-xs sm:text-sm text-slate-400 block font-medium">절기 (節氣) 절입 기준</span>
+            <span id="displaySolarTerm" class="text-sm sm:text-lg font-black text-amber-300">
               입춘 (立春) 절기 기준 적용
             </span>
           </div>
         </div>
 
-        <!-- 4기둥 그리드 -->
+        <!-- 4기둥 (四柱八字 原局) 그리드 -->
         <div>
-          <div class="text-center mb-3">
-            <span class="text-xs sm:text-sm md:text-base font-extrabold text-slate-300 uppercase tracking-widest hanja-font">
+          <div class="text-center mb-4">
+            <span class="text-sm sm:text-lg font-black text-amber-300 tracking-widest hanja-font uppercase bg-amber-500/10 px-4 py-1.5 rounded-full border border-amber-400/30 inline-block">
               ◆ 四 柱 八 字 原 局 ◆
             </span>
           </div>
 
-          <div class="grid grid-cols-4 gap-1.5 sm:gap-4 max-w-3xl mx-auto">
-            <div class="text-center pb-1 text-xs sm:text-sm font-bold text-slate-300 border-b border-slate-800">時 柱</div>
-            <div class="text-center pb-1 text-xs sm:text-sm font-black text-amber-400 border-b border-amber-500/40 flex items-center justify-center gap-1">
+          <!-- 그리드 레이아웃 (모바일 시인성 극대화) -->
+          <div class="grid grid-cols-4 gap-1.5 sm:gap-3.5 max-w-3xl mx-auto">
+            
+            <!-- 1. 기둥 이름 -->
+            <div class="text-center pb-1 text-xs sm:text-base font-black text-slate-300 border-b border-slate-700">時 柱</div>
+            <div class="text-center pb-1 text-xs sm:text-base font-black text-amber-300 border-b-2 border-amber-400 flex items-center justify-center gap-1 bg-amber-500/10 rounded-t-lg">
               <span>日 柱</span>
-              <span class="text-[11px] sm:text-xs bg-amber-500/20 text-amber-300 px-1 rounded leading-tight font-bold">나</span>
+              <span class="text-[10px] sm:text-xs bg-amber-400 text-slate-950 px-1 py-0.5 rounded font-black">나</span>
             </div>
-            <div class="text-center pb-1 text-xs sm:text-sm font-bold text-slate-300 border-b border-slate-800">月 柱</div>
-            <div class="text-center pb-1 text-xs sm:text-sm font-bold text-slate-300 border-b border-slate-800">年 柱</div>
+            <div class="text-center pb-1 text-xs sm:text-base font-black text-slate-300 border-b border-slate-700">月 柱</div>
+            <div class="text-center pb-1 text-xs sm:text-base font-black text-slate-300 border-b border-slate-700">年 柱</div>
 
-            <div class="text-center py-0.5">
-              <span id="badgeHourStem" class="inline-block text-[11px] sm:text-xs font-semibold px-1.5 py-0.5 rounded-full bg-slate-800 text-slate-300 truncate max-w-full">-</span>
+            <!-- 2. 천간 십신 -->
+            <div class="text-center py-1">
+              <span id="badgeHourStem" class="saju-badge inline-block text-xs sm:text-sm font-bold px-2 py-0.5 rounded-md bg-slate-800 text-slate-200 border border-slate-700 whitespace-nowrap">-</span>
             </div>
-            <div class="text-center py-0.5">
-              <span class="inline-block text-[11px] sm:text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 truncate max-w-full">일간 ★</span>
+            <div class="text-center py-1">
+              <span class="saju-badge inline-block text-xs sm:text-sm font-black px-2.5 py-0.5 rounded-md bg-amber-500/30 text-amber-200 border border-amber-400/50 whitespace-nowrap">일간 ★</span>
             </div>
-            <div class="text-center py-0.5">
-              <span id="badgeMonthStem" class="inline-block text-[11px] sm:text-xs font-semibold px-1.5 py-0.5 rounded-full bg-slate-800 text-slate-300 truncate max-w-full">-</span>
+            <div class="text-center py-1">
+              <span id="badgeMonthStem" class="saju-badge inline-block text-xs sm:text-sm font-bold px-2 py-0.5 rounded-md bg-slate-800 text-slate-200 border border-slate-700 border whitespace-nowrap">-</span>
             </div>
-            <div class="text-center py-0.5">
-              <span id="badgeYearStem" class="inline-block text-[11px] sm:text-xs font-semibold px-1.5 py-0.5 rounded-full bg-slate-800 text-slate-300 truncate max-w-full">-</span>
-            </div>
-
-            <div id="cardHourStem" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-xl border transition"></div>
-            <div id="cardDayStem" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-xl border ring-2 ring-amber-400 shadow-md transition"></div>
-            <div id="cardMonthStem" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-xl border transition"></div>
-            <div id="cardYearStem" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-xl border transition"></div>
-
-            <div id="cardHourBranch" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-xl border transition"></div>
-            <div id="cardDayBranch" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-xl border ring-2 ring-amber-400 shadow-md transition"></div>
-            <div id="cardMonthBranch" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-xl border transition"></div>
-            <div id="cardYearBranch" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-xl border transition"></div>
-
-            <div class="text-center py-0.5">
-              <span id="badgeHourBranch" class="inline-block text-[11px] sm:text-xs font-semibold px-1.5 py-0.5 rounded-full bg-slate-800 text-slate-300 truncate max-w-full">-</span>
-            </div>
-            <div class="text-center py-0.5">
-              <span id="badgeDayBranch" class="inline-block text-[11px] sm:text-xs font-semibold px-1.5 py-0.5 rounded-full bg-slate-800 text-slate-300 truncate max-w-full">-</span>
-            </div>
-            <div class="text-center py-0.5">
-              <span id="badgeMonthBranch" class="inline-block text-[11px] sm:text-xs font-semibold px-1.5 py-0.5 rounded-full bg-slate-800 text-slate-300 truncate max-w-full">-</span>
-            </div>
-            <div class="text-center py-0.5">
-              <span id="badgeYearBranch" class="inline-block text-[11px] sm:text-xs font-semibold px-1.5 py-0.5 rounded-full bg-slate-800 text-slate-300 truncate max-w-full">-</span>
+            <div class="text-center py-1">
+              <span id="badgeYearStem" class="saju-badge inline-block text-xs sm:text-sm font-bold px-2 py-0.5 rounded-md bg-slate-800 text-slate-200 border border-slate-700 whitespace-nowrap">-</span>
             </div>
 
-            <div class="text-center text-[11px] sm:text-xs font-medium text-slate-200 truncate" id="twelveHour">-</div>
-            <div class="text-center text-[11px] sm:text-xs font-bold text-amber-300 truncate" id="twelveDay">-</div>
-            <div class="text-center text-[11px] sm:text-xs font-medium text-slate-200 truncate" id="twelveMonth">-</div>
-            <div class="text-center text-[11px] sm:text-xs font-medium text-slate-200 truncate" id="twelveYear">-</div>
+            <!-- 3. 천간 카드 (천간 글자) -->
+            <div id="cardHourStem" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-2xl border-2 transition"></div>
+            <div id="cardDayStem" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-2xl border-2 ring-4 ring-amber-400/40 shadow-xl transition"></div>
+            <div id="cardMonthStem" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-2xl border-2 transition"></div>
+            <div id="cardYearStem" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-2xl border-2 transition"></div>
 
-            <div id="hiddenHour" class="text-center text-[11px] sm:text-xs font-mono text-slate-200 bg-slate-900/90 py-1 rounded-lg truncate px-1 border border-slate-800"></div>
-            <div id="hiddenDay" class="text-center text-[11px] sm:text-xs font-mono text-slate-200 bg-slate-900/90 py-1 rounded-lg truncate px-1 border border-slate-800"></div>
-            <div id="hiddenMonth" class="text-center text-[11px] sm:text-xs font-mono text-slate-200 bg-slate-900/90 py-1 rounded-lg truncate px-1 border border-slate-800"></div>
-            <div id="hiddenYear" class="text-center text-[11px] sm:text-xs font-mono text-slate-200 bg-slate-900/90 py-1 rounded-lg truncate px-1 border border-slate-800"></div>
+            <!-- 4. 지지 카드 (지지 글자) -->
+            <div id="cardHourBranch" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-2xl border-2 transition mt-1"></div>
+            <div id="cardDayBranch" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-2xl border-2 ring-4 ring-amber-400/40 shadow-xl transition mt-1"></div>
+            <div id="cardMonthBranch" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-2xl border-2 transition mt-1"></div>
+            <div id="cardYearBranch" class="flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-2xl border-2 transition mt-1"></div>
+
+            <!-- 5. 지지 십신 -->
+            <div class="text-center py-1">
+              <span id="badgeHourBranch" class="saju-badge inline-block text-xs sm:text-sm font-bold px-2 py-0.5 rounded-md bg-slate-800 text-slate-200 border border-slate-700 whitespace-nowrap">-</span>
+            </div>
+            <div class="text-center py-1">
+              <span id="badgeDayBranch" class="saju-badge inline-block text-xs sm:text-sm font-bold px-2 py-0.5 rounded-md bg-slate-800 text-slate-200 border border-slate-700 whitespace-nowrap">-</span>
+            </div>
+            <div class="text-center py-1">
+              <span id="badgeMonthBranch" class="saju-badge inline-block text-xs sm:text-sm font-bold px-2 py-0.5 rounded-md bg-slate-800 text-slate-200 border border-slate-700 whitespace-nowrap">-</span>
+            </div>
+            <div class="text-center py-1">
+              <span id="badgeYearBranch" class="saju-badge inline-block text-xs sm:text-sm font-bold px-2 py-0.5 rounded-md bg-slate-800 text-slate-200 border border-slate-700 whitespace-nowrap">-</span>
+            </div>
+
+            <!-- 6. 12운성 -->
+            <div class="text-center text-xs sm:text-sm font-bold text-slate-300 py-0.5 whitespace-nowrap" id="twelveHour">-</div>
+            <div class="text-center text-xs sm:text-sm font-black text-amber-300 py-0.5 whitespace-nowrap" id="twelveDay">-</div>
+            <div class="text-center text-xs sm:text-sm font-bold text-slate-300 py-0.5 whitespace-nowrap" id="twelveMonth">-</div>
+            <div class="text-center text-xs sm:text-sm font-bold text-slate-300 py-0.5 whitespace-nowrap" id="twelveYear">-</div>
+
+            <!-- 7. 지장간 (줄바꿈 없이 또렷하게) -->
+            <div id="hiddenHour" class="text-center text-[11px] sm:text-xs font-mono font-medium text-slate-300 bg-slate-900/90 py-1.5 rounded-lg whitespace-nowrap px-1 border border-slate-800"></div>
+            <div id="hiddenDay" class="text-center text-[11px] sm:text-xs font-mono font-medium text-slate-300 bg-slate-900/90 py-1.5 rounded-lg whitespace-nowrap px-1 border border-slate-800"></div>
+            <div id="hiddenMonth" class="text-center text-[11px] sm:text-xs font-mono font-medium text-slate-300 bg-slate-900/90 py-1.5 rounded-lg whitespace-nowrap px-1 border border-slate-800"></div>
+            <div id="hiddenYear" class="text-center text-[11px] sm:text-xs font-mono font-medium text-slate-300 bg-slate-900/90 py-1.5 rounded-lg whitespace-nowrap px-1 border border-slate-800"></div>
           </div>
         </div>
 
+        <!-- 오행 분석 & 일간 본원 설명 -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pt-4 border-t border-slate-800">
-          <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs sm:text-sm font-bold text-slate-200 flex items-center gap-2">
-                <i data-lucide="pie-chart" class="w-4 h-4 text-amber-400"></i>
+          
+          <!-- 오행 분포 -->
+          <div class="bg-slate-900/90 p-4 sm:p-5 rounded-2xl border border-slate-700/80">
+            <div class="flex items-center justify-between mb-3.5">
+              <span class="text-sm sm:text-base font-black text-slate-100 flex items-center gap-2">
+                <i data-lucide="pie-chart" class="w-5 h-5 text-amber-400"></i>
                 오행(五行) 에너지 분포
               </span>
-              <span class="text-xs text-slate-400">원국 8자 기준</span>
+              <span class="text-xs sm:text-sm text-slate-400 font-semibold">원국 8자 기준</span>
             </div>
             
-            <div class="space-y-2 text-xs sm:text-sm">
+            <div class="space-y-2.5 text-xs sm:text-sm">
               <div>
-                <div class="flex justify-between text-slate-300 mb-1 font-medium">
-                  <span>목 (木 - 청색)</span>
-                  <span id="countWood" class="font-mono font-bold">0개 (0%)</span>
+                <div class="flex justify-between text-slate-200 mb-1 font-bold">
+                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span>목 (木 - 청색)</span>
+                  <span id="countWood" class="font-mono font-black text-emerald-300">0개 (0%)</span>
                 </div>
-                <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+                <div class="w-full h-2.5 rounded-full bg-slate-800 overflow-hidden">
                   <div id="barWood" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%"></div>
                 </div>
               </div>
 
               <div>
-                <div class="flex justify-between text-slate-300 mb-1 font-medium">
-                  <span>화 (火 - 적색)</span>
-                  <span id="countFire" class="font-mono font-bold">0개 (0%)</span>
+                <div class="flex justify-between text-slate-200 mb-1 font-bold">
+                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span>화 (火 - 적색)</span>
+                  <span id="countFire" class="font-mono font-black text-rose-300">0개 (0%)</span>
                 </div>
-                <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+                <div class="w-full h-2.5 rounded-full bg-slate-800 overflow-hidden">
                   <div id="barFire" class="h-full bg-rose-500 rounded-full transition-all duration-500" style="width: 0%"></div>
                 </div>
               </div>
 
               <div>
-                <div class="flex justify-between text-slate-300 mb-1 font-medium">
-                  <span>토 (土 - 황색)</span>
-                  <span id="countEarth" class="font-mono font-bold">0개 (0%)</span>
+                <div class="flex justify-between text-slate-200 mb-1 font-bold">
+                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block"></span>토 (土 - 황색)</span>
+                  <span id="countEarth" class="font-mono font-black text-amber-300">0개 (0%)</span>
                 </div>
-                <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+                <div class="w-full h-2.5 rounded-full bg-slate-800 overflow-hidden">
                   <div id="barEarth" class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: 0%"></div>
                 </div>
               </div>
 
               <div>
-                <div class="flex justify-between text-slate-300 mb-1 font-medium">
-                  <span>금 (金 - 백색)</span>
-                  <span id="countMetal" class="font-mono font-bold">0개 (0%)</span>
+                <div class="flex justify-between text-slate-200 mb-1 font-bold">
+                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-200 inline-block"></span>금 (金 - 백색)</span>
+                  <span id="countMetal" class="font-mono font-black text-slate-200">0개 (0%)</span>
                 </div>
-                <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+                <div class="w-full h-2.5 rounded-full bg-slate-800 overflow-hidden">
                   <div id="barMetal" class="h-full bg-slate-300 rounded-full transition-all duration-500" style="width: 0%"></div>
                 </div>
               </div>
 
               <div>
-                <div class="flex justify-between text-slate-300 mb-1 font-medium">
-                  <span>수 (水 - 흑색)</span>
-                  <span id="countWater" class="font-mono font-bold">0개 (0%)</span>
+                <div class="flex justify-between text-slate-200 mb-1 font-bold">
+                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block"></span>수 (水 - 흑색)</span>
+                  <span id="countWater" class="font-mono font-black text-blue-300">0개 (0%)</span>
                 </div>
-                <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+                <div class="w-full h-2.5 rounded-full bg-slate-800 overflow-hidden">
                   <div id="barWater" class="h-full bg-blue-500 rounded-full transition-all duration-500" style="width: 0%"></div>
                 </div>
               </div>
             </div>
 
-            <p id="elementSummaryText" class="text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-slate-800/80 leading-relaxed saju-body"></p>
+            <p id="elementSummaryText" class="text-xs sm:text-sm text-slate-200 mt-3.5 pt-3 border-t border-slate-800/90 leading-relaxed saju-body senior-text-scale"></p>
           </div>
 
-          <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800 flex flex-col justify-between">
+          <!-- 일간 본원 기질 -->
+          <div class="bg-slate-900/90 p-4 sm:p-5 rounded-2xl border border-slate-700/80 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-2">
-                <span class="text-xs sm:text-sm font-bold text-slate-200 flex items-center gap-2">
-                  <i data-lucide="user-check" class="w-4 h-4 text-amber-400"></i>
+                <span class="text-sm sm:text-base font-black text-slate-100 flex items-center gap-2">
+                  <i data-lucide="user-check" class="w-5 h-5 text-amber-400"></i>
                   일간(日干) 본원 기질
                 </span>
-                <span id="dayStemBadge" class="text-xs sm:text-sm px-2.5 py-0.5 rounded-full font-bold"></span>
+                <span id="dayStemBadge" class="text-xs sm:text-sm px-3 py-0.5 rounded-full font-black border"></span>
               </div>
-              <h4 id="dayStemTitle" class="text-sm sm:text-base font-extrabold text-slate-100 hanja-font mt-1 saju-headline"></h4>
-              <p id="dayStemDesc" class="text-xs sm:text-sm text-slate-300 mt-2 saju-body"></p>
+              <h4 id="dayStemTitle" class="text-base sm:text-lg font-black text-slate-100 hanja-font mt-1.5 saju-headline"></h4>
+              <p id="dayStemDesc" class="text-xs sm:text-sm md:text-base text-slate-200 mt-2.5 saju-body senior-text-scale leading-relaxed"></p>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-800/80 text-xs sm:text-sm text-slate-400 flex items-center justify-between">
-              <span>월령: <strong id="birthSeason" class="text-slate-200"></strong></span>
-              <span>득령 여부: <strong id="seasonSupport" class="text-amber-300"></strong></span>
+            <div class="mt-4 pt-3 border-t border-slate-800 text-xs sm:text-sm text-slate-300 flex items-center justify-between font-medium">
+              <span>월령: <strong id="birthSeason" class="text-slate-100 font-bold"></strong></span>
+              <span>득령 여부: <strong id="seasonSupport" class="text-amber-300 font-black"></strong></span>
             </div>
           </div>
         </div>
 
+        <!-- 10년 주기 대운 타임라인 -->
         <div class="pt-4 border-t border-slate-800">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2.5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-3">
             <div class="flex flex-wrap items-center gap-2">
-              <span class="text-xs sm:text-base font-bold text-slate-200 flex items-center gap-2">
-                <i data-lucide="trending-up" class="w-4 h-4 text-amber-400"></i>
-                10년 주기 대운(大運) 타임라인
+              <span class="text-sm sm:text-lg font-black text-slate-100 flex items-center gap-2">
+                <i data-lucide="trending-up" class="w-5 h-5 text-amber-400"></i>
+                10년 주기 대운(大運) 흐름
               </span>
-              <span id="daeunDirection" class="text-xs sm:text-sm text-amber-400 font-semibold"></span>
+              <span id="daeunDirection" class="text-xs sm:text-sm text-amber-300 font-bold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20"></span>
             </div>
-            <div class="flex items-center gap-2 text-xs text-slate-400">
-              <span class="text-amber-300 font-medium">◀ 우측(초년) ➔ 좌측(노년)</span>
+            <div class="flex items-center gap-2 text-xs sm:text-sm text-slate-300">
+              <span class="text-amber-300 font-bold">◀ 우측(초년) → 좌측(노년)</span>
               <div class="hidden sm:flex items-center gap-1 ml-2">
-                <button type="button" id="btnDaeunPrev" class="p-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300" title="이전 대운">
-                  <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+                <button type="button" id="btnDaeunPrev" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition" title="이전 대운">
+                  <i data-lucide="chevron-left" class="w-4 h-4"></i>
                 </button>
-                <button type="button" id="btnDaeunNext" class="p-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300" title="다음 대운">
-                  <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                <button type="button" id="btnDaeunNext" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition" title="다음 대운">
+                  <i data-lucide="chevron-right" class="w-4 h-4"></i>
                 </button>
               </div>
             </div>
           </div>
 
-          <div id="daeunScrollContainer" class="snap-carousel overflow-x-auto pb-2">
-            <div id="daeunRow" class="flex gap-2 min-w-max py-1">
+          <div id="daeunScrollContainer" class="snap-carousel overflow-x-auto pb-3">
+            <div id="daeunRow" class="flex gap-2 sm:gap-3 min-w-max py-1">
             </div>
           </div>
         </div>
 
-        <div class="pt-5 border-t border-slate-800 space-y-4">
-          <div class="p-3.5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-slate-900 to-red-500/10 border border-amber-500/30 flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
+        <!-- 오늘의 일진 운세 대시보드 -->
+        <div class="pt-6 border-t border-slate-800 space-y-5">
+          
+          <div class="p-4 rounded-2xl bg-gradient-to-r from-amber-500/15 via-slate-900 to-red-500/15 border border-amber-400/40 flex flex-col md:flex-row items-center justify-between gap-3.5 text-center md:text-left">
             <div class="flex items-center gap-3 w-full md:w-auto">
-              <span class="p-2 rounded-xl bg-amber-500 text-slate-950 flex-shrink-0">
-                <i data-lucide="info" class="w-4 h-4"></i>
+              <span class="p-2.5 rounded-xl bg-amber-400 text-slate-950 flex-shrink-0 font-black shadow">
+                <i data-lucide="info" class="w-5 h-5"></i>
               </span>
               <div class="text-left saju-text-flow flex-1">
-                <p class="text-xs sm:text-sm font-bold text-amber-200">
-                  ※ 만세력과 함께 보실 수 있는 오늘의 일진은 <span class="text-amber-400 underline decoration-amber-400">재미로 보는 것</span>입니다.
+                <p class="text-xs sm:text-sm md:text-base font-black text-amber-200">
+                  ※ 만세력과 함께 보실 수 있는 오늘의 일진은 <span class="text-amber-300 underline decoration-amber-400">재미로 보는 것</span>입니다.
                 </p>
-                <p class="text-xs sm:text-sm text-slate-300 mt-0.5 leading-snug">
-                  심층적인 명식 감정 및 자신의 운명이 궁금하신 분들은 
+                <p class="text-xs sm:text-sm text-slate-200 mt-0.5 leading-snug font-medium">
+                  자신의 운명이 궁금하신 분들은 
                   <a href="tel:01026228255" class="text-amber-300 hover:text-amber-200 font-bold underline underline-offset-4 decoration-amber-400">동인선생(010-2622-8255)</a>에게 문의해 주세요.
                 </p>
               </div>
@@ -736,7 +767,7 @@
             
             <div class="flex items-center gap-2 w-full md:w-auto">
               <a href="https://www.youtube.com/@%EB%8F%99%EC%9D%B8%EC%84%A0%EC%83%9D-18z" target="_blank" rel="noopener noreferrer" 
-                 class="flex-1 md:flex-initial px-3.5 py-2 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 text-white text-xs sm:text-sm font-extrabold flex items-center justify-center gap-1.5 shadow transition active:scale-95 border border-red-400/40 cursor-pointer" 
+                 class="flex-1 md:flex-initial px-4 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 text-white text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 shadow transition active:scale-95 border border-red-400/50 cursor-pointer" 
                  title="동방의 제갈량 동인선생 유튜브 열기">
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                   <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
@@ -744,170 +775,169 @@
                 <span>동방의 제갈량</span>
               </a>
 
-              <a href="tel:01026228255" class="flex-1 md:flex-initial btn-call-pulse px-3.5 py-2 rounded-xl bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-300 hover:from-yellow-200 text-slate-950 text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 shadow-lg transition active:scale-95 border-2 border-yellow-200 cursor-pointer" title="010-2622-8255 통화 연결">
+              <a href="tel:01026228255" class="flex-1 md:flex-initial btn-call-glow px-4 py-2.5 rounded-xl bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-300 hover:from-yellow-200 text-slate-950 text-xs sm:text-sm font-black flex items-center justify-center gap-1.5 shadow-lg transition active:scale-95 border-2 border-yellow-100 cursor-pointer" title="010-2622-8255 통화 연결">
                 <i data-lucide="phone-call" class="w-4 h-4 animate-phone-ring"></i>
                 <span class="font-black whitespace-nowrap">010-2622-8255</span>
               </a>
             </div>
           </div>
 
-          <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/20 p-4 sm:p-5 rounded-2xl border border-amber-500/30">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-800">
+          <!-- 오늘의 일진 요약 카드 -->
+          <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/40 p-4 sm:p-6 rounded-2xl border border-amber-500/40">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800">
               <div>
-                <span class="text-xs text-amber-400 font-bold uppercase tracking-wider block">DAILY HOROSCOPE BRIEFING</span>
-                <h3 id="displayFortuneHeadline" class="text-base sm:text-xl font-black text-slate-100 hanja-font saju-headline mt-0.5">
-                  2026년 9월 5일 토요일 [ 戊辰(무진)일 ]
+                <span class="text-xs text-amber-400 font-extrabold uppercase tracking-wider block">DAILY HOROSCOPE BRIEFING</span>
+                <h3 id="displayFortuneHeadline" class="text-lg sm:text-2xl font-black text-slate-100 hanja-font saju-headline mt-0.5">
+                  오늘의 일진 정보
                 </h3>
               </div>
 
-              <div class="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800 text-xs sm:text-sm self-start sm:self-auto">
-                <label for="targetFortuneDate" class="text-slate-400 whitespace-nowrap font-medium">기준일자:</label>
-                <input type="date" id="targetFortuneDate" class="bg-transparent text-amber-300 font-mono text-xs sm:text-sm font-semibold focus:outline-none cursor-pointer">
-                <button type="button" id="btnSetToday" class="px-2 py-0.5 rounded-md bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs font-bold border border-amber-500/30 transition whitespace-nowrap cursor-pointer">오늘</button>
+              <div class="flex items-center gap-2 bg-slate-950 px-3.5 py-2 rounded-xl border border-slate-700 text-xs sm:text-sm self-start sm:self-auto">
+                <label for="targetFortuneDate" class="text-slate-300 whitespace-nowrap font-bold">기준일자:</label>
+                <input type="date" id="targetFortuneDate" class="bg-transparent text-amber-300 font-mono text-xs sm:text-sm font-bold focus:outline-none cursor-pointer">
+                <button type="button" id="btnSetToday" class="px-2.5 py-1 rounded-lg bg-amber-500/25 hover:bg-amber-500/40 text-amber-300 text-xs font-bold border border-amber-400/40 transition whitespace-nowrap cursor-pointer">오늘</button>
               </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
               <div class="flex flex-col sm:flex-row items-center justify-center gap-4 py-2">
-                <div class="relative w-[120px] h-[120px] flex-shrink-0 flex items-center justify-center">
+                <div class="relative w-[130px] h-[130px] flex-shrink-0 flex items-center justify-center">
                   <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
-                    <circle cx="60" cy="60" r="50" stroke="currentColor" stroke-width="9" class="text-slate-800" fill="transparent" />
-                    <circle id="iljinGaugeCircle" cx="60" cy="60" r="50" stroke="currentColor" stroke-width="9" stroke-linecap="round" class="text-amber-400 transition-all duration-700 ease-out" fill="transparent" stroke-dasharray="314.159" stroke-dashoffset="62.8" />
+                    <circle cx="60" cy="60" r="50" stroke="currentColor" stroke-width="10" class="text-slate-800" fill="transparent" />
+                    <circle id="iljinGaugeCircle" cx="60" cy="60" r="50" stroke="currentColor" stroke-width="10" stroke-linecap="round" class="text-amber-400 transition-all duration-700 ease-out" fill="transparent" stroke-dasharray="314.159" stroke-dashoffset="62.8" />
                   </svg>
                   <div class="absolute flex flex-col items-center justify-center text-center">
-                    <span id="displayFortuneScore" class="text-3xl font-black text-amber-400 font-mono leading-none">88</span>
-                    <span class="text-[11px] text-slate-400 font-bold mt-0.5">일진 지수</span>
+                    <span id="displayFortuneScore" class="text-3xl sm:text-4xl font-black text-amber-300 font-mono leading-none">88</span>
+                    <span class="text-xs text-slate-300 font-bold mt-1">일진 지수</span>
                   </div>
                 </div>
 
-                <div class="text-center sm:text-left space-y-1">
-                  <div class="flex items-center justify-center sm:justify-start gap-1.5 flex-wrap">
-                    <span id="displayFortuneLevelText" class="text-sm sm:text-base font-extrabold text-amber-300">매우 길한 날 (대길)</span>
+                <div class="text-center sm:text-left space-y-1.5">
+                  <div class="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
+                    <span id="displayFortuneLevelText" class="text-base sm:text-xl font-black text-amber-300">매우 길한 날 (대길)</span>
                   </div>
-                  <p id="displayFortuneLevelSub" class="text-xs text-slate-400 saju-text-flow">적극적인 활동과 협력에 매우 유리한 하루</p>
-                  <div class="flex items-center justify-center sm:justify-start gap-1.5 pt-1">
-                    <span id="displayIljinTenGod" class="text-xs font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">편재(偏財)</span>
-                    <span id="displayIljin12Star" class="text-xs font-bold text-slate-200 bg-slate-800 px-2 py-0.5 rounded border border-slate-700">장생(長生)</span>
+                  <p id="displayFortuneLevelSub" class="text-xs sm:text-sm text-slate-300 font-medium saju-text-flow">적극적인 활동과 협력에 매우 유리한 하루</p>
+                  <div class="flex items-center justify-center sm:justify-start gap-2 pt-1">
+                    <span id="displayIljinTenGod" class="text-xs sm:text-sm font-bold text-amber-200 bg-amber-500/20 px-2.5 py-1 rounded-lg border border-amber-400/40">편재(偏財)</span>
+                    <span id="displayIljin12Star" class="text-xs sm:text-sm font-bold text-slate-100 bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-600">장생(長生)</span>
                   </div>
                 </div>
               </div>
 
-              <div class="space-y-2.5 bg-slate-950/70 p-3.5 rounded-xl border border-slate-800">
+              <div class="space-y-3 bg-slate-950/80 p-4 rounded-2xl border border-slate-800">
                 <div>
-                  <span class="text-[11px] text-slate-400 block font-semibold">일간(本元)과 일진의 기운 상호작용</span>
-                  <div id="displayIljinSpecialInteraction" class="text-xs sm:text-sm font-bold text-emerald-400 mt-0.5">천간합(天干合): 화합과 매력 상승, 협력에 길함</div>
+                  <span class="text-xs text-slate-400 block font-bold mb-1">일간(本元)과 일진의 기운 상호작용</span>
+                  <div id="displayIljinSpecialInteraction" class="text-xs sm:text-sm md:text-base font-black text-emerald-400 leading-snug">천간합(天干合): 화합과 매력 상승, 협력에 길함</div>
                 </div>
 
                 <div>
-                  <span class="text-[11px] text-slate-400 block font-semibold mb-1">오늘의 핵심 키워드 태그</span>
+                  <span class="text-xs text-slate-400 block font-bold mb-1.5">오늘의 핵심 키워드 태그</span>
                   <div id="iljinKeywordTags" class="flex flex-wrap gap-2">
-                    <span class="text-xs font-medium px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30 whitespace-nowrap">#아이디어폭발</span>
-                    <span class="text-xs font-medium px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 whitespace-nowrap">#금전거래유리</span>
-                    <span class="text-xs font-medium px-2.5 py-1 rounded-lg bg-blue-500/15 text-blue-300 border border-emerald-500/30 whitespace-nowrap">#오후길일</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-800">
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs sm:text-sm font-bold text-slate-200 flex items-center gap-2">
-                <i data-lucide="bar-chart-3" class="w-4 h-4 text-amber-400"></i>
-                4대 운기 지수 (Responsive Energy Bar)
+          <!-- 4대 운기 지수 바 (금전, 애정, 직업, 건강) -->
+          <div class="bg-slate-900/90 p-4 sm:p-5 rounded-2xl border border-slate-700/80">
+            <div class="flex items-center justify-between mb-3.5">
+              <span class="text-sm sm:text-base font-black text-slate-100 flex items-center gap-2">
+                <i data-lucide="bar-chart-3" class="w-5 h-5 text-amber-400"></i>
+                4대 운기 지수 (100점 만점 기준)
               </span>
-              <span class="text-xs text-slate-400">100점 만점 기준</span>
+              <span class="text-xs sm:text-sm text-slate-400 font-semibold">일간 기준 산출</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-              <div class="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
+              <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800">
                 <div class="flex justify-between items-center text-xs sm:text-sm mb-1.5">
                   <span class="font-bold text-slate-200 flex items-center gap-1.5">
-                    <i data-lucide="coins" class="w-3.5 h-3.5 text-amber-400"></i> 금전운 (財物運)
+                    <i data-lucide="coins" class="w-4 h-4 text-amber-400"></i> 금전운 (財物運)
                   </span>
-                  <span id="scoreWealth" class="font-mono font-bold text-amber-400">88점</span>
+                  <span id="scoreWealth" class="font-mono font-black text-amber-300">88점</span>
                 </div>
                 <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
                   <div id="barWealth" class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: 88%"></div>
                 </div>
-                <p id="descFortuneWealth" class="text-xs text-slate-300 mt-1.5 saju-body leading-relaxed"></p>
+                <p id="descFortuneWealth" class="text-xs sm:text-sm text-slate-200 mt-2 saju-body senior-text-scale leading-relaxed"></p>
               </div>
 
-              <div class="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80">
+              <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800">
                 <div class="flex justify-between items-center text-xs sm:text-sm mb-1.5">
                   <span class="font-bold text-slate-200 flex items-center gap-1.5">
-                    <i data-lucide="heart" class="w-3.5 h-3.5 text-rose-400"></i> 애정운 (緣分運)
+                    <i data-lucide="heart" class="w-4 h-4 text-rose-400"></i> 애정운 (緣分運)
                   </span>
-                  <span id="scoreLove" class="font-mono font-bold text-rose-400">85점</span>
+                  <span id="scoreLove" class="font-mono font-black text-rose-300">85점</span>
                 </div>
                 <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
                   <div id="barLove" class="h-full bg-rose-500 rounded-full transition-all duration-500" style="width: 85%"></div>
                 </div>
-                <p id="descFortuneLove" class="text-xs text-slate-300 mt-1.5 saju-body leading-relaxed"></p>
+                <p id="descFortuneLove" class="text-xs sm:text-sm text-slate-200 mt-2 saju-body senior-text-scale leading-relaxed"></p>
               </div>
 
-              <div class="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80">
+              <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800">
                 <div class="flex justify-between items-center text-xs sm:text-sm mb-1.5">
                   <span class="font-bold text-slate-200 flex items-center gap-1.5">
-                    <i data-lucide="briefcase" class="w-3.5 h-3.5 text-blue-400"></i> 직업·학업운 (事業運)
+                    <i data-lucide="briefcase" class="w-4 h-4 text-blue-400"></i> 직업·학업운 (事業運)
                   </span>
-                  <span id="scoreCareer" class="font-mono font-bold text-blue-400">90점</span>
+                  <span id="scoreCareer" class="font-mono font-black text-blue-300">90점</span>
                 </div>
                 <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
                   <div id="barCareer" class="h-full bg-blue-500 rounded-full transition-all duration-500" style="width: 90%"></div>
                 </div>
-                <p id="descFortuneCareer" class="text-xs text-slate-300 mt-1.5 saju-body leading-relaxed"></p>
+                <p id="descFortuneCareer" class="text-xs sm:text-sm text-slate-200 mt-2 saju-body senior-text-scale leading-relaxed"></p>
               </div>
 
-              <div class="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/80">
+              <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800">
                 <div class="flex justify-between items-center text-xs sm:text-sm mb-1.5">
                   <span class="font-bold text-slate-200 flex items-center gap-1.5">
-                    <i data-lucide="activity" class="w-3.5 h-3.5 text-emerald-400"></i> 건강·활력운 (健康運)
+                    <i data-lucide="activity" class="w-4 h-4 text-emerald-400"></i> 건강·활력운 (健康運)
                   </span>
-                  <span id="scoreHealth" class="font-mono font-bold text-emerald-400">82점</span>
+                  <span id="scoreHealth" class="font-mono font-black text-emerald-300">82점</span>
                 </div>
                 <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
                   <div id="barHealth" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 82%"></div>
                 </div>
-                <p id="descFortuneHealth" class="text-xs text-slate-300 mt-1.5 saju-body leading-relaxed"></p>
+                <p id="descFortuneHealth" class="text-xs sm:text-sm text-slate-200 mt-2 saju-body senior-text-scale leading-relaxed"></p>
               </div>
             </div>
           </div>
 
           <!-- 행동 가이드 & 행운 요소 -->
-          <div class="space-y-3">
-            <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30">
-              <div class="flex items-center gap-2 text-xs sm:text-sm font-bold text-amber-300 mb-1.5">
+          <div class="space-y-3.5">
+            <div class="p-4 sm:p-5 rounded-2xl bg-amber-500/15 border-2 border-amber-400/40">
+              <div class="flex items-center gap-2 text-xs sm:text-sm font-black text-amber-300 mb-1.5">
                 <span class="text-base">💡</span>
-                <span>오늘의 행동 가이드</span>
+                <span>오늘의 맞춤 행동 가이드</span>
               </div>
-              <p id="actionGuideText" class="text-xs sm:text-sm md:text-base text-slate-200 saju-headline leading-relaxed font-medium">
-                새로운 계약이나 중요한 의사결정은 기운이 왕성해지는 오후 시간대에 진행하는 것이 가장 유리합니다. 주변과의 가벼운 대화 속에서 뜻밖의 해결책을 발견하게 됩니다.
+              <p id="actionGuideText" class="text-xs sm:text-sm md:text-base text-slate-100 saju-headline leading-relaxed font-semibold senior-text-scale">
+                새로운 계약이나 중요한 의사결정은 기운이 왕성해지는 오후 시간대에 진행하는 것이 유리합니다.
               </p>
             </div>
 
-            <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800">
-              <div class="flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-200 mb-2.5">
-                <span class="text-base">🎨</span>
+            <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-700/80">
+              <div class="flex items-center gap-2 text-xs sm:text-sm font-black text-slate-200 mb-3">
+                <span class="text-base">🍀</span>
                 <span>행운의 요소 & 주의사항</span>
               </div>
 
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs sm:text-sm">
-                <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800/80">
-                  <span class="text-[11px] text-slate-400 block">행운의 색</span>
-                  <strong id="luckyColorText" class="text-amber-300 font-semibold block mt-0.5">청록색 (Cyan)</strong>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 text-xs sm:text-sm">
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                  <span class="text-[11px] text-slate-400 block font-medium">행운의 색</span>
+                  <strong id="luckyColorText" class="text-amber-300 font-bold block mt-0.5">청록색</strong>
                 </div>
-                <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800/80">
-                  <span class="text-[11px] text-slate-400 block">행운의 방향</span>
-                  <strong id="luckyDirectionText" class="text-slate-200 font-semibold block mt-0.5">동쪽 (East)</strong>
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                  <span class="text-[11px] text-slate-400 block font-medium">행운의 방향</span>
+                  <strong id="luckyDirectionText" class="text-slate-100 font-bold block mt-0.5">동쪽</strong>
                 </div>
-                <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800/80">
-                  <span class="text-[11px] text-slate-400 block">행운의 숫자</span>
-                  <strong id="luckyNumberText" class="text-slate-200 font-semibold block mt-0.5">3, 8</strong>
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                  <span class="text-[11px] text-slate-400 block font-medium">행운의 숫자</span>
+                  <strong id="luckyNumberText" class="text-slate-100 font-bold block mt-0.5">3, 8</strong>
                 </div>
-                <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800/80">
-                  <span class="text-[11px] text-rose-400/90 block">조심할 점</span>
-                  <strong id="luckyCautionText" class="text-rose-300 font-semibold block mt-0.5 truncate">충동적인 지출</strong>
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                  <span class="text-[11px] text-rose-400 block font-medium">조심할 점</span>
+                  <strong id="luckyCautionText" class="text-rose-300 font-bold block mt-0.5 truncate">충동적인 지출</strong>
                 </div>
               </div>
             </div>
@@ -931,15 +961,15 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <button id="modalBtnPdf" type="button" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 text-xs sm:text-sm font-bold rounded-lg transition flex items-center gap-1 cursor-pointer">
+          <button id="modalBtnPdf" type="button" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 active:scale-95 text-slate-950 text-xs sm:text-sm font-black rounded-lg transition flex items-center gap-1 cursor-pointer">
             <i data-lucide="file-down" class="w-4 h-4"></i>
             <span>PDF 저장</span>
           </button>
-          <button id="modalBtnImages" type="button" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 text-xs sm:text-sm font-bold rounded-lg transition flex items-center gap-1 cursor-pointer">
+          <button id="modalBtnImages" type="button" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 text-xs sm:text-sm font-black rounded-lg transition flex items-center gap-1 cursor-pointer">
             <i data-lucide="image" class="w-4 h-4"></i>
             <span>이미지 저장</span>
           </button>
-          <button id="modalBtnPrint" type="button" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 text-xs sm:text-sm font-semibold rounded-lg transition flex items-center gap-1 border border-slate-600 cursor-pointer">
+          <button id="modalBtnPrint" type="button" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 text-xs sm:text-sm font-bold rounded-lg transition flex items-center gap-1 border border-slate-600 cursor-pointer">
             <i data-lucide="printer" class="w-4 h-4"></i>
             인쇄
           </button>
@@ -956,11 +986,10 @@
     </div>
   </div>
 
-  <!-- 이미지 저장 센터 모달 (요청하신 모바일 안내 문구 포함: "모바일에서는 이미지로 저장해서 사용하세요. 인쇄는 PC에서만 지원 합니다.") -->
+  <!-- 이미지 저장 센터 모달 -->
   <div id="saveCenterModal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 no-print">
-    <div class="bg-slate-900 border border-slate-700 w-full max-w-lg max-h-[92vh] rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in slide-in-from-bottom duration-200">
+    <div class="bg-slate-900 border border-slate-700 w-full max-w-lg max-h-[92vh] rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col">
       
-      <!-- 헤더 -->
       <div class="px-5 py-3.5 bg-slate-850 border-b border-slate-800 flex items-center justify-between flex-shrink-0">
         <div class="flex items-center gap-2.5">
           <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
@@ -976,54 +1005,52 @@
         </button>
       </div>
 
-      <!-- 본문 스크롤 영역 -->
       <div class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 text-xs sm:text-sm">
         
-        <!-- 요청하신 안내 문구 배너 -->
-        <div class="p-3.5 rounded-2xl bg-gradient-to-r from-amber-500/15 via-slate-950 to-amber-500/10 border border-amber-500/40 text-amber-200 space-y-1">
-          <div class="font-bold text-amber-300 flex items-center gap-1.5">
+        <!-- 요청하신 모바일 전용 안내 문구 배너 -->
+        <div class="p-3.5 rounded-2xl bg-gradient-to-r from-amber-500/20 via-slate-950 to-amber-500/10 border-2 border-amber-400/50 text-amber-200 space-y-1">
+          <div class="font-black text-amber-300 flex items-center gap-1.5 text-sm sm:text-base">
             <i data-lucide="smartphone" class="w-4 h-4 text-amber-400"></i>
             이용 안내
           </div>
-          <p class="text-xs text-slate-200 leading-snug font-medium">
+          <p class="text-xs sm:text-sm text-slate-100 leading-snug font-bold">
             모바일에서는 이미지로 저장해서 사용하세요. 인쇄는 PC에서만 지원 합니다.
           </p>
         </div>
 
-        <!-- 옵션: 스마트폰 사진첩(갤러리)에 이미지로 저장 -->
-        <div class="bg-gradient-to-br from-emerald-500/15 via-slate-950 to-slate-950 p-3.5 rounded-2xl border border-emerald-500/40 space-y-2.5">
+        <div class="bg-gradient-to-br from-emerald-500/15 via-slate-950 to-slate-950 p-4 rounded-2xl border border-emerald-500/40 space-y-3">
           <div class="flex items-center justify-between">
-            <span class="font-bold text-emerald-300 flex items-center gap-1.5">
+            <span class="font-bold text-emerald-300 flex items-center gap-1.5 text-sm">
               <i data-lucide="image" class="w-4 h-4 text-emerald-400"></i>
               스마트폰 사진첩(갤러리)에 즉시 저장
             </span>
-            <span class="text-[10px] bg-emerald-500 text-slate-950 font-black px-1.5 py-0.5 rounded">모바일 추천</span>
+            <span class="text-xs bg-emerald-500 text-slate-950 font-black px-2 py-0.5 rounded">모바일 추천</span>
           </div>
-          <p class="text-xs text-slate-300 leading-snug">
-            아래 버튼을 눌러 1쪽(원국)과 2쪽(일진)을 각각 이미지(JPG)로 저장하세요. 카카오톡 공유 및 앨범 열람이 편리합니다.
+          <p class="text-xs sm:text-sm text-slate-300 leading-snug font-medium">
+            아래 버튼을 눌러 1쪽(원국)과 2쪽(일진)을 각각 이미지(JPG)로 저장하세요. 카카오톡 전송 및 앨범 보관이 편리합니다.
           </p>
 
-          <div class="grid grid-cols-2 gap-2 pt-1">
-            <button id="btnSaveImgPage1" type="button" class="py-2.5 px-3 bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-bold rounded-xl flex items-center justify-center gap-1.5 shadow cursor-pointer text-xs">
-              <i data-lucide="download" class="w-3.5 h-3.5"></i>
-              <span>1쪽(원국) 사진 저장</span>
+          <div class="grid grid-cols-2 gap-2.5 pt-1">
+            <button id="btnSaveImgPage1" type="button" class="py-3 px-3 bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black rounded-xl flex items-center justify-center gap-1.5 shadow cursor-pointer text-xs sm:text-sm">
+              <i data-lucide="download" class="w-4 h-4"></i>
+              <span>1쪽(원국) 저장</span>
             </button>
-            <button id="btnSaveImgPage2" type="button" class="py-2.5 px-3 bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-bold rounded-xl flex items-center justify-center gap-1.5 shadow cursor-pointer text-xs">
-              <i data-lucide="download" class="w-3.5 h-3.5"></i>
-              <span>2쪽(일진) 사진 저장</span>
+            <button id="btnSaveImgPage2" type="button" class="py-3 px-3 bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-black rounded-xl flex items-center justify-center gap-1.5 shadow cursor-pointer text-xs sm:text-sm">
+              <i data-lucide="download" class="w-4 h-4"></i>
+              <span>2쪽(일진) 저장</span>
             </button>
           </div>
 
-          <div class="pt-2 border-t border-slate-800">
-            <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1.5">
-              <span>💡 이미지를 1초간 꾹 눌러 [사진에 저장]도 가능</span>
-              <span id="previewPageIndicator" class="text-emerald-400 font-semibold">1 / 2 쪽</span>
+          <div class="pt-2.5 border-t border-slate-800">
+            <div class="flex items-center justify-between text-xs text-slate-300 mb-2 font-medium">
+              <span>💡 이미지를 1초간 길게 눌러 사진 저장 가능</span>
+              <span id="previewPageIndicator" class="text-emerald-400 font-bold">1 / 2 쪽</span>
             </div>
-            <div class="relative w-full bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex justify-center items-center max-h-[220px]">
-              <img id="mobilePreviewImg" src="" alt="감정서 미리보기" class="w-auto h-auto max-h-[220px] object-contain cursor-pointer">
-              <div class="absolute bottom-2 right-2 flex gap-1.5">
-                <button type="button" id="btnPrevPreviewPage" class="p-1 rounded-md bg-slate-900/90 text-slate-200 border border-slate-700 hover:bg-slate-800 text-[11px] font-bold px-2 cursor-pointer">1쪽</button>
-                <button type="button" id="btnNextPreviewPage" class="p-1 rounded-md bg-slate-900/90 text-slate-200 border border-slate-700 hover:bg-slate-800 text-[11px] font-bold px-2 cursor-pointer">2쪽</button>
+            <div class="relative w-full bg-slate-950 rounded-xl overflow-hidden border border-slate-800 flex justify-center items-center max-h-[230px]">
+              <img id="mobilePreviewImg" src="" alt="감정서 미리보기" class="w-auto h-auto max-h-[230px] object-contain cursor-pointer">
+              <div class="absolute bottom-2.5 right-2.5 flex gap-2">
+                <button type="button" id="btnPrevPreviewPage" class="p-1.5 rounded-lg bg-slate-900/95 text-slate-100 border border-slate-700 hover:bg-slate-800 text-xs font-bold px-2.5 cursor-pointer">1쪽 보기</button>
+                <button type="button" id="btnNextPreviewPage" class="p-1.5 rounded-lg bg-slate-900/95 text-slate-100 border border-slate-700 hover:bg-slate-800 text-xs font-bold px-2.5 cursor-pointer">2쪽 보기</button>
               </div>
             </div>
           </div>
@@ -1031,9 +1058,8 @@
 
       </div>
 
-      <!-- 하단 닫기 바 -->
       <div class="p-3 bg-slate-950 border-t border-slate-800 text-center flex-shrink-0">
-        <button id="saveCenterCloseBtnBottom" type="button" class="w-full py-2 text-xs font-semibold text-slate-400 hover:text-slate-200 cursor-pointer">
+        <button id="saveCenterCloseBtnBottom" type="button" class="w-full py-2 text-xs font-bold text-slate-400 hover:text-slate-200 cursor-pointer">
           닫기
         </button>
       </div>
@@ -1074,18 +1100,19 @@
         <i data-lucide="sparkles" class="w-6 h-6 text-amber-400 animate-pulse"></i>
       </div>
     </div>
-    <p id="loadingTitle" class="text-slate-100 font-bold text-base sm:text-lg tracking-wide">고화질 A4 2페이지 사주 감정서 생성 중</p>
-    <p id="loadingSubtitle" class="text-slate-400 text-xs sm:text-sm mt-1">원국 정본 및 오늘의 일진 감정서를 2장 규격으로 변환하고 있습니다...</p>
+    <p id="loadingTitle" class="text-slate-100 font-black text-base sm:text-lg tracking-wide">사주 감정서 생성 중</p>
+    <p id="loadingSubtitle" class="text-slate-400 text-xs sm:text-sm mt-1">원국 정본 및 오늘의 일진 감정서를 규격으로 변환하고 있습니다...</p>
   </div>
 
-  <!-- 알림 토스트 -->
-  <div id="toast" class="fixed bottom-4 right-4 left-4 sm:left-auto z-50 hidden bg-slate-800 text-slate-100 px-4 py-3 rounded-xl border border-slate-700 shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm transition-all duration-300 no-print font-medium">
-    <i data-lucide="info" class="w-4 h-4 text-amber-400 flex-shrink-0" id="toastIcon"></i>
+  <!-- 알림 토스트 (alert 대신 사용) -->
+  <div id="toast" class="fixed bottom-4 right-4 left-4 sm:left-auto z-50 hidden bg-slate-800 text-slate-100 px-5 py-3.5 rounded-xl border border-slate-600 shadow-2xl flex items-center gap-3 text-xs sm:text-sm transition-all duration-300 no-print font-bold">
+    <i data-lucide="info" class="w-5 h-5 text-amber-400 flex-shrink-0" id="toastIcon"></i>
     <span id="toastMessage" class="flex-1 saju-text-flow">안내 메시지</span>
   </div>
 
-  <footer class="mt-8 sm:mt-12 text-center text-xs sm:text-sm text-slate-400 no-print pb-8 saju-text-flow px-3 space-y-2">
-    <div class="flex items-center justify-center gap-3">
+  <!-- 하단 푸터 -->
+  <footer class="mt-8 sm:mt-12 text-center text-xs sm:text-sm text-slate-400 no-print pb-8 saju-text-flow px-3 space-y-2.5">
+    <div class="flex items-center justify-center gap-3 flex-wrap">
       <a href="https://www.youtube.com/@%EB%8F%99%EC%9D%B8%EC%84%A0%EC%83%9D-18z" target="_blank" rel="noopener noreferrer" 
          class="inline-flex items-center gap-1.5 text-red-400 hover:text-red-300 font-bold underline underline-offset-4 transition">
         <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -1093,15 +1120,16 @@
         </svg>
         유튜브 '동방의 제갈량 동인선생' 바로가기
       </a>
-      <span class="text-slate-600">|</span>
-      <a href="tel:01026228255" class="text-amber-400 hover:text-amber-300 font-bold underline underline-offset-4 transition">
-        상담문의: 010-2622-8255
+      <span class="text-slate-600 hidden sm:inline">|</span>
+      <a href="tel:01026228255" class="text-amber-400 hover:text-amber-300 font-black underline underline-offset-4 transition">
+        전화상담: 010-2622-8255
       </a>
     </div>
-    <p>© 동인명리학 만세력 엔진 | 태양 황경 24절기 계산법 및 60갑자 연속 일진 역법 준수</p>
+    <p>© 동인명리학 만세력 엔진 | 태양 황경 24절기 정밀 절입 계산 및 60갑자 연속 일진 역법</p>
   </footer>
 
   <script>
+    /* 1900년 ~ 2050년 음력 데이터 테이블 (151개 연도 완벽 보존) */
     const LUNAR_INFO = [
       0x04bd8,0x04ae0,0x0a570,0x054d5,0x0d260,0x0d950,0x16554,0x056a0,0x09ad0,0x055d2, // 1900-1909
       0x04ae0,0x0a5b6,0x0a4d0,0x0d250,0x1d255,0x0b540,0x0d6a0,0x0ada2,0x095b0,0x14977, // 1910-1919
@@ -1243,11 +1271,11 @@
     ];
 
     const ELEMENT_NAMES = {
-      wood:  { name: '목', hanja: '木', color: '청색', css: 'elem-wood', textCss: 'text-wood' },
-      fire:  { name: '화', hanja: '火', color: '적색', css: 'elem-fire', textCss: 'text-fire' },
-      earth: { name: '토', hanja: '土', color: '황색', css: 'elem-earth', textCss: 'text-earth' },
-      metal: { name: '금', hanja: '金', color: '백색', css: 'elem-metal', textCss: 'text-metal' },
-      water: { name: '수', hanja: '水', color: '흑색', css: 'elem-water', textCss: 'text-water' }
+      wood:  { name: '목', hanja: '木', color: '청색', css: 'elem-wood', textCss: 'text-emerald-300' },
+      fire:  { name: '화', hanja: '火', color: '적색', css: 'elem-fire', textCss: 'text-rose-300' },
+      earth: { name: '토', hanja: '土', color: '황색', css: 'elem-earth', textCss: 'text-amber-300' },
+      metal: { name: '금', hanja: '金', color: '백색', css: 'elem-metal', textCss: 'text-slate-100' },
+      water: { name: '수', hanja: '水', color: '흑색', css: 'elem-water', textCss: 'text-blue-300' }
     };
 
     function getTenGod(dayStemIdx, targetStemIdx) {
@@ -1509,7 +1537,7 @@
       const targetMid = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0, 0);
 
       const baseDate = new Date(2000, 0, 1, 12, 0, 0);
-      const diffDays = Math.round((targetMid.getTime() - baseDate.getTime()) / (86400000));
+      const diffDays = Math.round((targetMid.getTime() - baseDate.getTime()) / 86400000);
 
       let tStemIdx = (4 + diffDays) % 10;
       if (tStemIdx < 0) tStemIdx += 10;
@@ -1538,32 +1566,32 @@
       const isBranchChung = Math.abs(dayBranchIdx - tBranchIdx) === 6;
 
       let interactionText = "기운이 무난하게 흐르는 평온한 하루";
-      let baseScore = 82;
+      let baseScore = 84;
 
       if (isStemHap && isYukhab) {
-        interactionText = "천지덕합(天地德合): 귀인의 도움과 대길(大吉)의 기운";
-        baseScore = 96;
+        interactionText = "천지덕합(天地德合): 귀인의 큰 도움과 대길(大吉)의 기운";
+        baseScore = 97;
       } else if (isStemHap) {
-        interactionText = "천간합(天干合): 화합과 매력 상승, 협력에 매우 길함";
-        baseScore = 91;
+        interactionText = "천간합(天干合): 화합과 매력 상승, 협력과 계약에 매우 길함";
+        baseScore = 92;
       } else if (isYukhab) {
         interactionText = "일지 육합(六合): 마음이 통하고 대인관계 안정이 따르는 날";
-        baseScore = 88;
+        baseScore = 89;
       } else if (isBranchChung && isStemChung) {
         interactionText = "천충지충(天沖地沖): 돌발 변수와 이동수, 신중한 처세 요구";
-        baseScore = 65;
+        baseScore = 64;
       } else if (isBranchChung) {
-        interactionText = "일지충(日支沖): 심경의 변화와 바쁜 활동성, 감정 주의";
+        interactionText = "일지충(日支沖): 심경의 변화와 바쁜 활동성, 감정 관리 주의";
         baseScore = 70;
       } else if (isStemChung) {
         interactionText = "천간충(天干沖): 생각의 부딪힘, 차분한 언행 관리 필요";
-        baseScore = 73;
+        baseScore = 72;
       }
 
       if (twelveStar === '건록' || twelveStar === '제왕' || twelveStar === '장생') {
-        baseScore = Math.min(98, baseScore + 4);
+        baseScore = Math.min(99, baseScore + 4);
       } else if (twelveStar === '사' || twelveStar === '묘' || twelveStar === '절') {
-        baseScore = Math.max(60, baseScore - 4);
+        baseScore = Math.max(58, baseScore - 4);
       }
 
       let levelText = "순조로운 길일 (吉日)";
@@ -1620,7 +1648,7 @@
           wealth: "재치 있는 기회 포착으로 이익을 도모할 수 있으나, 언행 실수로 인한 손실이 없도록 계약 조항을 살피세요.",
           career: "기존의 틀을 깨는 혁신적인 아이디어가 돋보이나, 윗사람과의 조율 시 예의와 겸손을 갖추는 것이 안전합니다.",
           love: "솔직한 표현이 매력으로 다가가지만, 뼈 있는 직언은 피하고 칭찬과 격려의 언어를 사용하세요.",
-          health: "신경이 예민해질 수 있으니 따뜻한 허브차로 긴장을 이완하세요.",
+          health: "신경이 예민해질 수 있으니 따뜻한 차로 긴장을 이완하세요.",
           tags: ['#기발한발상', '#두뇌회전', '#언행주의', '#혁신적돌파']
         },
         '편재(偏財)': {
@@ -1676,11 +1704,11 @@
       const baseFortune = fortuneTemplates[tenGodStem] || fortuneTemplates['정재(正財)'];
 
       const luckyElements = {
-        wood:  { color: '청록색 (Cyan)', dir: '동쪽 (East)', nums: '3, 8', time: '07시 ~ 09시', caution: '성급한 언행', action: '새로운 기획이나 중요한 제안은 목(木) 기운이 살아나는 아침 시간대에 추진하는 것이 가장 길합니다.' },
-        fire:  { color: '선홍색 (Rose)', dir: '남쪽 (South)', nums: '2, 7', time: '11시 ~ 13시', caution: '충동적인 지출', action: '중요한 미팅과 의사결정은 화(火) 기운이 왕성해지는 한낮 시간에 진행하는 것이 큰 활력을 줍니다.' },
-        earth: { color: '황토색 (Amber)', dir: '중앙·남서 (Center)', nums: '5, 10', time: '13시 ~ 15시', caution: '과도한 고집', action: '문서 점검이나 자산 정리는 토(土) 기운이 안정되는 오후 시간대에 꼼꼼히 검토하세요.' },
-        metal: { color: '슬레이트 백색', dir: '서쪽 (West)', nums: '4, 9', time: '15시 ~ 17시', caution: '냉정한 태도', action: '정리정돈과 계약 마무리는 금(金) 기운이 굳건해지는 늦은 오후에 진행하는 것이 실속을 줍니다.' },
-        water: { color: '로열 블루 (Navy)', dir: '북쪽 (North)', nums: '1, 6', time: '21시 ~ 23시', caution: '불필요한 고민', action: '깊은 구상과 사색은 수(水) 기운이 맑아지는 저녁 시간에 차분하게 진행하는 것이 지혜롭습니다.' }
+        wood:  { color: '청록색 (Cyan)', dir: '동쪽 (East)', nums: '3, 8', caution: '성급한 언행', action: '새로운 기획이나 중요한 제안은 목(木) 기운이 살아나는 아침 시간대에 추진하는 것이 가장 길합니다.' },
+        fire:  { color: '선홍색 (Rose)', dir: '남쪽 (South)', nums: '2, 7', caution: '충동적인 지출', action: '중요한 미팅과 의사결정은 화(火) 기운이 왕성해지는 한낮 시간에 진행하는 것이 큰 활력을 줍니다.' },
+        earth: { color: '황토색 (Amber)', dir: '중앙·남서', nums: '5, 10', caution: '과도한 고집', action: '문서 점검이나 자산 정리는 토(土) 기운이 안정되는 오후 시간대에 꼼꼼히 검토하세요.' },
+        metal: { color: '백색 (White)', dir: '서쪽 (West)', nums: '4, 9', caution: '냉정한 태도', action: '정리정돈과 계약 마무리는 금(金) 기운이 굳건해지는 늦은 오후에 진행하는 것이 실속을 줍니다.' },
+        water: { color: '로열블루 (Navy)', dir: '북쪽 (North)', nums: '1, 6', caution: '불필요한 고민', action: '깊은 구상과 사색은 수(水) 기운이 맑아지는 저녁 시간에 차분하게 진행하는 것이 지혜롭습니다.' }
       };
 
       const userElemKey = sajuData.pillars.day.stem.element;
@@ -1719,25 +1747,25 @@
 
       if (!stemOrBranch) {
         container.innerHTML = `
-          <span class="text-[11px] sm:text-xs font-semibold text-slate-500 bg-slate-800/60 px-1.5 py-0.5 rounded-full whitespace-nowrap">미상</span>
-          <div class="my-1 sm:my-1.5 text-center">
-            <span class="block text-2xl sm:text-4xl font-bold text-slate-500 leading-none hanja-font">?</span>
-            <span class="text-[11px] sm:text-xs text-slate-500 font-medium whitespace-nowrap">시간미상</span>
+          <span class="text-[11px] sm:text-xs font-bold text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded-full whitespace-nowrap">미상</span>
+          <div class="my-1 sm:my-2 text-center">
+            <span class="block text-3xl sm:text-5xl font-black text-slate-500 leading-none hanja-font">?</span>
+            <span class="text-xs sm:text-sm text-slate-400 font-bold whitespace-nowrap mt-1">시간미상</span>
           </div>
         `;
-        container.className = "flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-xl border border-dashed border-slate-700 bg-slate-900/40 min-h-[90px] sm:min-h-[110px]";
+        container.className = "flex flex-col items-center justify-between p-2 sm:p-3 rounded-2xl border-2 border-dashed border-slate-700 bg-slate-900/40 min-h-[105px] sm:min-h-[125px]";
         return;
       }
 
       const elem = ELEMENT_NAMES[stemOrBranch.element];
-      container.className = `flex flex-col items-center justify-between p-1.5 sm:p-3 rounded-xl border-2 transition shadow-sm min-h-[90px] sm:min-h-[110px] ${elem.css}`;
+      container.className = `flex flex-col items-center justify-between p-2 sm:p-3 rounded-2xl border-2 transition shadow-md min-h-[105px] sm:min-h-[125px] ${elem.css}`;
       container.innerHTML = `
-        <span class="text-[11px] sm:text-xs font-semibold px-2 py-0.5 rounded-full whitespace-nowrap border" style="background-color: rgba(255,255,255,0.65); border-color: currentColor;">
+        <span class="text-[11px] sm:text-xs font-black px-2.5 py-0.5 rounded-full whitespace-nowrap border border-white/20 bg-black/35">
           ${elem.name}${stemOrBranch.yang ? '+' : '-'}
         </span>
         <div class="my-0.5 sm:my-1 text-center">
-          <span class="block text-[28px] sm:text-[38px] font-bold hanja-font leading-none tracking-[-0.03em]">${stemOrBranch.hanja}</span>
-          <span class="text-[11px] sm:text-xs font-medium whitespace-nowrap opacity-90">${stemOrBranch.sound || stemOrBranch.hangeul}</span>
+          <span class="saju-hanja-cell block text-[32px] sm:text-[44px] font-black hanja-font leading-none tracking-tight">${stemOrBranch.hanja}</span>
+          <span class="text-xs sm:text-sm font-black whitespace-nowrap opacity-95 tracking-wide mt-1">${stemOrBranch.sound || stemOrBranch.hangeul}</span>
         </div>
       `;
     }
@@ -1763,7 +1791,7 @@
       tagBox.innerHTML = '';
       fortuneData.tags.forEach(t => {
         const span = document.createElement('span');
-        span.className = "text-xs font-medium px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30 whitespace-nowrap";
+        span.className = "text-xs sm:text-sm font-bold px-3 py-1 rounded-xl bg-amber-500/20 text-amber-200 border border-amber-400/40 whitespace-nowrap shadow-sm";
         span.innerText = t;
         tagBox.appendChild(span);
       });
@@ -1879,10 +1907,10 @@
 
       const maxElem = Object.keys(elementCounts).reduce((a, b) => elementCounts[a] > elementCounts[b] ? a : b);
       const minElems = Object.keys(elementCounts).filter(k => elementCounts[k] === 0);
-      let summaryStr = `오행 중 <strong>${ELEMENT_NAMES[maxElem].name}(${ELEMENT_NAMES[maxElem].hanja})</strong>의 기운이 가장 왕성(${elementCounts[maxElem]}개)하며, `;
+      let summaryStr = `오행 중 <strong class="text-amber-300 font-bold">${ELEMENT_NAMES[maxElem].name}(${ELEMENT_NAMES[maxElem].hanja})</strong>의 기운이 가장 왕성(${elementCounts[maxElem]}개)하며, `;
       if (minElems.length > 0) {
-        const missingNames = minElems.map(m => `${ELEMENT_NAMES[m].name}(${ELEMENT_NAMES[m].hanja})`).join(', ');
-        summaryStr += `원국에 <strong>${missingNames}</strong> 기운이 부족하여 보완이 길합니다.`;
+        const missingNames = minElems.map(m => `<span class="text-rose-300 font-bold">${ELEMENT_NAMES[m].name}(${ELEMENT_NAMES[m].hanja})</span>`).join(', ');
+        summaryStr += `원국에 ${missingNames} 기운이 부족하여 조화와 보완이 길합니다.`;
       } else {
         summaryStr += `오행이 골고루 조화를 이루어 원활한 순환을 이룹니다.`;
       }
@@ -1904,7 +1932,7 @@
       };
 
       const dayBadge = document.getElementById('dayStemBadge');
-      dayBadge.className = `text-xs sm:text-sm px-2.5 py-0.5 rounded-full font-bold ${dayElem.css}`;
+      dayBadge.className = `text-xs sm:text-sm px-3 py-1 rounded-full font-black ${dayElem.css}`;
       dayBadge.innerText = `${dayElem.name}(${dayElem.hanja}) ${dayStem.yang ? '양(+)' : '음(-)'}`;
 
       const descInfo = stemDescriptions[dayStem.hanja];
@@ -1927,7 +1955,7 @@
       
       const supportEl = document.getElementById('seasonSupport');
       supportEl.innerText = isDeukRyeong ? '득령 (得令 - 득세)' : '실령 (失令 - 설기)';
-      supportEl.className = isDeukRyeong ? 'text-emerald-400 font-bold' : 'text-slate-400 font-normal';
+      supportEl.className = isDeukRyeong ? 'text-emerald-400 font-black' : 'text-slate-400 font-bold';
 
       document.getElementById('daeunDirection').innerText = `(${data.isForward ? '순행 順行' : '역행 逆行'} · 대운수 ${data.daeunNumber})`;
       const daeunContainer = document.getElementById('daeunRow');
@@ -1944,23 +1972,23 @@
         const isCurrentDaeun = (userAge >= item.age && userAge < item.age + 10);
 
         const card = document.createElement('div');
-        card.className = `snap-carousel-item flex-1 min-w-[70px] sm:min-w-[84px] bg-slate-900 rounded-xl p-2 sm:p-2.5 text-center flex flex-col items-center transition shadow relative border ${isCurrentDaeun ? 'border-amber-400 ring-2 ring-amber-400/50 bg-amber-950/20' : 'border-slate-800 hover:border-slate-700'}`;
+        card.className = `snap-carousel-item flex-1 min-w-[78px] sm:min-w-[94px] bg-slate-900/90 rounded-2xl p-2.5 sm:p-3 text-center flex flex-col items-center transition shadow-md relative border-2 ${isCurrentDaeun ? 'border-amber-400 ring-4 ring-amber-400/40 bg-amber-950/40' : 'border-slate-800 hover:border-slate-600'}`;
         
         card.innerHTML = `
           ${isCurrentDaeun ? `
-            <span class="absolute -top-2 px-1.5 py-0.2 rounded-full bg-amber-400 text-slate-950 text-[10px] font-black uppercase tracking-wider flex items-center gap-0.5 shadow">
+            <span class="absolute -top-2.5 px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[11px] font-black uppercase tracking-wider flex items-center gap-1 shadow-md">
               <span class="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse"></span>현재
             </span>
           ` : ''}
-          <span class="text-xs sm:text-sm font-black text-amber-400 font-mono mt-0.5 mb-0.5">${item.age}세</span>
-          <span class="text-[11px] sm:text-xs text-slate-300 font-semibold mb-1">${tenGod.substring(0, 2)}</span>
-          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center font-bold hanja-font text-base sm:text-lg mb-1 shadow border ${stemElem.css}">
+          <span class="text-xs sm:text-base font-black text-amber-300 font-mono mt-0.5 mb-1">${item.age}세</span>
+          <span class="text-xs font-bold text-slate-200 mb-1.5">${tenGod.substring(0, 2)}</span>
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-black hanja-font text-lg sm:text-xl mb-1.5 shadow border-2 ${stemElem.css}">
             ${item.stem.hanja}
           </div>
-          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center font-bold hanja-font text-base sm:text-lg mb-1 shadow border ${branchElem.css}">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-black hanja-font text-lg sm:text-xl mb-1.5 shadow border-2 ${branchElem.css}">
             ${item.branch.hanja}
           </div>
-          <span class="text-[11px] sm:text-xs text-slate-300 font-semibold">${item.stem.hangeul}${item.branch.hangeul}</span>
+          <span class="text-xs font-black text-slate-200 mt-0.5">${item.stem.hangeul}${item.branch.hangeul}</span>
         `;
         daeunContainer.appendChild(card);
       });
@@ -1968,7 +1996,7 @@
       if (daeunContainer.parentElement) {
         setTimeout(() => {
           daeunContainer.parentElement.scrollLeft = daeunContainer.parentElement.scrollWidth;
-        }, 60);
+        }, 80);
       }
 
       const targetDateVal = document.getElementById('targetFortuneDate').value;
@@ -2037,7 +2065,7 @@
       function renderPillarBox(stemOrBranch) {
         if (!stemOrBranch) {
           return `
-            <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 8px 2px; text-align: center; color: #94a3b8;">
+            <div style="background: #f8fafc; border: 1.5px dashed #cbd5e1; border-radius: 8px; padding: 8px 2px; text-align: center; color: #94a3b8;">
               <div style="font-size: 11px; font-weight: 700;">時未詳</div>
               <div style="font-size: 26px; font-weight: 900; font-family: 'Noto Serif KR', serif;">?</div>
               <div style="font-size: 11px; font-weight: 700;">미상</div>
@@ -2174,7 +2202,7 @@
 
             <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; background: #fafafa;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px;">
-                <span style="font-size: 11px; font-weight: 800; color: #334155;">10년 주기 대운(大運) 흐름표 (${data.isForward ? '순행 順行' : '역행 逆行'} · 대운수 ${data.daeunNumber}) <span style="color: #b45309; font-size: 11px;">◀ 우측(초년) ➔ 좌측(노년)</span></span>
+                <span style="font-size: 11px; font-weight: 800; color: #334155;">10년 주기 대운(大運) 흐름표 (${data.isForward ? '순행 順行' : '역행 逆行'} · 대운수 ${data.daeunNumber}) <span style="color: #b45309; font-size: 11px;">◀ 우측(초년) → 좌측(노년)</span></span>
                 <span style="font-size: 11px; color: #64748b; font-weight: 700;">대운수 기준</span>
               </div>
               <div style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px;">
@@ -2303,10 +2331,10 @@
 
             <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; background: #f8fafc; margin-bottom: 12px;">
               <div style="font-size: 12px; font-weight: 800; color: #1e293b; margin-bottom: 6px;">
-                🍀 오늘의 맞춤 행동 가이드 & 행운 처방
+                💡 오늘의 맞춤 행동 가이드 & 행운 처방
               </div>
               <div style="font-size: 11px; color: #0f172a; margin-bottom: 6px; line-height: 1.5; word-break: keep-all;">
-                <strong>💡 실천 조언:</strong> ${f.luckyInfo.action}
+                <strong>📌 실천 조언:</strong> ${f.luckyInfo.action}
               </div>
               <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 11px; border-top: 1px dashed #cbd5e1; padding-top: 6px;">
                 <div><span style="color: #64748b;">행운색:</span> <strong>${f.luckyInfo.color}</strong></div>
@@ -2340,6 +2368,7 @@
     let currentImgPage1DataUrl = null;
     let currentImgPage2DataUrl = null;
     let currentPreviewPage = 1;
+    let isSeniorMode = false;
 
     function showToast(message, isError = false) {
       const toast = document.getElementById('toast');
@@ -2347,7 +2376,7 @@
       const toastIcon = document.getElementById('toastIcon');
 
       toastMsg.innerText = message;
-      toastIcon.setAttribute('data-lucide', isError ? 'alert-circle' : 'check-circle2');
+      toastIcon.setAttribute('data-lucide', isError ? 'alert-circle' : 'check-circle-2');
       lucide.createIcons();
 
       toast.classList.remove('hidden');
@@ -2356,10 +2385,9 @@
       setTimeout(() => {
         toast.classList.add('hidden');
         toast.classList.remove('flex');
-      }, 3200);
+      }, 3400);
     }
 
-    // 1900년부터 2050년까지 생년 범위 확장
     function populateDateSelectors() {
       const yearSelect = document.getElementById('birthYear');
       const monthSelect = document.getElementById('birthMonth');
@@ -2419,10 +2447,10 @@
       if (isLunarSelected) {
         const leapM = getLunarLeapMonth(y);
         if (leapM === m) {
-          leapLabel.classList.remove('opacity-50', 'pointer-events-none');
+          leapLabel.classList.remove('opacity-40', 'pointer-events-none');
         } else {
           leapCheckbox.checked = false;
-          leapLabel.classList.add('opacity-50', 'pointer-events-none');
+          leapLabel.classList.add('opacity-40', 'pointer-events-none');
         }
 
         if (leapCheckbox.checked && leapM === m) {
@@ -2432,7 +2460,7 @@
         }
       } else {
         leapCheckbox.checked = false;
-        leapLabel.classList.add('opacity-50', 'pointer-events-none');
+        leapLabel.classList.add('opacity-40', 'pointer-events-none');
         maxDays = new Date(y, m, 0).getDate();
       }
 
@@ -2464,7 +2492,7 @@
       if (isLunarSelected) {
         targetSolarDate = lunarToSolar(y, m, d, isLeap);
         noticeBar.classList.remove('hidden');
-        noticeDetail.innerText = `음력 ${y}년 ${isLeap ? '윤' : ''}${m}월 ${d}일 ➔ 양력 ${targetSolarDate.year}년 ${targetSolarDate.month}월 ${targetSolarDate.day}일 정밀 절입 계산`;
+        noticeDetail.innerText = `음력 ${y}년 ${isLeap ? '윤' : ''}${m}월 ${d}일 → 양력 ${targetSolarDate.year}년 ${targetSolarDate.month}월 ${targetSolarDate.day}일 정밀 절입 계산`;
       } else {
         noticeBar.classList.add('hidden');
       }
@@ -2474,7 +2502,7 @@
       const yGanzhi = `${HEAVENLY_STEMS[sIdx].hanja}${EARTHLY_BRANCHES[bIdx].hanja}`;
 
       if (isLunarSelected) {
-        document.getElementById('datePreview').innerText = `음력 ${y}.${m}.${d} (${isLeap ? '윤달' : '평달'}) ➔ 양력 ${targetSolarDate.year}.${String(targetSolarDate.month).padStart(2,'0')}.${String(targetSolarDate.day).padStart(2,'0')}`;
+        document.getElementById('datePreview').innerText = `음력 ${y}.${m}.${d} (${isLeap ? '윤달' : '평달'}) → 양력 ${targetSolarDate.year}.${String(targetSolarDate.month).padStart(2,'0')}.${String(targetSolarDate.day).padStart(2,'0')}`;
       } else {
         document.getElementById('datePreview').innerText = `양력 ${y}.${String(m).padStart(2,'0')}.${String(d).padStart(2,'0')} (${yGanzhi}년)`;
       }
@@ -2489,7 +2517,7 @@
         if (hour12 !== 12) hour24 += 12;
       }
       const hour24Str = String(hour24).padStart(2, '0');
-      document.getElementById('time24Preview').innerText = `${hour24Str}:${min} (${isAmSelected ? '오전' : '오후'} ${hour12}시)`;
+      document.getElementById('time24Preview').innerText = `${hour24Str}:${min} (${isAmSelected ? '오전' : '오후'} ${hour12}시 ${min}분)`;
     }
 
     function setCalendarType(lunar) {
@@ -2498,11 +2526,11 @@
       const btnLunar = document.getElementById('btnCalLunar');
 
       if (lunar) {
-        btnLunar.className = "px-3 py-1 rounded-md text-xs sm:text-sm font-bold transition bg-amber-500 text-slate-950 shadow";
-        btnSolar.className = "px-3 py-1 rounded-md text-xs sm:text-sm font-bold transition text-slate-300 hover:text-white";
+        btnLunar.className = "px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-black transition bg-amber-500 text-slate-950 shadow cursor-pointer";
+        btnSolar.className = "px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-black transition text-slate-300 hover:text-white cursor-pointer";
       } else {
-        btnSolar.className = "px-3 py-1 rounded-md text-xs sm:text-sm font-bold transition bg-amber-500 text-slate-950 shadow";
-        btnLunar.className = "px-3 py-1 rounded-md text-xs sm:text-sm font-bold transition text-slate-300 hover:text-white";
+        btnSolar.className = "px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-black transition bg-amber-500 text-slate-950 shadow cursor-pointer";
+        btnLunar.className = "px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-black transition text-slate-300 hover:text-white cursor-pointer";
       }
 
       updateDayOptions();
@@ -2514,11 +2542,11 @@
       const btnPm = document.getElementById('btnPm');
 
       if (am) {
-        btnAm.className = "flex-1 text-xs sm:text-sm font-bold rounded-lg transition-all bg-amber-500 text-slate-950 shadow";
-        btnPm.className = "flex-1 text-xs sm:text-sm font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200";
+        btnAm.className = "flex-1 text-xs sm:text-sm font-black rounded-lg transition-all bg-amber-500 text-slate-950 shadow cursor-pointer";
+        btnPm.className = "flex-1 text-xs sm:text-sm font-black rounded-lg transition-all text-slate-400 hover:text-slate-200 cursor-pointer";
       } else {
-        btnPm.className = "flex-1 text-xs sm:text-sm font-bold rounded-lg transition-all bg-amber-500 text-slate-950 shadow";
-        btnAm.className = "flex-1 text-xs sm:text-sm font-bold rounded-lg transition-all text-slate-400 hover:text-slate-200";
+        btnPm.className = "flex-1 text-xs sm:text-sm font-black rounded-lg transition-all bg-amber-500 text-slate-950 shadow cursor-pointer";
+        btnAm.className = "flex-1 text-xs sm:text-sm font-black rounded-lg transition-all text-slate-400 hover:text-slate-200 cursor-pointer";
       }
       updatePreviews();
     }
@@ -2645,7 +2673,7 @@
           mountDiv.innerHTML = '';
           mountDiv.appendChild(page);
 
-          await new Promise(resolve => setTimeout(resolve, 60));
+          await new Promise(resolve => setTimeout(resolve, 80));
 
           const canvas = await html2canvas(mountDiv, {
             scale: 2,
@@ -2673,7 +2701,6 @@
       return canvases;
     }
 
-    // 1. PDF 저장 기능 (PDF 문서 저장 버튼 전용)
     async function executeSavePdf() {
       if (!currentSajuData) {
         showToast('먼저 사주 분석을 실행해 주세요.', true);
@@ -2721,7 +2748,7 @@
 
         const fileName = `${currentSajuData.name}_동인명리학_사주팔자_감정서.pdf`;
         pdf.save(fileName);
-        showToast('✅ A4 2페이지 사주 감정서 PDF 파일이 다운로드되었습니다.');
+        showToast('A4 2페이지 사주 감정서 PDF 파일이 다운로드되었습니다.');
 
       } catch (err) {
         console.error('PDF Generation failed:', err);
@@ -2733,7 +2760,6 @@
       }
     }
 
-    // 2. 이미지 저장 기능 (이미지 저장 버튼 전용 - 안내 문구 포함)
     async function executeOpenImageSaveCenter() {
       if (!currentSajuData) {
         showToast('먼저 사주 분석을 실행해 주세요.', true);
@@ -2800,10 +2826,9 @@
       link.click();
       document.body.removeChild(link);
 
-      showToast(`📸 ${pageNumber}쪽 이미지를 저장했습니다. 스마트폰 사진첩(갤러리)을 확인하세요!`);
+      showToast(`${pageNumber}쪽 이미지를 저장했습니다. 스마트폰 사진첩(갤러리)을 확인하세요!`);
     }
 
-    // 3. 인쇄 실행 함수 (인쇄 오류 해결 및 PC 환경 지원)
     function executePrint() {
       if (!currentSajuData) {
         showToast('먼저 사주 분석을 실행해 주세요.', true);
@@ -2821,7 +2846,6 @@
       openDedicatedPrintWindow();
     }
 
-    // 독립된 새 탭 인쇄 창 열기 함수 (인쇄 대화 상자 실행 오류 완전 해결)
     function openDedicatedPrintWindow() {
       if (!currentSajuData) return;
       const a4Report = buildA4ReportElement(currentSajuData, currentFortuneData);
@@ -2842,7 +2866,7 @@
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>${currentSajuData.name} 사주팔자 & 오늘의 일진 감정서 - 동인명리학</title>
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-          <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&display=swap" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
           <style>
             @page { size: A4 portrait; margin: 0; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-sizing: border-box; }
@@ -2871,7 +2895,7 @@
         </html>
       `);
       printDoc.close();
-      showToast('🖨️ 인쇄 전용 새 창이 열렸습니다.');
+      showToast('인쇄 전용 새 창이 열렸습니다.');
     }
 
     function copyResultText() {
@@ -2929,7 +2953,7 @@
     function scrollDaeun(direction) {
       const container = document.getElementById('daeunScrollContainer');
       if (container) {
-        container.scrollBy({ left: direction * 150, behavior: 'smooth' });
+        container.scrollBy({ left: direction * 160, behavior: 'smooth' });
       }
     }
 
@@ -2944,12 +2968,30 @@
       const fortuneDateInput = document.getElementById('targetFortuneDate');
       if (fortuneDateInput) fortuneDateInput.value = `${yyyy}-${mm}-${dd}`;
 
+      // 글자 크기(큰 글씨 모드) 토글 이벤트
+      const btnSenior = document.getElementById('btnToggleSeniorMode');
+      const seniorText = document.getElementById('seniorModeText');
+      if (btnSenior) {
+        btnSenior.addEventListener('click', () => {
+          isSeniorMode = !isSeniorMode;
+          if (isSeniorMode) {
+            document.body.classList.add('senior-mode');
+            seniorText.innerText = '기본 글씨로 보기';
+            showToast('글씨 크기가 확대되었습니다.');
+          } else {
+            document.body.classList.remove('senior-mode');
+            seniorText.innerText = '글씨 크게 보기';
+            showToast('기본 글씨 크기로 복원되었습니다.');
+          }
+        });
+      }
+
       // 양력/음력 토글
       document.getElementById('btnCalSolar').addEventListener('click', () => setCalendarType(false));
       document.getElementById('btnCalLunar').addEventListener('click', () => setCalendarType(true));
       document.getElementById('isLeapMonth').addEventListener('change', updateDayOptions);
 
-      // 연월일 변경 감지
+      // 날짜 변경 이벤트
       document.getElementById('birthYear').addEventListener('change', updateDayOptions);
       document.getElementById('birthMonth').addEventListener('change', updateDayOptions);
       document.getElementById('birthDay').addEventListener('change', updatePreviews);
@@ -3003,7 +3045,7 @@
       document.getElementById('btnDaeunPrev').addEventListener('click', () => scrollDaeun(-1));
       document.getElementById('btnDaeunNext').addEventListener('click', () => scrollDaeun(1));
 
-      // 상단 컨트롤 바 버튼 바인딩 (PDF 저장과 이미지 저장 분리 완료)
+      // 상단 컨트롤 바 버튼 바인딩
       document.getElementById('btnOpenReportModal').addEventListener('click', openReportPreview);
       document.getElementById('btnCloseModal').addEventListener('click', closeReportPreview);
       document.getElementById('btnSavePdf').addEventListener('click', executeSavePdf);
@@ -3014,7 +3056,7 @@
       document.getElementById('modalBtnPrint').addEventListener('click', executePrint);
       document.getElementById('btnCopyText').addEventListener('click', copyResultText);
 
-      // 이미지 저장 센터 모달 닫기 바인딩
+      // 이미지 저장 센터 모달 닫기
       document.getElementById('btnCloseSaveCenter').addEventListener('click', () => {
         document.getElementById('saveCenterModal').classList.add('hidden');
       });
@@ -3022,7 +3064,7 @@
         document.getElementById('saveCenterModal').classList.add('hidden');
       });
 
-      // 1쪽 / 2쪽 사진첩(갤러리) 이미지 다운로드
+      // 1쪽 / 2쪽 이미지 다운로드
       document.getElementById('btnSaveImgPage1').addEventListener('click', () => downloadPageImage(1));
       document.getElementById('btnSaveImgPage2').addEventListener('click', () => downloadPageImage(2));
 
@@ -3036,7 +3078,7 @@
         updateMobilePreviewImage();
       });
 
-      // PC 인쇄 대체 모달 이벤트
+      // PC 인쇄 팝업 창 열기
       document.getElementById('btnOpenPrintTabDirect').addEventListener('click', () => {
         document.getElementById('printFallbackModal').classList.add('hidden');
         openDedicatedPrintWindow();
