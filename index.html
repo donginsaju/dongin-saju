@@ -784,7 +784,7 @@
             </div>
           </div>
 
-          <!-- 오늘의 일진 요약 카드 -->
+          <!-- 오늘의 일진 요약 카드 (동적 게이지 및 명식 맞춤 지수) -->
           <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/40 p-3.5 sm:p-6 rounded-2xl border border-amber-500/40">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-3.5 pb-2.5 border-b border-slate-800">
               <div>
@@ -838,6 +838,50 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <!-- 신규 추가: 오늘의 명식 맞춤 종합 심층 총평 -->
+          <div class="bg-slate-900/95 p-4 sm:p-6 rounded-2xl border border-amber-500/30 space-y-3 shadow-lg">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+              <div class="flex items-center gap-2">
+                <span class="p-1.5 rounded-lg bg-amber-500/20 text-amber-300">
+                  <i data-lucide="book-open" class="w-4 h-4"></i>
+                </span>
+                <h4 class="text-xs sm:text-base font-black text-slate-100">오늘의 명식 맞춤 종합 심층 총평</h4>
+              </div>
+              <span id="displayIljinPillarBadge" class="text-[11px] sm:text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-amber-300 border border-slate-700"></span>
+            </div>
+            
+            <p id="displayFortuneGeneralDesc" class="text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed saju-body senior-text-scale">
+            </p>
+          </div>
+
+          <!-- 신규 추가: 원국-일진 형충회합(刑沖會合) 및 특수 신살 분석 -->
+          <div class="bg-slate-900/90 p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs sm:text-base font-black text-slate-100 flex items-center gap-2">
+                <i data-lucide="sparkles" class="w-4 h-4 sm:w-5 sm:h-5 text-amber-400"></i>
+                원국(原局)과 일진(日辰)의 형충회합 & 특수 신살 정밀 진단
+              </span>
+              <span class="text-[11px] sm:text-xs text-slate-400 font-semibold">정통 명리 기운 연산</span>
+            </div>
+
+            <div id="displayIljinSpecialList" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm">
+            </div>
+          </div>
+
+          <!-- 신규 추가: 오늘의 시간대별(시진별) 운기 흐름 & 실천 팁 -->
+          <div class="bg-slate-900/90 p-4 sm:p-5 rounded-2xl border border-slate-800 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs sm:text-base font-black text-slate-100 flex items-center gap-2">
+                <i data-lucide="clock" class="w-4 h-4 sm:w-5 sm:h-5 text-amber-400"></i>
+                오늘의 시간대별 운기 흐름 및 맞춤 집중 팁
+              </span>
+              <span class="text-[11px] sm:text-xs text-amber-300 font-semibold">시진(時辰) 바이오리듬</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs sm:text-sm" id="displayIljinTimeSlots">
             </div>
           </div>
 
@@ -1534,6 +1578,7 @@
       };
     }
 
+    /* 오늘의 일진 정밀 명리 연산 엔진 (다양한 내용 및 현실적 점수 편차 적용) */
     function calculateDailyFortune(sajuData, targetDate) {
       const d = targetDate ? new Date(targetDate) : new Date();
       const targetMid = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0, 0);
@@ -1551,13 +1596,20 @@
 
       const dayStemIdx = sajuData.pillars.day.stemIdx;
       const dayBranchIdx = sajuData.pillars.day.branchIdx;
+      const monthBranchIdx = sajuData.pillars.month.branchIdx;
+      const yearBranchIdx = sajuData.pillars.year.branchIdx;
 
       const tenGodStem = getTenGod(dayStemIdx, tStemIdx);
       const twelveStar = getTwelveStar(dayStemIdx, tBranchIdx);
 
-      const isStemHap = Math.abs(dayStemIdx - tStemIdx) === 5;
-      const isStemChung = Math.abs(dayStemIdx - tStemIdx) === 6;
+      // 천간합 및 천간충
+      const isStemHap = (Math.abs(dayStemIdx - tStemIdx) === 5);
+      const isStemChung = (dayStemIdx === 0 && tStemIdx === 6) || (dayStemIdx === 6 && tStemIdx === 0) || // 甲庚충
+                          (dayStemIdx === 1 && tStemIdx === 7) || (dayStemIdx === 7 && tStemIdx === 1) || // 乙辛충
+                          (dayStemIdx === 2 && tStemIdx === 8) || (dayStemIdx === 8 && tStemIdx === 2) || // 丙壬충
+                          (dayStemIdx === 3 && tStemIdx === 9) || (dayStemIdx === 9 && tStemIdx === 3);    // 丁癸충
 
+      // 지지 육합 (子丑, 寅亥, 卯戌, 辰酉, 巳申, 午未)
       const isYukhab = (dayBranchIdx === 0 && tBranchIdx === 1) || (dayBranchIdx === 1 && tBranchIdx === 0) ||
                        (dayBranchIdx === 2 && tBranchIdx === 11) || (dayBranchIdx === 11 && tBranchIdx === 2) ||
                        (dayBranchIdx === 3 && tBranchIdx === 10) || (dayBranchIdx === 10 && tBranchIdx === 3) ||
@@ -1565,156 +1617,512 @@
                        (dayBranchIdx === 5 && tBranchIdx === 8) || (dayBranchIdx === 8 && tBranchIdx === 5) ||
                        (dayBranchIdx === 6 && tBranchIdx === 7) || (dayBranchIdx === 7 && tBranchIdx === 6);
 
+      // 지지 삼합 (申子辰 수국, 亥卯未 목국, 寅午戌 화국, 巳酉丑 금국)
+      const samhabGroups = [
+        [8, 0, 4],   // 신자진
+        [11, 3, 7],  // 해묘미
+        [2, 6, 10],  // 인오술
+        [5, 9, 1]    // 사유축
+      ];
+      let hasSamhab = false;
+      let samhabName = "";
+      samhabGroups.forEach(grp => {
+        if (grp.includes(dayBranchIdx) && grp.includes(tBranchIdx)) {
+          hasSamhab = true;
+          if (grp.includes(0)) samhabName = "수국(水局) 삼합/반합";
+          else if (grp.includes(3)) samhabName = "목국(木局) 삼합/반합";
+          else if (grp.includes(6)) samhabName = "화국(火局) 삼합/반합";
+          else if (grp.includes(9)) samhabName = "금국(金局) 삼합/반합";
+        }
+      });
+
+      // 지지충 (子午, 丑未, 寅申, 卯酉, 辰戌, 巳亥)
       const isBranchChung = Math.abs(dayBranchIdx - tBranchIdx) === 6;
 
-      let interactionText = "기운이 무난하게 흐르는 평온한 하루";
-      let baseScore = 84;
+      // 형살 (刑殺: 인사신, 축술미, 자묘, 진진/오오/유유/해해)
+      const isInsasin = ([2, 5, 8].includes(dayBranchIdx) && [2, 5, 8].includes(tBranchIdx) && dayBranchIdx !== tBranchIdx);
+      const isChuksulmi = ([1, 10, 7].includes(dayBranchIdx) && [1, 10, 7].includes(tBranchIdx) && dayBranchIdx !== tBranchIdx);
+      const isJamyo = ((dayBranchIdx === 0 && tBranchIdx === 3) || (dayBranchIdx === 3 && tBranchIdx === 0));
+      const isSelfHyeong = (dayBranchIdx === tBranchIdx && [4, 6, 9, 11].includes(dayBranchIdx));
+      const isHyeong = isInsasin || isChuksulmi || isJamyo || isSelfHyeong;
+
+      // 원진살 (怨嗔: 子未, 丑午, 寅酉, 卯申, 辰亥, 巳戌)
+      const isWonjin = (dayBranchIdx === 0 && tBranchIdx === 7) || (dayBranchIdx === 7 && tBranchIdx === 0) ||
+                       (dayBranchIdx === 1 && tBranchIdx === 6) || (dayBranchIdx === 6 && tBranchIdx === 1) ||
+                       (dayBranchIdx === 2 && tBranchIdx === 9) || (dayBranchIdx === 9 && tBranchIdx === 2) ||
+                       (dayBranchIdx === 3 && tBranchIdx === 8) || (dayBranchIdx === 8 && tBranchIdx === 3) ||
+                       (dayBranchIdx === 4 && tBranchIdx === 11) || (dayBranchIdx === 11 && tBranchIdx === 4) ||
+                       (dayBranchIdx === 5 && tBranchIdx === 10) || (dayBranchIdx === 10 && tBranchIdx === 5);
+
+      // 파(破) & 해(害)
+      const isPa = (dayBranchIdx === 0 && tBranchIdx === 9) || (dayBranchIdx === 9 && tBranchIdx === 0) ||
+                   (dayBranchIdx === 1 && tBranchIdx === 4) || (dayBranchIdx === 4 && tBranchIdx === 1) ||
+                   (dayBranchIdx === 2 && tBranchIdx === 11) || (dayBranchIdx === 11 && tBranchIdx === 2) ||
+                   (dayBranchIdx === 3 && tBranchIdx === 6) || (dayBranchIdx === 6 && tBranchIdx === 3) ||
+                   (dayBranchIdx === 5 && tBranchIdx === 8) || (dayBranchIdx === 8 && tBranchIdx === 5) ||
+                   (dayBranchIdx === 10 && tBranchIdx === 7) || (dayBranchIdx === 7 && tBranchIdx === 10);
+
+      const isHae = (dayBranchIdx === 0 && tBranchIdx === 7) || (dayBranchIdx === 7 && tBranchIdx === 0) ||
+                    (dayBranchIdx === 1 && tBranchIdx === 6) || (dayBranchIdx === 6 && tBranchIdx === 1) ||
+                    (dayBranchIdx === 2 && tBranchIdx === 5) || (dayBranchIdx === 5 && tBranchIdx === 2) ||
+                    (dayBranchIdx === 3 && tBranchIdx === 4) || (dayBranchIdx === 4 && tBranchIdx === 3) ||
+                    (dayBranchIdx === 8 && tBranchIdx === 11) || (dayBranchIdx === 11 && tBranchIdx === 8) ||
+                    (dayBranchIdx === 9 && tBranchIdx === 10) || (dayBranchIdx === 10 && tBranchIdx === 9);
+
+      // 특수 신살 산출
+      // 1. 천을귀인 (天乙貴人)
+      const cheoneulMap = {
+        0: [1, 7], 4: [1, 7], 6: [1, 7], // 甲戊庚 -> 丑未
+        1: [0, 8], 5: [0, 8],             // 乙己 -> 子申
+        2: [11, 9], 3: [11, 9],           // 丙丁 -> 亥酉
+        8: [5, 3], 9: [5, 3],             // 壬癸 -> 巳卯
+        7: [6, 2]                         // 辛 -> 午寅
+      };
+      const isCheoneul = (cheoneulMap[dayStemIdx] && cheoneulMap[dayStemIdx].includes(tBranchIdx));
+
+      // 2. 문창귀인 (文昌貴人)
+      const moonchangMap = { 0: 5, 1: 6, 2: 8, 4: 8, 3: 9, 5: 9, 6: 11, 7: 0, 8: 2, 9: 3 };
+      const isMoonchang = (moonchangMap[dayStemIdx] === tBranchIdx);
+
+      // 3. 역마살 (驛馬殺: 인오술->신, 신자진->인, 사유축->해, 해묘미->사)
+      const yeokmaMap = {
+        8: 2, 0: 2, 4: 2,
+        2: 8, 6: 8, 10: 8,
+        5: 11, 9: 11, 1: 11,
+        11: 5, 3: 5, 7: 5
+      };
+      const isYeokma = (yeokmaMap[dayBranchIdx] === tBranchIdx || yeokmaMap[yearBranchIdx] === tBranchIdx);
+
+      // 4. 도화살 (桃花殺: 인오술->묘, 신자진->유, 사유축->오, 해묘미->자)
+      const dohwaMap = {
+        8: 9, 0: 9, 4: 9,
+        2: 3, 6: 3, 10: 3,
+        5: 6, 9: 6, 1: 6,
+        11: 0, 3: 0, 7: 0
+      };
+      const isDohwa = (dohwaMap[dayBranchIdx] === tBranchIdx || dohwaMap[yearBranchIdx] === tBranchIdx);
+
+      // 5. 화개살 (華蓋殺: 인오술->술, 신자진->진, 사유축->축, 해묘미->미)
+      const hwagaeMap = {
+        8: 4, 0: 4, 4: 4,
+        2: 10, 6: 10, 10: 10,
+        5: 1, 9: 1, 1: 1,
+        11: 7, 3: 7, 7: 7
+      };
+      const isHwagae = (hwagaeMap[dayBranchIdx] === tBranchIdx || hwagaeMap[yearBranchIdx] === tBranchIdx);
+
+      // 현실적인 운기 점수 계산 (평운 기준선 67점에서 시작하여 흉일 35~40점대, 길일 90점대 구현)
+      let calculatedScore = 67;
+
+      // 십신 기본 가중치
+      const tenGodScoreMods = {
+        '정관(正官)': +7,
+        '정인(正印)': +7,
+        '식신(食神)': +6,
+        '정재(正財)': +6,
+        '편재(偏財)': +4,
+        '비견(比肩)': +2,
+        '편인(偏印)': -1,
+        '상관(傷官)': -4,
+        '겁재(劫財)': -7,
+        '편관(偏官)': -9
+      };
+      calculatedScore += (tenGodScoreMods[tenGodStem] || 0);
+
+      // 12운성 가중치
+      const twelveStarMods = {
+        '제왕': +7, '건록': +6, '장생': +5, '관대': +4,
+        '양': +2, '태': +1, '쇠': -1, '목욕': -3,
+        '병': -6, '사': -8, '묘': -9, '절': -11
+      };
+      calculatedScore += (twelveStarMods[twelveStar] || 0);
+
+      // 합충형파해 및 신살 점수 편차 강화
+      if (isStemHap && isYukhab) calculatedScore += 18; // 천지덕합
+      else {
+        if (isStemHap) calculatedScore += 8;
+        if (isYukhab) calculatedScore += 8;
+        if (hasSamhab) calculatedScore += 7;
+      }
+
+      if (isCheoneul) calculatedScore += 12; // 최고의 길신 천을귀인
+      if (isMoonchang) calculatedScore += 5;
+      if (isDohwa) calculatedScore += 3;
+
+      if (isStemChung && isBranchChung) calculatedScore -= 22; // 천충지충 (극심한 흉)
+      else {
+        if (isBranchChung) calculatedScore -= 14;
+        if (isStemChung) calculatedScore -= 8;
+      }
+
+      if (isHyeong) calculatedScore -= 12; // 삼형·상형
+      if (isWonjin) calculatedScore -= 10; // 원진
+      if (isPa) calculatedScore -= 5;
+      if (isHae) calculatedScore -= 5;
+
+      // 최종 운기 지수 경계 (최저 35점 ~ 최고 98점 범위로 완벽 교정)
+      calculatedScore = Math.min(98, Math.max(35, calculatedScore));
+
+      // 일간별 십신 결합 심층 해석 데이터베이스
+      const dayStemHanja = sajuData.pillars.day.stem.hanja;
+      const dayStemName = sajuData.pillars.day.stem.hangeul;
+
+      const deepDescriptions = {
+        '甲': {
+          '비견(比肩)': '거목(甲木)이 또 다른 나무를 만나 숲을 이루는 형국입니다. 주체성과 자립심이 왕성해져 독자적인 결단을 내리기 좋습니다. 다만 타협을 모르면 고립될 수 있으니 주변의 의견도 귀담아들으세요.',
+          '겁재(劫財)': '다른 나무가 내 양분과 햇살을 가로채려는 기운이 감돕니다. 지출이나 투자, 빌려주는 돈으로 인한 손재수가 따르기 쉬우며 경쟁자와의 날선 대립이 생길 수 있으니 겸손과 경계가 필수입니다.',
+          '식신(食神)': '거목이 봄볕을 맞아 화사한 꽃과 잎을 피워내는 날입니다. 창의적인 아이디어가 샘솟고 말솜씨와 표현력이 빛을 발하여 주변의 호응과 의식주의 풍요를 만끽할 수 있습니다.',
+          '상관(傷官)': '기운이 강렬한 불꽃으로 뿜어져 나오는 날입니다. 천재적인 기지와 순발력이 돋보이지만, 상사나 법규에 대한 반발심이 커져 구설에 오를 수 있으니 언행의 절제가 요구됩니다.',
+          '편재(偏財)': '넓은 영토(土)를 내 것으로 개척해 나가는 역동적인 날입니다. 유통, 투자, 비즈니스 협상에서 대범한 결단력으로 뜻밖의 큰 기회를 포착할 수 있으나 욕심을 부리면 손실이 따릅니다.',
+          '정재(正財)': '뿌리를 깊고 단단한 비옥한 땅에 정착시키는 안정의 날입니다. 정직한 노력과 꼼꼼한 마무리가 확실한 실속과 금전 결실로 보답받으며, 가계와 문서 관리에 길합니다.',
+          '편관(偏官)': '거목이 날카로운 큰 도끼(庚金)의 가지치기를 맞닥뜨리는 긴장의 날입니다. 외부의 엄격한 압박, 직장의 과중한 책임, 신체적 피로와 부상이 따르기 쉬우니 무리한 맞대응은 피하고 자중하세요.',
+          '정관(正官)': '올바른 규범과 품격(辛金)으로 아름답게 다듬어지는 날입니다. 사회적 공인과 명예가 높아지며, 공적인 계약이나 승인, 시험 등에서 신뢰를 한 몸에 받게 됩니다.',
+          '편인(偏印)': '차디찬 겨울비(壬水)가 쏟아져 사색이 깊어지는 날입니다. 종교, 철학, 전문 기술, 기획 분야에서는 탁월한 혜안을 얻으나 일상 업무에서는 지나친 망상이나 변덕을 주의해야 합니다.',
+          '정인(正印)': '단비와 맑은 물(癸水)이 메마른 뿌리를 적셔주는 축복의 날입니다. 부모나 윗사람의 따뜻한 후원과 학문적 성취, 합격 및 계약의 문서운이 아주 길하게 작용합니다.'
+        },
+        '乙': {
+          '비견(比肩)': '푸른 초원에 화초들이 어우러지는 날입니다. 동료들과의 연대와 협력이 순조로우며, 함께 뜻을 모아 일을 추진할 때 든든한 시너지를 창출합니다.',
+          '겁재(劫財)': '등라계갑(藤蘿繫甲)의 지혜가 필요합니다. 큰 나무(甲木)를 타고 오르면 도약하지만, 시기질투에 휘말리면 실속을 빼앗기므로 공정한 처신이 안전합니다.',
+          '식신(食神)': '화사한 꽃망울을 활짝 터뜨려 매력을 발산하는 날입니다. 감수성이 풍부해지고 사교성이 돋보여 사람들에게 사랑받으며, 기획과 창작에 행운이 따릅니다.',
+          '상관(傷官)': '재치와 예술성이 번뜩이지만 예민한 감정선으로 인해 주변과 마찰이 생길 수 있습니다. 자신의 재능을 뽐내되 남을 깎아내리지 않는 겸양을 지키세요.',
+          '편재(偏財)': '재빠른 순발력으로 돈의 흐름을 짚어내는 날입니다. 기민한 움직임과 부지런함으로 알짜 이익을 거두기 좋으나 한 번에 큰 것을 노리는 투기는 경계하세요.',
+          '정재(正財)': '착실하게 화분에 흙을 채우듯 저축과 실속이 쌓이는 날입니다. 성실하게 약속을 이행하면 신망이 두터워지고 고정 수입이나 금전적 보상이 뒤따릅니다.',
+          '편관(偏官)': '날카로운 가위(辛金)가 여린 잎을 다듬으려는 날입니다. 심리적 위축과 피로, 관절 및 신경통을 조심해야 하며 중요한 결정은 한 발 물러서서 관망하는 것이 현명합니다.',
+          '정관(正官)': '신뢰할 수 있는 울타리(庚金)와 바위 틈에서 안정을 찾는 날입니다. 을경합(乙庚合)의 조화로움이 발휘되어 이성운과 계약운, 조직 내 안정이 따릅니다.',
+          '편인(偏印)': '깊은 생각과 호기심이 발동하는 날입니다. 독창적인 지식을 습득하고 남들이 보지 못하는 비밀을 꿰뚫어보기에 좋으나 활동성이 떨어지지 않도록 유의하세요.',
+          '정인(正印)': '대지 위에 단비가 내려 생명력이 넘치는 날입니다. 귀인의 조언을 받아 문서상의 길조가 열리고 심신이 편안해지며 학업과 면접에서 길합니다.'
+        },
+        '丙': {
+          '비견(比肩)': '태양이 둘이 떠서 빛을 경쟁하는 형국입니다. 리더십이 왕성해지나 자존심 대립으로 동료와 부딪힐 수 있으니 양보와 경청의 미덕이 필요합니다.',
+          '겁재(劫財)': '구름 뒤로 햇살이 가려지거나 과도한 열기로 에너지가 분산되는 날입니다. 충동 지출이나 무모한 확장을 멈추고 지갑을 굳게 닫아야 손재를 면합니다.',
+          '식신(食神)': '따사로운 햇살로 만물을 무럭무럭 자라게 하는 축복의 날입니다. 베푸는 마음이 복록으로 되돌아오며, 발표와 영업, 식도락에서 큰 기쁨을 맛봅니다.',
+          '상관(傷官)': '빛과 열이 지나치게 치솟아 솔직함이 화근이 될 수 있는 날입니다. 총명함과 돌파력은 탁월하나, 윗사람에게 직언을 삼가고 차분하게 숨을 고르세요.',
+          '편재(偏財)': '넓은 벌판과 광물에 빛을 비추어 결실을 도모하는 날입니다. 사업적 직관과 과감한 승부수가 성과를 낼 수 있는 활동적인 호운의 흐름입니다.',
+          '정재(正財)': '태양과 보석이 병신합(丙辛合)으로 아름다운 무지개를 이루는 최고의 길일입니다. 재물운과 애정운이 동시에 피어나며 귀한 인연과 계약이 성사됩니다.',
+          '편관(偏官)': '바다(壬水) 위에 태양이 비추는 수화기제(水火旣濟)의 날입니다. 카리스마가 돋보이나 거센 파도 같은 압박이 있을 수 있으니 냉철한 평정심을 유지하세요.',
+          '정관(正官)': '단정한 품격과 도덕성이 돋보이는 날입니다. 공명정대하게 일 처리를 하면 사회적 권위와 신용을 높이 살 수 있으며 승진과 공인에 매우 길합니다.',
+          '편인(偏印)': '땔감(甲木)을 얻어 화력이 세어지는 날입니다. 특수 전문 분야, 지식 탐구, 아이디어 구상에 매우 유리하며 남다른 통찰력으로 문제를 풉니다.',
+          '정인(正印)': '마른 가지(乙木)가 햇살을 받아 불길을 오래 유지하는 평온한 날입니다. 어머니나 은사의 후원 덕분에 매사가 순풍에 돛 단 듯 편안하게 풀립니다.'
+        },
+        '丁': {
+          '비견(比肩)': '촛불과 등불이 모여 어둠을 환하게 밝히는 날입니다. 마음 맞는 친구와 온기를 나누며 속 깊은 대화를 나누기에 적합하며 협력의 기운이 돕습니다.',
+          '겁재(劫財)': '태양(丙火)의 강한 빛에 등불의 존재감이 가려질 수 있는 날입니다. 조급하게 앞에 나서기보다 묵묵히 내실을 다지며 때를 기다리는 처세가 길합니다.',
+          '식신(食神)': '섬세한 손재주와 기획력이 반짝이는 날입니다. 창작, 요리, 연구, 학술 분야에서 정교한 완성도를 보이며 소소한 의식주의 즐거움이 가득합니다.',
+          '상관(傷官)': '기발한 언변과 유머 감각으로 좌중을 사로잡는 날입니다. 다만 말이 앞서면 약속을 어길 수 있으니 실천력을 동반해야 신뢰를 지킵니다.',
+          '편재(偏財)': '은은한 불길로 단단한 쇠를 녹여 귀한 그릇을 만드는 날입니다. 유통이나 거래에서 알짜배기 기회를 잡아 금전적 보람을 느낄 수 있습니다.',
+          '정재(正財)': '정교한 보석을 다듬는 솜씨가 빛을 발하는 날입니다. 꼼꼼한 자산 관리와 정직한 계약이 차곡차곡 자산을 불려주는 든든한 하루가 됩니다.',
+          '편관(偏官)': '갑작스러운 소나기(癸水)에 촛불이 흔들릴 수 있는 긴장의 날입니다. 시비와 구설, 건강상의 피로감을 조심하고 과격한 운동이나 충돌은 피해야 합니다.',
+          '정관(正官)': '정임합목(丁壬合木)으로 포근한 목(木) 기운을 잉태하는 길일입니다. 애정 관계가 돈독해지고 직장과 공적인 일에서 귀인의 두터운 신망을 얻습니다.',
+          '편인(偏印)': '깊은 밤 등불 아래에서 학문을 연마하는 학자의 기운입니다. 고도의 집중력과 직관으로 어려운 난제를 풀어내며 영적인 안식을 얻습니다.',
+          '정인(正印)': '마르지 않는 기름이 공급되어 불꽃이 안정적으로 타오르는 날입니다. 스승이나 후원자의 신뢰를 받아 문서운과 시험운에서 큰 행운을 누립니다.'
+        },
+        '戊': {
+          '비견(比肩)': '웅장한 큰 산이 연이어 산맥을 이루는 형국입니다. 주관과 뚝심이 대단해지며 흔들리지 않는 묵직함으로 조직의 중심축 역할을 완벽히 해냅니다.',
+          '겁재(劫財)': '산 위에 또 다른 언덕이 솟아 영역 다툼이 벌어질 수 있습니다. 고집을 부리면 대인관계가 경색되고 손재수가 따르니 포용력을 발휘해야 합니다.',
+          '식신(食神)': '산속에서 맑은 샘물이 솟고 광물이 채굴되는 풍요의 날입니다. 부지런한 활동성이 그대로 알짜 소득과 연결되며 사람들에게 덕을 베풀기 좋습니다.',
+          '상관(傷官)': '단단한 산을 깎아 길을 내듯 과감한 혁신을 추진하는 날입니다. 기존의 틀을 깨는 뛰어난 순발력을 발휘하지만 법규 위반이나 과속은 절대 금물입니다.',
+          '편재(偏財)': '큰 산이 거대한 강물(壬水)을 가두어 댐을 이루는 대길일입니다. 스케일이 큰 사업이나 금융 거래에서 주도권을 쥐고 상당한 이익을 거둡니다.',
+          '정재(正財)': '촉촉한 단비(癸水)를 머금어 산천초목이 무성해지는 무계합(戊癸合)의 길일입니다. 금전운과 부부·연인운이 화평하며 안정된 결실이 뒤따릅니다.',
+          '편관(偏官)': '큰 나무(甲木)의 뿌리가 산을 파고들어 긴장감이 도는 날입니다. 업무량이 폭증하거나 윗선의 압박이 거셀 수 있으니 완급 조절과 휴식이 최선입니다.',
+          '정관(正官)': '화초(乙木)들이 산을 아름답게 수놓는 날입니다. 공적인 질서와 규칙을 준수할 때 명예가 드높아지며 바른 처신으로 주변의 찬사를 받습니다.',
+          '편인(偏印)': '강렬한 화산의 열기로 땅이 굳어지는 날입니다. 사색과 종교, 전문 연구에는 깊이가 더해지나 고집이 세어져 융통성이 부족해질 수 있습니다.',
+          '정인(正印)': '따스한 온기가 대지를 품어주는 포근한 날입니다. 문서 취득, 부동산, 자격증 관련 시험에서 아주 유리하며 마음의 평온을 되찾습니다.'
+        },
+        '己': {
+          '비견(比肩)': '넓은 텃밭이 이어져 협동심이 샘솟는 날입니다. 소탈하고 친근한 태도로 이웃과 동료를 챙기며 공동의 과업을 원만하게 완수합니다.',
+          '겁재(劫財)': '비옥한 밭(己土)에 큰 산(戊土)이 가려 햇빛을 잃을 수 있습니다. 타인의 감언이설이나 빚보증, 무리한 동업 제안은 단호히 거절해야 합니다.',
+          '식신(食神)': '비옥한 전답에서 곡식과 과일이 풍성하게 결실을 맺는 날입니다. 부드러운 화술과 음식 솜씨, 따스한 정성이 주변에 감동과 복록을 선물합니다.',
+          '상관(傷官)': '재치와 순발력이 넘치지만 날카로운 흙먼지가 날릴 수 있습니다. 비판적인 언사로 상대방의 자존심을 긁지 않도록 부드러운 표현을 쓰세요.',
+          '편재(偏財)': '강물(壬水)의 범람을 조심해야 하는 날입니다. 무리한 주식·코인 투자나 도박성 지출을 삼가고, 실속 위주의 방어적인 자산 관리가 상책입니다.',
+          '정재(正財)': '스며드는 이슬비(癸水)를 머금어 대지가 비옥해지는 날입니다. 알뜰한 가계 지출과 저축, 실질적인 재테크 계획이 착실히 실현됩니다.',
+          '편관(偏官)': '밭 위에 거목이 들어서서 땅이 쪼개질 수 있는 긴장의 날입니다. 예기치 않은 건강 문제나 벅찬 과제에 직면할 수 있으니 무리수를 두지 마세요.',
+          '정관(正官)': '갑기합(甲己合)으로 중정(中正)의 덕을 이루는 최고의 길일입니다. 신뢰와 예의가 빛나며, 계약, 화합, 애정, 관공서 인허가에 큰 복이 있습니다.',
+          '편인(偏印)': '사색과 눈썰미가 예리해지는 날입니다. 남들이 모르는 비법을 습득하고 전문 지식을 연마하기에 좋으나 의심이나 서운함은 털어내세요.',
+          '정인(正印)': '모성을 지닌 대지가 따스한 사랑을 받는 날입니다. 윗사람의 칭찬과 보살핌 속에 일의 마무리가 깔끔하게 풀리며 평안한 하루를 보냅니다.'
+        },
+        '庚': {
+          '비견(比肩)': '단단한 명검들이 만나 기상을 겨루는 날입니다. 강한 결단력과 추진력으로 밀어붙이면 난관을 뚫어내지만 독선은 피해야 합니다.',
+          '겁재(劫財)': '원석과 보석이 부딪혀 상처를 입을 수 있습니다. 자존심 싸움이나 무리한 내기, 충동적인 소비로 인한 손실을 주의해야 하는 날입니다.',
+          '식신(食神)': '단단한 바위틈에서 맑고 시원한 생수(壬水)가 콸콸 솟구치는 날입니다. 두뇌 회전이 맑고 막힘없는 추진력으로 주변을 시원하게 이끕니다.',
+          '상관(傷官)': '차가운 비바람(癸水)이 쇠를 녹슬게 할 수 있습니다. 능수능란한 언변이 자칫 말실수로 이어져 구설수가 될 수 있으니 말을 아끼는 것이 약입니다.',
+          '편재(偏財)': '거목(甲木)을 베어 훌륭한 목재를 만드는 생산적인 날입니다. 상업적 감각과 결단력이 극대화되어 큰 이권이나 계약을 성취할 호운입니다.',
+          '정재(正財)': '목재를 다듬어 실용적인 가구를 완성하는 날입니다. 정직한 노력의 대가가 금전으로 정확히 환산되며 착실한 재산 증식의 보람을 누립니다.',
+          '편관(偏官)': '용광로(丙火)의 맹렬한 불꽃 속에 원석이 들어가 담금질을 받는 날입니다. 엄격한 시련과 과제가 주어지지만 인내하면 명검으로 거듭납니다.',
+          '정관(正官)': '등불과 숯불(丁火)의 알맞은 화력으로 정교하게 단련되는 길일입니다. 조직의 규칙을 준수하며 승진, 영전, 표창 등의 영예를 안게 됩니다.',
+          '편인(偏印)': '마른 흙(戊土)이 쇠를 두껍게 덮어 빛이 흐려질 수 있습니다. 지나친 사색이나 게으름에 빠지지 말고 행동으로 실천해야 성과가 납니다.',
+          '정인(正印)': '비옥한 흙(己土)이 원석을 깨끗하게 닦아주는 날입니다. 학업, 자격증, 문서 계약에서 행운이 따르며 귀인의 따뜻한 지원을 받습니다.'
+        },
+        '辛': {
+          '비견(比肩)': '영롱한 보석들이 진열장에 나란히 빛을 발하는 날입니다. 자존심과 품격을 지키며 전문가적인 실력을 발휘할 수 있는 안정된 흐름입니다.',
+          '겁재(劫財)': '보석(辛金)이 거친 원석(庚金)과 부딪혀 흠집이 날 수 있는 날입니다. 타인과의 감정 싸움이나 손해 보는 거래는 미루고 내 몸을 아끼세요.',
+          '식신(食神)': '맑은 물(壬水)에 보석을 깨끗이 씻어내어 광채가 만방에 퍼지는 금수상청(金水雙淸)의 길일입니다. 매력과 지혜가 최고조에 달합니다.',
+          '상관(傷官)': '이슬비(癸水)가 보석을 적셔 신비로운 매력을 자아내는 날입니다. 예술적 영감과 순발력은 뛰어나지만 예민한 신경으로 인한 스트레스를 관리하세요.',
+          '편재(偏財)': '작은 가위로 거목을 베려 하면 탈이 납니다. 과욕을 부리지 말고 내 분수에 맞는 실속 위주로 분할하여 이익을 챙기는 지혜가 필요합니다.',
+          '정재(正財)': '정교한 가위로 정원의 화초(乙木)를 다듬듯 쏠쏠한 재미를 봅니다. 세밀한 자산 관리와 정직한 상거래에서 짭짤한 이득을 거둡니다.',
+          '편관(偏官)': '태양(丙火)과 보석이 병신합수(丙辛合水)를 이루며 부드러운 화합으로 변모하는 대길일입니다. 관재는 사라지고 귀한 조력과 명예가 찾아옵니다.',
+          '정관(正官)': '촛불의 뜨거운 열기(丁火)가 보석을 녹이려 할 수 있습니다. 윗사람이나 관청의 깐깐한 감사가 있을 수 있으니 서류를 완벽히 점검하세요.',
+          '편인(偏印)': '흙먼지(戊土)에 보석이 묻히는 토다매금(土多埋金)을 경계해야 합니다. 쓸데없는 공상이나 변덕을 버리고 현실적인 감각을 되찾아야 합니다.',
+          '정인(正印)': '촉촉한 흙(己土)에서 보석이 채굴되어 세상의 빛을 보는 날입니다. 어진 사람의 후원을 받아 문서가 성사되고 마음의 안정을 찾습니다.'
+        },
+        '壬': {
+          '비견(比肩)': '거대한 강물들이 합류하여 도도하게 흐르는 날입니다. 스케일이 커지고 대범한 교류가 이뤄지나 물길이 넘치지 않도록 절제력이 필요합니다.',
+          '겁재(劫財)': '폭우가 쏟아져 강물이 범람하는 형국입니다. 투자 손실이나 지인의 유혹으로 인한 금전 누수를 철저히 차단하고 차분히 자리를 지키세요.',
+          '식신(食神)': '큰 물이 거목(甲木)을 적셔 푸르게 키워내는 날입니다. 기획과 교육, 사업 확장에 매우 유리하며 만인을 이끄는 리더십을 발휘합니다.',
+          '상관(傷官)': '강물이 화초(乙木)를 부드럽게 적시며 흐르는 날입니다. 유연한 임기응변과 화려한 사교술로 사람들의 마음을 사로잡고 활로를 개척합니다.',
+          '편재(偏財)': '강물 위에 태양(丙火)이 비추어 수화기제(水火旣濟)의 장관을 이룹니다. 상거래와 금융, 해외 비즈니스에서 호쾌한 결실을 맺을 대길일입니다.',
+          '정재(正財)': '정임합목(丁壬合木)으로 밤하늘에 등불을 밝히는 은은한 길일입니다. 애정운과 금전운이 매우 따뜻하며 신뢰를 바탕으로 실속을 거둡니다.',
+          '편관(偏官)': '거대한 산(戊土)이 둑을 쌓아 물길을 가로막는 긴장의 날입니다. 답답함과 통제가 따를 수 있으니 억지로 밀지 말고 순리대로 우회하세요.',
+          '정관(正官)': '전답(己土)의 흙탕물에 강물이 탁해지는 기토탁임(己土濁壬)을 조심하세요. 공과 사를 명확히 구분하고 명예를 훼손하는 유혹을 멀리해야 합니다.',
+          '편인(偏印)': '바위산(庚金)에서 맑은 물이 솟구쳐 지혜가 깊어지는 날입니다. 특수 연구나 학문, 자격 취득에서 탁월한 성과를 거두는 길한 흐름입니다.',
+          '정인(正印)': '보석과 금빛 자갈(辛金) 사이로 맑은 물이 흐르는 평온한 날입니다. 덕망 있는 조력자의 신용을 받아 계약과 시험에서 만사형통합니다.'
+        },
+        '癸': {
+          '비견(比肩)': '봄비와 이슬이 대지를 촉촉이 적시는 날입니다. 사람들과의 화합이 부드럽고 다정다감한 교류를 통해 든든한 아군을 확보합니다.',
+          '겁재(劫財)': '도도한 강물(壬水)에 시냇물이 휩쓸릴 수 있습니다. 남의 일에 섣불리 간섭하다가 손재수를 입을 수 있으니 내 주관을 지키는 것이 상책입니다.',
+          '식신(食神)': '여린 화초(乙木)에 단비가 내려 생명력이 돋아납니다. 취미, 학업, 표현 활동에서 큰 보람을 얻고 의식주의 풍요와 여유를 만끽합니다.',
+          '상관(傷官)': '단비가 큰 나무(甲木)를 키워내듯 재능을 한껏 뽐내는 날입니다. 창의력과 순발력은 눈부시나 말과 행동이 앞서면 시비를 낳으니 신중하세요.',
+          '편재(偏財)': '구름 사이로 태양(丙火)이 비추어 화려한 무지개를 만듭니다. 사교성과 기동력을 발휘하여 뜻밖의 금전적 횡재와 기회를 노려볼 수 있습니다.',
+          '정재(正財)': '촛불(丁火)과 비바람이 부딪히는 형국입니다. 감정적 지출이나 충동구매를 자제하고 차분하게 가계부를 정리해야 손실을 막습니다.',
+          '편관(偏官)': '무계합(戊癸合)으로 거대한 큰 산과 비가 만나 안개를 이루는 길일입니다. 인내심을 갖고 성실히 임하면 관청과 직장에서 큰 인정을 받습니다.',
+          '정관(正官)': '비옥한 밭(己土)을 촉촉이 적셔 농사를 돕는 날입니다. 공적인 직무에서 신뢰를 쌓고 안정된 결실과 좋은 평가를 얻게 됩니다.',
+          '편인(偏印)': '명검과 바위(庚金)가 맑은 이슬을 맺게 하는 날입니다. 직관과 영감이 번뜩여 학문과 예술, 기술 분야에서 비범한 성취를 이룹니다.',
+          '정인(正印)': '반짝이는 보석(辛金)에 이슬이 맺혀 영롱함을 더하는 날입니다. 귀인의 자애로운 보살핌과 문서상의 길조가 함께하여 평안을 누립니다.'
+        }
+      };
+
+      const dayDescGroup = deepDescriptions[dayStemHanja] || deepDescriptions['甲'];
+      const defaultDesc = dayDescGroup[tenGodStem] || '기운이 무난하게 흐르는 날로 자신의 페이스를 유지하며 내실을 다지는 것이 좋습니다.';
+
+      // 특수 상호작용 분석 목록 및 상세 해설 생성
+      const interactionDetails = [];
+
+      if (isCheoneul) {
+        interactionDetails.push({
+          badge: "천을귀인(天乙貴人)",
+          badgeCss: "bg-amber-500/20 text-amber-300 border-amber-400",
+          title: "백호와 흉살을 소멸시키는 최고의 길신",
+          desc: "오늘 일진에 최고의 길신인 천을귀인이 임하여 어려운 난관이 닥쳐도 뜻밖의 은인이나 조력자가 나타나 매끄럽게 수습됩니다. 공적인 청탁, 면접, 중요한 만남에 대길합니다."
+        });
+      }
 
       if (isStemHap && isYukhab) {
-        interactionText = "천지덕합(天地德合): 귀인의 큰 도움과 대길(大吉)의 기운";
-        baseScore = 97;
+        interactionDetails.push({
+          badge: "천지덕합(天地德合)",
+          badgeCss: "bg-emerald-500/20 text-emerald-300 border-emerald-400",
+          title: "하늘과 땅이 완벽한 화합을 이루는 대길운",
+          desc: "천간합과 지지육합이 동시에 성립하여 대인관계의 매력과 신용이 최고조에 달합니다. 협업, 혼담, 계약, 합작 투자 등 사람과 결합하는 모든 일에 만사형통합니다."
+        });
       } else if (isStemHap) {
-        interactionText = "천간합(天干合): 화합과 매력 상승, 협력과 계약에 매우 길함";
-        baseScore = 92;
+        interactionDetails.push({
+          badge: "천간합(天干合)",
+          badgeCss: "bg-emerald-500/20 text-emerald-300 border-emerald-400",
+          title: "마음이 통하고 뜻이 합쳐지는 기운",
+          desc: "일간과 일진 천간이 합을 이루어 화합과 매력 지수가 상승합니다. 협상이나 미팅에서 상대의 마음을 얻기 매우 유리합니다."
+        });
       } else if (isYukhab) {
-        interactionText = "일지 육합(六合): 마음이 통하고 대인관계 안정이 따르는 날";
-        baseScore = 89;
-      } else if (isBranchChung && isStemChung) {
-        interactionText = "천충지충(天沖地沖): 돌발 변수와 이동수, 신중한 처세 요구";
-        baseScore = 64;
+        interactionDetails.push({
+          badge: "일지육합(六合)",
+          badgeCss: "bg-emerald-500/20 text-emerald-300 border-emerald-400",
+          title: "내면과 환경의 안정적인 밀착",
+          desc: "일지(배우자궁)와 일진이 정답게 합을 이루어 마음의 안정과 가족, 연인과의 두터운 정을 나누기에 최적의 날입니다."
+        });
+      } else if (hasSamhab) {
+        interactionDetails.push({
+          badge: samhabName,
+          badgeCss: "bg-blue-500/20 text-blue-300 border-blue-400",
+          title: "세력 규합과 공동 프로젝트의 도약",
+          desc: "삼합(반합)의 강력한 에너지가 발동하여 혼자 하기 버거운 일도 팀워크나 동료들의 조력으로 순조롭게 추진됩니다."
+        });
+      }
+
+      if (isStemChung && isBranchChung) {
+        interactionDetails.push({
+          badge: "천충지충(天沖地沖)",
+          badgeCss: "bg-rose-500/20 text-rose-300 border-rose-400",
+          title: "하늘과 땅이 동시에 흔들리는 극심한 변동",
+          desc: "생각과 현실이 모두 정면충돌하는 강력한 흉운입니다. 돌발 사고, 급격한 이별이나 계약 파기, 건강 이상을 각별히 경계하고 절대 무리수를 두지 마십시오."
+        });
       } else if (isBranchChung) {
-        interactionText = "일지충(日支沖): 심경의 변화와 바쁜 활동성, 감정 관리 주의";
-        baseScore = 70;
+        interactionDetails.push({
+          badge: "일지충(日支沖)",
+          badgeCss: "bg-rose-500/20 text-rose-300 border-rose-400",
+          title: "안방과 기초가 흔들리는 이동과 변동수",
+          desc: "일지가 충을 맞아 심경의 변화가 심해지고 바쁜 이동수나 출장이 생길 수 있습니다. 감정적 언쟁을 피하고 운전 시 방어운전에 집중하세요."
+        });
       } else if (isStemChung) {
-        interactionText = "천간충(天干沖): 생각의 부딪힘, 차분한 언행 관리 필요";
-        baseScore = 72;
+        interactionDetails.push({
+          badge: "천간충(天干沖)",
+          badgeCss: "bg-orange-500/20 text-orange-300 border-orange-400",
+          title: "정신적 스트레스와 두통, 의견 대립",
+          desc: "생각의 부딪힘이 발생하는 날입니다. 고집을 부리면 직장 상사나 동료와 마찰이 빚어질 수 있으니 차분한 이성을 유지하세요."
+        });
       }
 
-      if (twelveStar === '건록' || twelveStar === '제왕' || twelveStar === '장생') {
-        baseScore = Math.min(99, baseScore + 4);
-      } else if (twelveStar === '사' || twelveStar === '묘' || twelveStar === '절') {
-        baseScore = Math.max(58, baseScore - 4);
+      if (isHyeong) {
+        interactionDetails.push({
+          badge: "형살(刑殺)",
+          badgeCss: "bg-orange-500/20 text-orange-300 border-orange-400",
+          title: "시비구설과 계약서 흠결, 관재 주의",
+          desc: "공적인 규칙 위반, 교통 과태료, 계약서 조항의 하자를 꼼꼼히 살피십시오. 무리하게 타인을 통제하려 들면 관재구설이 따릅니다."
+        });
       }
 
-      let levelText = "순조로운 길일 (吉日)";
-      let levelSub = "긍정적인 실천과 생산적인 일 처리에 유리합니다.";
-      if (baseScore >= 90) {
-        levelText = "매우 길한 날 (대길 大吉)";
-        levelSub = "귀인의 도움과 성취가 따르는 최고의 운기입니다.";
-      } else if (baseScore >= 80) {
-        levelText = "활력이 넘치는 호운 (吉日)";
-        levelSub = "능동적인 행동과 교류가 좋은 성과를 맺습니다.";
-      } else if (baseScore >= 70) {
+      if (isWonjin) {
+        interactionDetails.push({
+          badge: "원진살(怨嗔殺)",
+          badgeCss: "bg-rose-500/20 text-rose-300 border-rose-400",
+          title: "이유 없는 미움과 감정 불화 경계",
+          desc: "상대방의 사소한 눈빛이나 말투에 오해가 생겨 큰 다툼으로 번지기 쉽습니다. 즉각적인 맞대응을 피하고 거리를 두는 것이 상책입니다."
+        });
+      }
+
+      if (isMoonchang) {
+        interactionDetails.push({
+          badge: "문창귀인(文昌貴人)",
+          badgeCss: "bg-emerald-500/20 text-emerald-300 border-emerald-400",
+          title: "총명함과 문서, 학업, 시험의 대길조",
+          desc: "두뇌 회전이 대단히 명석해지고 글솜씨와 분석력이 빛을 발합니다. 기획서 작성, 시험, 면접, 연구에 최적의 운기입니다."
+        });
+      }
+
+      if (isYeokma) {
+        interactionDetails.push({
+          badge: "역마살(驛馬殺)",
+          badgeCss: "bg-blue-500/20 text-blue-300 border-blue-400",
+          title: "동분서주 활동 반경의 확대와 이동",
+          desc: "가만히 앉아 있기보다 밖으로 나가 발로 뛸 때 기회가 열립니다. 출장이나 여행, 외근이 길하나 졸음운전은 주의하세요."
+        });
+      }
+
+      if (isDohwa) {
+        interactionDetails.push({
+          badge: "도화살(桃花殺)",
+          badgeCss: "bg-rose-500/20 text-rose-300 border-rose-400",
+          title: "사람을 끌어당기는 매력과 인기 상승",
+          desc: "타인의 시선을 한몸에 받는 날입니다. 미팅이나 데이트, 대중 앞 발표에서 매력이 폭발하지만 주색과 구설은 조심해야 합니다."
+        });
+      }
+
+      if (interactionDetails.length === 0) {
+        interactionDetails.push({
+          badge: "평온지기(平穩之氣)",
+          badgeCss: "bg-slate-800 text-slate-200 border-slate-700",
+          title: "모나지 않고 잔잔하게 흐르는 순리",
+          desc: "특별한 충돌이나 급변 없이 무탈하게 흘러가는 날입니다. 성실하게 일상의 루틴을 소화하고 내실을 다지기에 적합합니다."
+        });
+      }
+
+      // 운기 등급 및 서브텍스트 결정 (점수 변별력 확보)
+      let levelText = "안정과 내실의 평운 (平日)";
+      let levelSub = "차분하게 루틴을 지키며 내실을 다지기 좋습니다.";
+      let primaryInteraction = interactionDetails[0].title;
+
+      if (calculatedScore >= 88) {
+        levelText = "천우신조의 대길일 (大吉)";
+        levelSub = "귀인의 큰 조력과 만사형통의 호운이 깃드는 날입니다.";
+      } else if (calculatedScore >= 78) {
+        levelText = "활력 넘치는 호운 (吉日)";
+        levelSub = "능동적인 행동과 자신감 있는 전진이 좋은 성과를 냅니다.";
+      } else if (calculatedScore >= 64) {
         levelText = "안정과 내실의 평운 (平日)";
-        levelSub = "차분하게 루틴을 지키며 내실을 다지기 좋습니다.";
+        levelSub = "무리하지 않고 기본을 지킬 때 알짜배기 실속을 챙깁니다.";
+      } else if (calculatedScore >= 50) {
+        levelText = "신중과 주의가 필요한 날 (注意)";
+        levelSub = "돌발 변수와 언행 실수에 각별히 유의하고 자중하세요.";
       } else {
-        levelText = "신중함이 길을 여는 날 (愼日)";
-        levelSub = "성급한 결정을 피하고 돌다리를 두드려보세요.";
+        levelText = "자중자애의 흉일 (自重)";
+        levelSub = "무리한 확장과 추진을 멈추고 건강과 손재를 철저히 지키세요.";
       }
+
+      // 4대 운기 지수 현실적 분화 산출 (최저 30점 ~ 최고 98점)
+      const wealthScore = Math.min(98, Math.max(32, calculatedScore + (['정재(正財)', '편재(偏財)'].includes(tenGodStem) ? 6 : (tenGodStem === '겁재(劫財)' ? -12 : 0)) + (isStemHap ? 4 : (isStemChung ? -7 : 0))));
+      const loveScore = Math.min(98, Math.max(32, calculatedScore + (isStemHap || isYukhab || isDohwa ? 8 : 0) - (isWonjin || isBranchChung ? 14 : 0)));
+      const careerScore = Math.min(98, Math.max(32, calculatedScore + (['정관(正官)', '정인(正印)'].includes(tenGodStem) || isMoonchang ? 7 : (tenGodStem === '상관(傷官)' ? -10 : 0))));
+      const healthScore = Math.min(98, Math.max(30, calculatedScore - (isBranchChung || isHyeong || twelveStar === '절' || twelveStar === '사' ? 12 : 0) + (twelveStar === '건록' || twelveStar === '제왕' ? 5 : 0)));
+
+      // 4대 운기 설명문 강화
+      const specificWealth = (wealthScore >= 80)
+        ? "유익한 거래 제안이나 알짜배기 금전 회전의 기운이 강합니다. 정직하고 과감한 판단이 결실을 맺습니다."
+        : (wealthScore >= 60)
+          ? "수입과 지출의 균형이 무난하게 유지됩니다. 충동구매만 자제하고 예산 안에서 운용하면 안정적입니다."
+          : "예상치 못한 과태료, 분실, 손재수가 따르기 쉬운 날입니다. 지인의 금전 부탁이나 투자 유혹을 단호히 거절하세요.";
+
+      const specificLove = (loveScore >= 80)
+        ? "호감과 매력이 상승하여 연인 및 배우자와의 신뢰가 돈독해집니다. 미팅이나 고백, 화해에 대단히 길합니다."
+        : (loveScore >= 60)
+          ? "편안하고 잔잔한 정서적 교감이 오갑니다. 서로의 일상을 존중하고 따스한 격려 한마디를 건네보세요."
+          : "사소한 말실수로 큰 오해나 자존심 대립이 빚어질 수 있습니다. 감정이 격해질 때는 한 템포 쉬어가세요.";
+
+      const specificCareer = (careerScore >= 80)
+        ? "추진력과 기획력이 인정받아 조직 내 위상이 높아집니다. 공적인 결재, 발표, 시험에서 두각을 나타냅니다."
+        : (careerScore >= 60)
+          ? "맡은 바 직무를 성실히 수행할 때 신망이 두터워집니다. 새로운 모험보다는 기존 과업의 완성에 집중하세요."
+          : "상사와의 마찰이나 업무상 흠결이 지적될 수 있는 날입니다. 보고서와 서류의 오탈자를 두 번 이상 검토하세요.";
+
+      const specificHealth = (healthScore >= 80)
+        ? "생체 리듬이 활기차고 면역력이 왕성합니다. 가벼운 유산소 운동이나 취미 생활로 활력을 북돋우세요."
+        : (healthScore >= 60)
+          ? "평이한 컨디션입니다. 규칙적인 수분 섭취와 바른 자세를 유지하며 업무 피로를 조절하세요."
+          : "신경성 두통, 관절통, 소화불량을 조심해야 합니다. 무리한 음주나 과격한 신체 활동을 피하고 일찍 휴식하세요.";
+
+      // 시간대별 운기 흐름 팁 생성
+      const timeSlots = [
+        {
+          period: "오전 (07:00 ~ 11:30)",
+          icon: "sunrise",
+          title: (calculatedScore >= 70) ? "기획 & 집중 전진" : "마음 정리 & 신중 점검",
+          desc: (calculatedScore >= 70)
+            ? "양기가 상승하는 시간대로 하루의 핵심 과제를 선제적으로 처리하기에 가장 유리합니다."
+            : "생각이 복잡해질 수 있으니 서두르지 말고 중요한 안건의 결제 서류를 차분히 재점검하세요."
+        },
+        {
+          period: "오후 (11:30 ~ 17:30)",
+          icon: "sun",
+          title: (calculatedScore >= 70) ? "소통 & 성과 창출" : "언행 절제 & 외출 주의",
+          desc: (calculatedScore >= 70)
+            ? "대외적인 미팅, 협상, 사람과의 교류에서 실질적인 성과와 호응을 이끌어낼 수 있습니다."
+            : "감정 기복이나 피로도가 높아지므로 무리한 계약 체결을 피하고 방어적인 태세를 유지하세요."
+        },
+        {
+          period: "저녁·야간 (17:30 ~ 23:30)",
+          icon: "moon",
+          title: "심신 안정 & 내일의 구상",
+          desc: (calculatedScore >= 70)
+            ? "가족 및 친지와의 따뜻한 식사나 독서, 문화생활로 보람찬 하루를 정리하기 좋습니다."
+            : "충분한 수면과 따뜻한 반신욕으로 긴장을 이완하고 가벼운 스트레칭으로 피로를 푸세요."
+        }
+      ];
 
       const daysOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
       const headlineStr = `${targetMid.getFullYear()}년 ${targetMid.getMonth() + 1}월 ${targetMid.getDate()}일 ${daysOfWeek[targetMid.getDay()]} [ ${targetStem.hanja}${targetBranch.hanja}(${targetStem.hangeul}${targetBranch.hangeul})일 ]`;
 
-      const wealthScore = Math.min(99, Math.max(50, baseScore + (isStemHap ? 4 : (isStemChung ? -5 : 2))));
-      const loveScore = Math.min(99, Math.max(50, baseScore + (isYukhab ? 5 : (isBranchChung ? -6 : 1))));
-      const careerScore = Math.min(99, Math.max(50, baseScore + (twelveStar === '건록' ? 5 : 0)));
-      const healthScore = Math.min(99, Math.max(50, baseScore - (isBranchChung ? 4 : 0)));
-
-      const fortuneTemplates = {
-        '비견(比肩)': {
-          general: "자신감과 주체성이 빛을 발하는 날입니다. 독립적인 판단이 유리하며 스스로의 의지로 주도적인 결과를 만듭니다.",
-          wealth: "동업이나 공동 지출보다는 독자적인 자산 관리가 길합니다. 지인의 부탁에 흔들리지 않는 실속이 필요합니다.",
-          career: "경쟁심이 긍정적인 동기부여로 승화됩니다. 목표를 향해 당당하게 밀어붙이면 좋은 성과를 거둡니다.",
-          love: "자존심을 앞세우기보다 상대방의 입장을 한 번 더 배려하면 신뢰와 호감이 더욱 돈독해집니다.",
-          health: "활동성이 왕성해지므로 가벼운 근력 운동이나 스트레칭으로 에너지를 발산하세요.",
-          tags: ['#주체성발휘', '#독자적판단', '#추진력상승', '#실속주의']
-        },
-        '겁재(劫財)': {
-          general: "추진력과 승부욕이 강해지는 날이나, 무리한 욕심보다는 페이스 조절과 안전한 처세가 최선입니다.",
-          wealth: "충동적인 지출이나 위험한 투자는 피하고, 주머니 사정을 꼼꼼히 점검하여 손재수를 사전에 차단하세요.",
-          career: "선의의 경쟁자가 나타나 긴장감이 생길 수 있습니다. 내실을 다지고 마무리를 철저히 점검하세요.",
-          love: "작은 오해가 자존심 대립으로 번지지 않도록 유연하고 온화한 대화법을 유지하는 것이 길합니다.",
-          health: "과로를 조심하고 충분한 수면으로 컨디션을 조절해야 하는 하루입니다.",
-          tags: ['#신중한처세', '#지출주의', '#페이스조절', '#마무리점검']
-        },
-        '식신(食神)': {
-          general: "창의력과 온화한 여유가 넘쳐나는 길일입니다. 취미, 학업, 표현 활동에서 큰 보람과 즐거움을 얻습니다.",
-          wealth: "자연스러운 의식주 복록이 따릅니다. 생산적인 아이디어가 향후 금전적 이익으로 연결될 가능성이 높습니다.",
-          career: "업무와 기획에서 뛰어난 순발력과 전문성을 발휘할 수 있습니다. 동료들의 지지와 찬사를 받습니다.",
-          love: "마음이 따스해지고 다정다감한 매력이 돋보입니다. 데이트나 친목 모임에서 즐거운 추억을 만듭니다.",
-          health: "소화기 계통이 편안해지며 맛있는 식사와 휴식으로 활력을 충전하기 좋습니다.",
-          tags: ['#아이디어폭발', '#의식주복록', '#다정다감', '#순발력발휘']
-        },
-        '상관(傷官)': {
-          general: "두뇌 회전이 대단히 빠르고 재치가 넘치는 하루입니다. 기발한 발상으로 막힌 문제를 단숨에 해결합니다.",
-          wealth: "재치 있는 기회 포착으로 이익을 도모할 수 있으나, 언행 실수로 인한 손실이 없도록 계약 조항을 살피세요.",
-          career: "기존의 틀을 깨는 혁신적인 아이디어가 돋보이나, 윗사람과의 조율 시 예의와 겸손을 갖추는 것이 안전합니다.",
-          love: "솔직한 표현이 매력으로 다가가지만, 뼈 있는 직언은 피하고 칭찬과 격려의 언어를 사용하세요.",
-          health: "신경이 예민해질 수 있으니 따뜻한 차로 긴장을 이완하세요.",
-          tags: ['#기발한발상', '#두뇌회전', '#언행주의', '#혁신적돌파']
-        },
-        '편재(偏財)': {
-          general: "활동 반경이 넓어지고 역동적인 기운이 샘솟는 날입니다. 새로운 정보와 인연이 뜻밖의 활로를 열어줍니다.",
-          wealth: "유통과 회전의 기운이 강합니다. 뜻밖의 횡재수나 유익한 거래 제안이 들어올 수 있는 풍요로운 흐름입니다.",
-          career: "대범한 스케일과 결단력이 빛납니다. 머뭇거리지 않고 적극적으로 행동할 때 큰 기회를 선점합니다.",
-          love: "사교성과 유머 감각이 높아져 인기가 많아집니다. 주변 사람들에게 유쾌하고 매력적인 인상을 남깁니다.",
-          health: "바쁜 이동으로 피로가 누적될 수 있으니 틈틈이 휴식을 취하세요.",
-          tags: ['#기회포착', '#금전호운', '#사교성발휘', '#적극적행동']
-        },
-        '정재(正財)': {
-          general: "계획대로 착착 진행되는 안정과 번영의 날입니다. 정직하고 성실한 태도가 확실한 결실로 돌아옵니다.",
-          wealth: "알짜 실속이 차곡차곡 쌓이는 날입니다. 저축, 가계부 정리, 실질적인 재테크 계획 수립에 매우 유리합니다.",
-          career: "책임감 있는 일 처리로 신망을 두텁게 얻습니다. 정해진 루틴을 충실히 지키는 것이 최고의 전략입니다.",
-          love: "안정적이고 편안한 신뢰가 돈독해지는 날입니다. 진솔한 마음을 나누며 장기적인 약속을 하기에 좋습니다.",
-          health: "생체 리듬이 안정적이며 규칙적인 생활 습관이 활력을 유지해 줍니다.",
-          tags: ['#성실한결실', '#알짜실속', '#신뢰구축', '#안정된하루']
-        },
-        '편관(偏官)': {
-          general: "카리스마와 도전 의식이 강조되는 날입니다. 어려운 난관을 돌파하는 강인한 뚝심이 필요한 시점입니다.",
-          wealth: "무리한 확장보다는 지키는 전략이 유리합니다. 공과 사를 명확히 구분하여 불필요한 과태료를 주의하세요.",
-          career: "중책을 맡거나 난이도 높은 과제를 해결하며 능력을 인정받습니다. 스트레스 관리를 병행하세요.",
-          love: "감정을 억누르기보다는 부드러운 화법으로 속마음을 터놓으세요. 신뢰가 한층 깊어지는 계기가 됩니다.",
-          health: "어깨나 목의 뭉침을 자주 풀어주고 과격한 신체 활동은 자제하세요.",
-          tags: ['#난관돌파', '#카리스마', '#인내심필요', '#스트레스관리']
-        },
-        '정관(正官)': {
-          general: "명예와 신용이 빛나고 공명정대한 기운이 감도는 최고의 길일입니다. 사회적 인정과 존경이 따릅니다.",
-          wealth: "합법적이고 안정적인 이익이 확보됩니다. 문서 계약, 공적인 업무 결재, 승인 과정에서 행운이 따릅니다.",
-          career: "승진, 합격, 추천 등의 공적 운세가 매우 밝습니다. 조직 내에서 리더십과 모범을 보여주기 좋습니다.",
-          love: "품위 있고 예의 바른 태도로 호감을 삽니다. 서로를 존중하는 아름다운 만남과 발전이 기대됩니다.",
-          health: "바른 자세 유지와 호흡 관리가 전반적인 활력을 북돋아 줍니다.",
-          tags: ['#명예와신용', '#공적승인', '#품격유지', '#신뢰상승']
-        },
-        '편인(偏印)': {
-          general: "깊은 통찰력과 직관력이 번뜩이는 날입니다. 학문, 철학, 예술, 기술적 탐구에서 놀라운 영감을 얻습니다.",
-          wealth: "눈앞의 이익보다 장기적인 지식 투자나 자격 취득에 집중하면 훗날 큰 부가가치로 보답받습니다.",
-          career: "특수 분야나 기획 업무에서 독창적인 진가를 발휘합니다. 사색에만 머물지 말고 실천으로 옮기세요.",
-          love: "상대방의 속마음을 꿰뚫어보는 혜안이 생깁니다. 지나친 의심보다는 너그러운 이해심을 발휘하세요.",
-          health: "눈의 피로를 풀어주고 조용한 음악과 함께 심신을 이완하세요.",
-          tags: ['#직관과영감', '#전문지식', '#사색과통찰', '#창의적기획']
-        },
-        '정인(正印)': {
-          general: "학덕과 자비의 온기가 가득한 축복의 날입니다. 윗사람이나 귀인의 후원 덕분에 매사가 평안합니다.",
-          wealth: "문서운과 계약운이 매우 길합니다. 부동산, 증서, 라이선스 등 안전 자산 관련 업무에 행운이 깃듭니다.",
-          career: "주변의 따뜻한 지원을 받으며 안정적으로 역량을 펼칩니다. 시험이나 면접에서도 우수한 결과를 얻습니다.",
-          love: "어머니 품처럼 포근하고 다정한 정서가 흐릅니다. 배려와 사랑으로 마음의 안식처를 나눌 수 있습니다.",
-          health: "마음의 평온함이 면역력을 높여주어 가볍고 산뜻한 컨디션을 유지합니다.",
-          tags: ['#귀인의후원', '#문서계약길', '#마음의평온', '#학습과지혜']
-        }
-      };
-
-      const baseFortune = fortuneTemplates[tenGodStem] || fortuneTemplates['정재(正財)'];
+      // 핵심 키워드 태그 선별
+      const tags = [];
+      tags.push(`#${tenGodStem.substring(0, 2)}운`);
+      tags.push(`#${twelveStar}운성`);
+      if (isCheoneul) tags.push('#천을귀인');
+      if (isStemHap || isYukhab) tags.push('#화합상승');
+      if (isBranchChung) tags.push('#이동변동주의');
+      if (isHyeong) tags.push('#구설조심');
+      if (isWonjin) tags.push('#감정관리');
+      if (isMoonchang) tags.push('#문창총명');
+      if (isDohwa) tags.push('#인기매력');
+      if (calculatedScore >= 80) tags.push('#기회선점');
+      else if (calculatedScore <= 50) tags.push('#자중자애');
 
       const luckyElements = {
-        wood:  { color: '청록색 (Cyan)', dir: '동쪽 (East)', nums: '3, 8', caution: '성급한 언행', action: '새로운 기획이나 중요한 제안은 목(木) 기운이 살아나는 아침 시간대에 추진하는 것이 가장 길합니다.' },
-        fire:  { color: '선홍색 (Rose)', dir: '남쪽 (South)', nums: '2, 7', caution: '충동적인 지출', action: '중요한 미팅과 의사결정은 화(火) 기운이 왕성해지는 한낮 시간에 진행하는 것이 큰 활력을 줍니다.' },
-        earth: { color: '황토색 (Amber)', dir: '중앙·남서', nums: '5, 10', caution: '과도한 고집', action: '문서 점검이나 자산 정리는 토(土) 기운이 안정되는 오후 시간대에 꼼꼼히 검토하세요.' },
-        metal: { color: '백색 (White)', dir: '서쪽 (West)', nums: '4, 9', caution: '냉정한 태도', action: '정리정돈과 계약 마무리는 금(金) 기운이 굳건해지는 늦은 오후에 진행하는 것이 실속을 줍니다.' },
-        water: { color: '로열블루 (Navy)', dir: '북쪽 (North)', nums: '1, 6', caution: '불필요한 고민', action: '깊은 구상과 사색은 수(水) 기운이 맑아지는 저녁 시간에 차분하게 진행하는 것이 지혜롭습니다.' }
+        wood:  { color: '청록색 (Cyan)', dir: '동쪽 (East)', nums: '3, 8', caution: '성급한 결정과 과욕' },
+        fire:  { color: '선홍색 (Rose)', dir: '남쪽 (South)', nums: '2, 7', caution: '충동적인 소비와 언쟁' },
+        earth: { color: '황토색 (Amber)', dir: '중앙·남서', nums: '5, 10', caution: '지나친 고집과 편견' },
+        metal: { color: '백색 (White)', dir: '서쪽 (West)', nums: '4, 9', caution: '냉정한 태도와 독선' },
+        water: { color: '로열블루 (Navy)', dir: '북쪽 (North)', nums: '1, 6', caution: '불필요한 공상과 잡념' }
       };
 
       const userElemKey = sajuData.pillars.day.stem.element;
       const luckyInfo = luckyElements[userElemKey];
+      luckyInfo.action = (calculatedScore >= 75)
+        ? `오늘은 적극적으로 문을 두드릴수록 귀인이 돕는 날입니다. ${luckyInfo.dir} 방향의 약속이나 제안을 긍정적으로 검토하세요.`
+        : `오늘은 무리한 확장보다 현재의 자리를 굳건히 지키는 날입니다. ${luckyInfo.color} 계열의 소품을 지니고 마음을 다스리세요.`;
 
       return {
         targetDate: targetMid,
@@ -1723,22 +2131,24 @@
         iljinBranch: targetBranch,
         tenGodStem,
         twelveStar,
-        score: baseScore,
+        score: calculatedScore,
         levelText,
         levelSub,
-        interactionText,
-        general: baseFortune.general,
-        wealth: baseFortune.wealth,
-        career: baseFortune.career,
-        love: baseFortune.love,
-        health: baseFortune.health,
-        tags: baseFortune.tags,
+        interactionText: primaryInteraction,
+        general: defaultDesc,
+        wealth: specificWealth,
+        career: specificCareer,
+        love: specificLove,
+        health: specificHealth,
+        tags: tags.slice(0, 5),
         scores: {
           wealth: wealthScore,
           love: loveScore,
           career: careerScore,
           health: healthScore
         },
+        interactionDetails,
+        timeSlots,
         luckyInfo
       };
     }
@@ -1779,9 +2189,27 @@
 
       const circle = document.getElementById('iljinGaugeCircle');
       const score = fortuneData.score;
-      document.getElementById('displayFortuneScore').innerText = score;
+      const scoreEl = document.getElementById('displayFortuneScore');
+      scoreEl.innerText = score;
+
+      // 점수별 원형 게이지 둘레 계산
       const offset = 314.159 * (1 - (score / 100));
       circle.style.strokeDashoffset = offset;
+
+      // 점수 대역에 따른 게이지 및 글자 색상 동적 적응
+      if (score >= 80) {
+        circle.setAttribute('class', 'text-amber-400 transition-all duration-700 ease-out');
+        scoreEl.setAttribute('class', 'text-2xl sm:text-4xl font-black text-amber-300 font-mono leading-none');
+      } else if (score >= 60) {
+        circle.setAttribute('class', 'text-blue-400 transition-all duration-700 ease-out');
+        scoreEl.setAttribute('class', 'text-2xl sm:text-4xl font-black text-blue-300 font-mono leading-none');
+      } else if (score >= 50) {
+        circle.setAttribute('class', 'text-orange-400 transition-all duration-700 ease-out');
+        scoreEl.setAttribute('class', 'text-2xl sm:text-4xl font-black text-orange-300 font-mono leading-none');
+      } else {
+        circle.setAttribute('class', 'text-rose-500 transition-all duration-700 ease-out');
+        scoreEl.setAttribute('class', 'text-2xl sm:text-4xl font-black text-rose-400 font-mono leading-none');
+      }
 
       document.getElementById('displayFortuneLevelText').innerText = fortuneData.levelText;
       document.getElementById('displayFortuneLevelSub').innerText = fortuneData.levelSub;
@@ -1798,6 +2226,53 @@
         tagBox.appendChild(span);
       });
 
+      // 종합 심층 총평 렌더링
+      const pillarBadge = document.getElementById('displayIljinPillarBadge');
+      if (pillarBadge) {
+        pillarBadge.innerText = `${currentSajuData ? currentSajuData.pillars.day.stem.hanja : ''}日干 × ${fortuneData.iljinStem.hanja}${fortuneData.iljinBranch.hanja}日`;
+      }
+      const generalDescEl = document.getElementById('displayFortuneGeneralDesc');
+      if (generalDescEl) {
+        generalDescEl.innerText = fortuneData.general;
+      }
+
+      // 형충회합 및 특수 신살 목록 렌더링
+      const specialListBox = document.getElementById('displayIljinSpecialList');
+      if (specialListBox) {
+        specialListBox.innerHTML = '';
+        fortuneData.interactionDetails.forEach(item => {
+          const div = document.createElement('div');
+          div.className = "bg-slate-950/80 p-3 sm:p-3.5 rounded-xl border border-slate-800 space-y-1";
+          div.innerHTML = `
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-[11px] sm:text-xs font-black px-2 py-0.5 rounded-md border ${item.badgeCss}">${item.badge}</span>
+              <span class="text-[11px] sm:text-xs font-bold text-slate-300 truncate">${item.title}</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-300 leading-snug saju-text-flow font-medium pt-1">${item.desc}</p>
+          `;
+          specialListBox.appendChild(div);
+        });
+      }
+
+      // 시간대별 운기 팁 렌더링
+      const timeSlotsBox = document.getElementById('displayIljinTimeSlots');
+      if (timeSlotsBox) {
+        timeSlotsBox.innerHTML = '';
+        fortuneData.timeSlots.forEach(slot => {
+          const div = document.createElement('div');
+          div.className = "bg-slate-950/80 p-3 sm:p-3.5 rounded-xl border border-slate-800 space-y-1.5 flex flex-col justify-between";
+          div.innerHTML = `
+            <div>
+              <span class="text-[10px] sm:text-xs text-amber-400 font-bold block">${slot.period}</span>
+              <strong class="text-xs sm:text-sm text-slate-100 font-bold block mt-0.5">${slot.title}</strong>
+              <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed saju-text-flow mt-1">${slot.desc}</p>
+            </div>
+          `;
+          timeSlotsBox.appendChild(div);
+        });
+      }
+
+      // 4대 운기 지수 렌더링
       document.getElementById('scoreWealth').innerText = `${fortuneData.scores.wealth}점`;
       document.getElementById('barWealth').style.width = `${fortuneData.scores.wealth}%`;
       document.getElementById('descFortuneWealth').innerText = fortuneData.wealth;
@@ -1819,6 +2294,8 @@
       document.getElementById('luckyDirectionText').innerText = fortuneData.luckyInfo.dir;
       document.getElementById('luckyNumberText').innerText = fortuneData.luckyInfo.nums;
       document.getElementById('luckyCautionText').innerText = fortuneData.luckyInfo.caution;
+
+      lucide.createIcons();
     }
 
     function renderSajuResult(data, shouldScroll = true) {
@@ -2278,67 +2755,76 @@
 
               <div style="text-align: right;">
                 <span style="color: #64748b; font-size: 11px; display: block;">일진 활력 지수</span>
-                <span style="font-size: 24px; font-weight: 900; color: #b45309; font-family: monospace;">${f.score}</span>
+                <span style="font-size: 24px; font-weight: 900; color: ${f.score >= 70 ? '#b45309' : (f.score >= 50 ? '#d97706' : '#e11d48')}; font-family: monospace;">${f.score}</span>
                 <span style="font-size: 11px; color: #64748b; font-weight: 700;">/ 100점 (${f.levelText.substring(0, 4)})</span>
               </div>
             </div>
 
-            <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 9px 12px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
-              <div style="display: flex; gap: 8px; align-items: center;">
-                <span style="background: #f59e0b; color: #ffffff; font-weight: 800; font-size: 11px; padding: 2px 7px; border-radius: 3px;">십신 육친</span>
-                <strong style="color: #92400e;">${f.tenGodStem} (${f.twelveStar})</strong>
+            <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 9px 12px; margin-bottom: 12px; font-size: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <span style="background: #f59e0b; color: #ffffff; font-weight: 800; font-size: 11px; padding: 2px 7px; border-radius: 3px;">십신·12운성</span>
+                  <strong style="color: #92400e;">${f.tenGodStem} (${f.twelveStar})</strong>
+                </div>
+                <div style="font-size: 11px; color: #78350f; font-weight: 700;">
+                  주요 작용: ${f.interactionText}
+                </div>
               </div>
-              <div style="font-size: 11px; color: #78350f; font-weight: 700;">
-                상호작용: ${f.interactionText}
-              </div>
+              <p style="font-size: 11px; color: #451a03; line-height: 1.5; margin: 0;">
+                ${f.general}
+              </p>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 11px; margin-bottom: 14px;">
-              <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 11px 13px; background: #fafafa;">
-                <div style="font-size: 12px; font-weight: 800; color: #1e293b; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
-                  <span style="color: #b45309;">◆</span> 오늘의 총운 (總體運)
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 11px; margin-bottom: 12px;">
+              <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; background: #fafafa;">
+                <div style="font-size: 12px; font-weight: 800; color: #1e293b; margin-bottom: 3px; display: flex; align-items: center; justify-content: space-between;">
+                  <span><span style="color: #b45309;">◆</span> 재물운 (財物運)</span>
+                  <span style="font-weight: 900; color: #b45309; font-family: monospace;">${f.scores.wealth}점</span>
                 </div>
-                <p style="font-size: 11px; color: #334155; line-height: 1.55; margin: 0; word-break: keep-all;">
-                  ${f.general}
-                </p>
-              </div>
-
-              <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 11px 13px; background: #fafafa;">
-                <div style="font-size: 12px; font-weight: 800; color: #1e293b; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
-                  <span style="color: #b45309;">◆</span> 재물 & 금전운 (財物運: ${f.scores.wealth}점)
-                </div>
-                <p style="font-size: 11px; color: #334155; line-height: 1.55; margin: 0; word-break: keep-all;">
+                <p style="font-size: 11px; color: #334155; line-height: 1.5; margin: 0; word-break: keep-all;">
                   ${f.wealth}
                 </p>
               </div>
 
-              <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 11px 13px; background: #fafafa;">
-                <div style="font-size: 12px; font-weight: 800; color: #1e293b; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
-                  <span style="color: #b45309;">◆</span> 사업 & 학업운 (事業運: ${f.scores.career}점)
+              <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; background: #fafafa;">
+                <div style="font-size: 12px; font-weight: 800; color: #1e293b; margin-bottom: 3px; display: flex; align-items: center; justify-content: space-between;">
+                  <span><span style="color: #b45309;">◆</span> 직업·학업운 (事業運)</span>
+                  <span style="font-weight: 900; color: #0284c7; font-family: monospace;">${f.scores.career}점</span>
                 </div>
-                <p style="font-size: 11px; color: #334155; line-height: 1.55; margin: 0; word-break: keep-all;">
+                <p style="font-size: 11px; color: #334155; line-height: 1.5; margin: 0; word-break: keep-all;">
                   ${f.career}
                 </p>
               </div>
 
-              <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 11px 13px; background: #fafafa;">
-                <div style="font-size: 12px; font-weight: 800; color: #1e293b; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
-                  <span style="color: #b45309;">◆</span> 인연 & 애정운 (緣分運: ${f.scores.love}점)
+              <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; background: #fafafa;">
+                <div style="font-size: 12px; font-weight: 800; color: #1e293b; margin-bottom: 3px; display: flex; align-items: center; justify-content: space-between;">
+                  <span><span style="color: #b45309;">◆</span> 인연·애정운 (緣分運)</span>
+                  <span style="font-weight: 900; color: #e11d48; font-family: monospace;">${f.scores.love}점</span>
                 </div>
-                <p style="font-size: 11px; color: #334155; line-height: 1.55; margin: 0; word-break: keep-all;">
+                <p style="font-size: 11px; color: #334155; line-height: 1.5; margin: 0; word-break: keep-all;">
                   ${f.love}
+                </p>
+              </div>
+
+              <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; background: #fafafa;">
+                <div style="font-size: 12px; font-weight: 800; color: #1e293b; margin-bottom: 3px; display: flex; align-items: center; justify-content: space-between;">
+                  <span><span style="color: #b45309;">◆</span> 건강·활력운 (健康運)</span>
+                  <span style="font-weight: 900; color: #059669; font-family: monospace;">${f.scores.health}점</span>
+                </div>
+                <p style="font-size: 11px; color: #334155; line-height: 1.5; margin: 0; word-break: keep-all;">
+                  ${f.health}
                 </p>
               </div>
             </div>
 
-            <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; background: #f8fafc; margin-bottom: 12px;">
-              <div style="font-size: 12px; font-weight: 800; color: #1e293b; margin-bottom: 6px;">
-                💡 오늘의 맞춤 행동 가이드 & 행운 처방
+            <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 9px 12px; background: #f8fafc; margin-bottom: 10px;">
+              <div style="font-size: 11px; font-weight: 800; color: #1e293b; margin-bottom: 4px;">
+                💡 오늘의 행동 지침 & 행운 처방
               </div>
-              <div style="font-size: 11px; color: #0f172a; margin-bottom: 6px; line-height: 1.5; word-break: keep-all;">
+              <div style="font-size: 11px; color: #0f172a; margin-bottom: 5px; line-height: 1.45; word-break: keep-all;">
                 <strong>📌 실천 조언:</strong> ${f.luckyInfo.action}
               </div>
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 11px; border-top: 1px dashed #cbd5e1; padding-top: 6px;">
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-size: 11px; border-top: 1px dashed #cbd5e1; padding-top: 5px;">
                 <div><span style="color: #64748b;">행운색:</span> <strong>${f.luckyInfo.color}</strong></div>
                 <div><span style="color: #64748b;">행운방위:</span> <strong>${f.luckyInfo.dir}</strong></div>
                 <div><span style="color: #64748b;">행운숫자:</span> <strong>${f.luckyInfo.nums}</strong></div>
@@ -2346,8 +2832,8 @@
               </div>
             </div>
 
-            <div style="background: #f1f5f9; border-radius: 6px; padding: 8px 12px; font-size: 11px; color: #64748b; line-height: 1.45; word-break: keep-all;">
-              ※ 오늘의 일진 운세는 수명자의 타고난 사주 일간(本元)과 당일 60갑자 천간·지지의 오행 생극제화 및 십신을 대입하여 도출한 맞춤형 길흉 가이드입니다. 능동적이고 지혜로운 실천의 참고 자료로 활용하시기 바랍니다.
+            <div style="background: #f1f5f9; border-radius: 6px; padding: 7px 10px; font-size: 11px; color: #64748b; line-height: 1.4; word-break: keep-all;">
+              ※ 오늘의 일진 운세는 수명자의 타고난 사주 일간(本元)과 당일 60갑자 천간·지지의 오행 생극제화, 12운성, 형충회합(刑沖會合) 및 천을귀인 신살을 입체적으로 대입하여 도출한 실전 맞춤형 길흉 가이드입니다.
             </div>
           </div>
 
@@ -2927,16 +3413,18 @@
 ----------------------------------------
 대운 방향: ${currentSajuData.isForward ? '순행(順行)' : '역행(逆行)'} · 대운수 ${currentSajuData.daeunNumber}
 
-■ [오늘의 일진 대시보드] (${f.headlineStr})
+■ [오늘의 맞춤 일진 종합 심층 분석] (${f.headlineStr})
 ----------------------------------------
-일진 지수: ${f.score}점 (${f.levelText})
-사주 상호작용: ${f.tenGodStem} (${f.twelveStar}) | ${f.interactionText}
-- 총운: ${f.general}
-- 금전운: ${f.wealth}
-- 직업운: ${f.career}
-- 애정운: ${f.love}
-- 행동 가이드: ${f.luckyInfo.action}
-- 행운 가이드: 색(${f.luckyInfo.color}), 방위(${f.luckyInfo.dir}), 숫자(${f.luckyInfo.nums}), 주의(${f.luckyInfo.caution})
+일진 활력 지수: ${f.score}점 (${f.levelText})
+십신 및 12운성: ${f.tenGodStem} | ${f.twelveStar}
+상호작용 및 신살: ${f.interactionText}
+- 심층 총평: ${f.general}
+- 금전운 (${f.scores.wealth}점): ${f.wealth}
+- 직업운 (${f.scores.career}점): ${f.career}
+- 애정운 (${f.scores.love}점): ${f.love}
+- 건강운 (${f.scores.health}점): ${f.health}
+- 실천 행동 지침: ${f.luckyInfo.action}
+- 행운 처방: 색(${f.luckyInfo.color}), 방위(${f.luckyInfo.dir}), 숫자(${f.luckyInfo.nums}), 주의(${f.luckyInfo.caution})
 ----------------------------------------
 동인선생 상담문의: 010-2622-8255
 공식 유튜브: https://www.youtube.com/@동인선생-18z (동방의 제갈량)
