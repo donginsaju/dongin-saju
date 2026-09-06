@@ -229,7 +229,7 @@
   </style>
 </head>
 
-<body class="min-h-screen py-3 sm:py-8 px-2.5 sm:px-6 lg:px-8 flex flex-col items-center">
+<body class="senior-mode min-h-screen py-3 sm:py-8 px-2.5 sm:px-6 lg:px-8 flex flex-col items-center">
 
   <!-- 최상단 헤더 -->
   <header class="w-full max-w-4xl text-center mb-5 sm:mb-8 no-print pt-1">
@@ -242,10 +242,10 @@
         <span>정통 천문 역법 만세력 & 양력·음력·윤달 완벽 지원</span>
       </div>
 
-      <!-- 큰 글씨 가독성 모드 토글 버튼 -->
-      <button id="btnToggleSeniorMode" type="button" class="inline-flex items-center gap-1 px-3 py-1 sm:py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 text-[11px] sm:text-sm font-bold transition shadow cursor-pointer active:scale-95 flex-shrink-0" title="글자 크기 키우기">
-        <i data-lucide="zoom-in" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400"></i>
-        <span id="seniorModeText">글씨 크게 보기</span>
+      <!-- 큰 글씨 가독성 모드 토글 버튼 (기본: 큰 글씨 활성화) -->
+      <button id="btnToggleSeniorMode" type="button" class="inline-flex items-center gap-1 px-3 py-1 sm:py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 text-[11px] sm:text-sm font-bold transition shadow cursor-pointer active:scale-95 flex-shrink-0" title="기본 글씨 크기로 변경">
+        <i id="seniorModeIcon" data-lucide="zoom-out" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400"></i>
+        <span id="seniorModeText">기본 글씨로 보기</span>
       </button>
     </div>
     
@@ -2856,7 +2856,7 @@
     let currentImgPage1DataUrl = null;
     let currentImgPage2DataUrl = null;
     let currentPreviewPage = 1;
-    let isSeniorMode = false;
+    let isSeniorMode = true;
 
     function showToast(message, isError = false) {
       const toast = document.getElementById('toast');
@@ -3458,21 +3458,27 @@
       const fortuneDateInput = document.getElementById('targetFortuneDate');
       if (fortuneDateInput) fortuneDateInput.value = `${yyyy}-${mm}-${dd}`;
 
-      // 글자 크기(큰 글씨 모드) 토글 이벤트
+      // 글자 크기(큰 글씨 모드 기본 활성화) 토글 이벤트
       const btnSenior = document.getElementById('btnToggleSeniorMode');
       const seniorText = document.getElementById('seniorModeText');
+      const seniorIcon = document.getElementById('seniorModeIcon');
       if (btnSenior) {
         btnSenior.addEventListener('click', () => {
           isSeniorMode = !isSeniorMode;
           if (isSeniorMode) {
             document.body.classList.add('senior-mode');
             seniorText.innerText = '기본 글씨로 보기';
-            showToast('글씨 크기가 확대되었습니다.');
+            btnSenior.title = '기본 글씨 크기로 변경';
+            if (seniorIcon) seniorIcon.setAttribute('data-lucide', 'zoom-out');
+            showToast('큰 글씨 모드가 적용되었습니다.');
           } else {
             document.body.classList.remove('senior-mode');
             seniorText.innerText = '글씨 크게 보기';
-            showToast('기본 글씨 크기로 복원되었습니다.');
+            btnSenior.title = '글자 크기 키우기';
+            if (seniorIcon) seniorIcon.setAttribute('data-lucide', 'zoom-in');
+            showToast('기본 글씨 크기로 전환되었습니다.');
           }
+          lucide.createIcons();
         });
       }
 
