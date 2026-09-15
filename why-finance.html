@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <!-- iOS 사파리 홈바 및 노치 최적화 (viewport-fit=cover) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>월급은 스쳐가는데 내 돈은 어디로? 인생이 달라지는 WISE 재무설계</title>
+
+  <!-- ================================================================
+       [카카오톡 & 모바일 메신저 전용 미리보기(Open Graph) 최적화 메타태그]
+       - 카카오톡, 라인, 페이스북 등 공유 시 썸네일 카드 100% 노출
+       - 1200x630 고해상도 프리미엄 금융/은퇴자산 전문 썸네일 탑재
+       ================================================================ -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="월급은 스쳐가는데 내 돈은 어디로? WISE 재무설계">
+  <meta property="og:description" content="돈 버는 30년, 돈 쓰는 60년! 인생의 적자 위기를 막는 은퇴설계 & 연금자산 1:1 맞춤 솔루션">
+  <!-- 안정적인 글로벌 CDN 고해상도 금융·자산관리 공식 대표 썸네일 (1200x630) -->
+  <meta property="og:image" content="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=1200&h=630&q=85">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="WISE 금융 및 은퇴자산 재무설계 가이드">
+  <meta property="og:locale" content="ko_KR">
+
+  <!-- 트위터 카드 & 검색엔진 최적화 -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="월급은 스쳐가는데 내 돈은 어디로? WISE 재무설계">
+  <meta name="twitter:description" content="은퇴설계 & 연금자산 전문 솔루션! 3분 만에 마스터하는 100세 시대 자산관리 비법">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=1200&h=630&q=85">
+
+  <!-- 모바일 브라우저 테마 색상 (iOS Safari & Android Chrome) -->
+  <meta name="theme-color" content="#0b132b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Pretendard Font (한글 모바일 최고 가독성 서체) -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  
+  <style>
+    /* iOS 및 안드로이드 공통 서체 및 줄바꿈 가독성 */
+    * {
+      font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", Roboto, sans-serif;
+      word-break: keep-all; /* 단어 단위 줄바꿈으로 가독성 극대화 */
+      line-height: 1.68;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /* 모바일 부드러운 스크롤 & 터치 반응성 유지 */
+    html {
+      scroll-behavior: smooth;
+      background-color: #070d1e;
+    }
+
+    body {
+      background-color: #070d1e;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* 텍스트 긁기 및 무단 복사 방지 (단, 전화 버튼 클릭 및 모바일 스크롤은 100% 정상 작동) */
+    .protect-content {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    /* 프리미엄 카드 음영 & 발광 효과 */
+    .premium-shadow {
+      box-shadow: 0 14px 30px -6px rgba(11, 19, 43, 0.12), 0 8px 12px -4px rgba(11, 19, 43, 0.06);
+    }
+
+    /* 하단 통화 바로콜 펄스 애니메이션 */
+    @keyframes subtle-pulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 4px 14px rgba(37, 99, 235, 0.4)); }
+      50% { transform: scale(1.02); filter: drop-shadow(0 8px 24px rgba(245, 158, 11, 0.5)); }
+    }
+    .call-pulse {
+      animation: subtle-pulse 2.2s infinite ease-in-out;
+    }
+
+    /* iOS 아이폰 하단 홈바 세이프 에어리어 대응 */
+    .pb-safe {
+      padding-bottom: calc(env(safe-area-inset-bottom, 16px) + 85px);
+    }
+    .bottom-safe {
+      padding-bottom: calc(env(safe-area-inset-bottom, 12px) + 12px);
+    }
+
+    .tap-highlight-none {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+  </style>
+</head>
+
+<body class="protect-content text-slate-800 flex justify-center min-h-screen">
+  <!-- 모바일 100% 최적화 프레임 (최대 너비 480px 보장) -->
+  <div class="w-full max-w-[480px] bg-slate-50 min-h-screen relative pb-safe shadow-2xl flex flex-col">
+
+    <!-- 상단 프리미엄 헤더: WISE 재무설계 마스터 가이드 -->
+    <header class="bg-gradient-to-br from-blue-700 via-indigo-950 to-slate-950 text-white px-5 pt-8 pb-10 rounded-b-[2.6rem] relative overflow-hidden shrink-0">
+      <!-- 배경 앰비언트 글로우 장식 -->
+      <div class="absolute -right-10 -bottom-10 w-52 h-52 bg-pink-500/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -left-10 top-0 w-44 h-44 bg-amber-400/20 rounded-full blur-2xl pointer-events-none"></div>
+
+      <!-- 상단 전문 인증 배지 -->
+      <div class="flex items-center justify-between gap-2 mb-4 relative z-10">
+        <span class="inline-flex items-center gap-1.5 bg-blue-500/30 border border-blue-300/40 text-blue-100 text-[13px] font-bold px-3.5 py-1.5 rounded-full backdrop-blur-sm">
+          <span class="w-2 h-2 rounded-full bg-cyan-300 animate-ping"></span>
+          인생을 바꾸는 자산관리 솔루션
+        </span>
+        <span class="text-xs bg-amber-400 text-slate-950 font-black px-3 py-1 rounded-full shadow-md">
+          WISE 공식 설계
+        </span>
+      </div>
+
+      <!-- 메인 헤드카피 (어르신도 편안하게 읽히는 큼직한 폰트) -->
+      <h1 class="text-[25px] leading-[1.38] font-black text-white mt-2 relative z-10">
+        “매달 열심히 일하는데,<br>
+        <span class="text-amber-300 underline underline-offset-8 decoration-amber-400">통장 잔고는 왜 제자리</span>일까요?<br>
+        <span class="text-cyan-300 underline underline-offset-8 decoration-cyan-400">인생이 달라지는 WISE 재무설계!</span>”
+      </h1>
+
+      <p class="mt-4 text-[16px] text-blue-100 font-medium leading-relaxed relative z-10">
+        단순히 주식이나 코인으로 돈을 불리는 <strong>'재테크'</strong>만 쫓다가는 큰 병이나 사고 한 번에 공든 탑이 무너집니다!<br>
+        중학생도 3분 만에 쏙쏙 이해할 수 있도록 <strong>월급부터 위험 방패, 저축, 여가까지 완벽하게 이어지는 자산관리 비법</strong>을 쉽게 풀어드립니다.
+      </p>
+
+      <!-- 핵심 요약 플로팅 카드 -->
+      <div class="mt-6 bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl flex items-center gap-4 relative z-10 shadow-lg">
+        <div class="w-13 h-13 shrink-0 bg-gradient-to-tr from-amber-400 to-yellow-300 text-slate-950 rounded-2xl flex items-center justify-center text-3xl shadow-md font-black">
+          🧭
+        </div>
+        <div>
+          <div class="text-amber-300 text-[12px] font-extrabold tracking-wide">Wage ➔ Insurance ➔ Saving ➔ Enjoy</div>
+          <div class="text-white text-[17px] font-black leading-tight">평생 마르지 않는 지혜로운 부의 공식</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 본문 섹션 1: [재테크 vs 재무설계] 차이점 -->
+    <section class="px-5 pt-8">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-2xl">💡</span>
+        <h2 class="text-[21px] font-black text-slate-900 tracking-tight">
+          "재테크와 재무설계, 뭐가 다른가요?"
+        </h2>
+      </div>
+      <p class="text-[16px] text-slate-600 font-medium mb-5">
+        한마디로 <strong>"돈을 불리는 단순 기술"</strong>과 <strong>"인생 전체를 지키는 종합 지도"</strong>의 차이입니다!
+      </p>
+
+      <!-- 대조 카드 2종 -->
+      <div class="space-y-4">
+        <!-- 1. 재테크 -->
+        <div class="bg-white border-2 border-slate-200 rounded-3xl p-5 premium-shadow">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div class="flex items-center gap-2.5">
+              <span class="w-7 h-7 rounded-full bg-slate-500 text-white font-black text-[15px] flex items-center justify-center">1</span>
+              <h3 class="text-[19px] font-black text-slate-800">재테크 (단순 기술)</h3>
+            </div>
+            <span class="text-xs bg-slate-100 text-slate-700 font-bold px-2.5 py-1 rounded-full">기술 중심</span>
+          </div>
+
+          <p class="text-[15px] text-slate-600 mt-3 leading-relaxed font-medium">
+            주식, 부동산, 예금 이자 등을 이용해 <strong>단기적으로 돈을 불리는 방법</strong>입니다.
+          </p>
+
+          <div class="mt-3 bg-slate-50 p-3 rounded-2xl border border-slate-200 text-xs sm:text-sm text-slate-700">
+            ⚠️ <strong>치명적 약점:</strong> 열심히 1억 원을 모았어도, 갑작스러운 중대질병이나 사고로 병원비와 생활비가 터지면 <strong>모아둔 돈이 순식간에 0원</strong>으로 사라집니다!
+          </div>
+        </div>
+
+        <!-- 2. 재무설계 -->
+        <div class="bg-gradient-to-br from-blue-50 via-indigo-50 to-pink-50 border-2 border-blue-500 rounded-3xl p-5 premium-shadow relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-blue-600 text-white text-[12px] font-black px-3.5 py-1 rounded-bl-xl shadow">
+            진짜 부자의 비결!
+          </div>
+          <div class="flex items-center justify-between pb-3 border-b border-blue-200">
+            <div class="flex items-center gap-2.5">
+              <span class="w-7 h-7 rounded-full bg-blue-600 text-white font-black text-[15px] flex items-center justify-center">2</span>
+              <h3 class="text-[19px] font-black text-blue-950">재무설계 (인생 종합 지도)</h3>
+            </div>
+          </div>
+
+          <p class="text-[15px] text-slate-800 mt-3 leading-relaxed font-medium">
+            내 소득과 지출을 분석해 <strong>결혼, 내 집 마련, 자녀 양육, 은퇴 후 노후까지</strong> 평생 돈 걱정 없이 살아갈 수 있도록 탄탄한 울타리를 치는 일입니다!
+          </p>
+
+          <div class="mt-3 bg-white/95 p-3.5 rounded-2xl border border-blue-300 text-[14px] text-blue-950 font-bold leading-normal">
+            🛡️ <strong>핵심 가치:</strong> 어떤 위기(질병, 실직, 사고)가 닥쳐도 <strong>내 가족과 자산이 절대 무너지지 않도록 안전판을 먼저 깔고</strong> 돈을 불려나갑니다.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 본문 섹션 2: 인생의 수입 | 지출 곡선의 냉혹한 진실 -->
+    <section class="px-5 pt-10">
+      <div class="text-center mb-6">
+        <span class="bg-indigo-100 text-indigo-900 text-[13px] font-extrabold px-3.5 py-1.5 rounded-full">
+          인생 라이프사이클 분석
+        </span>
+        <h2 class="text-[22px] font-black text-slate-900 mt-3 leading-snug">
+          "돈 버는 시간은 30년,<br>
+          <span class="text-rose-600">돈 쓰는 시간은 60년입니다!"</span>
+        </h2>
+        <p class="text-[15px] text-slate-600 mt-1">
+          인생의 수입 곡선과 지출 곡선이 엇갈리는 순간, 빈곤의 늪이 시작됩니다.
+        </p>
+      </div>
+
+      <!-- 수입/지출 곡선 인포그래픽 시각화 카드 -->
+      <div class="bg-gradient-to-br from-slate-900 via-slate-850 to-indigo-950 rounded-3xl p-5 text-white shadow-xl border border-slate-700 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-700 pb-2.5">
+          <span class="text-amber-300 font-extrabold text-[15px]">📊 인생 수입·지출 엇갈림 그래프</span>
+          <span class="text-xs bg-rose-600 text-white font-bold px-2 py-0.5 rounded-full">적자 위기 구간</span>
+        </div>
+
+        <!-- 2대 구간 시각화 박스 -->
+        <div class="space-y-3">
+          <!-- A구간: 저축 골든타임 -->
+          <div class="bg-slate-800/90 p-3.5 rounded-2xl border border-cyan-500/40">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-cyan-300 font-black text-[15px]">① 청장년기 (30세 ~ 55세 전후) [A구간]</span>
+              <span class="text-[11px] bg-cyan-950 text-cyan-200 border border-cyan-400/40 px-2 py-0.5 rounded">수입 &gt; 지출</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              직장 생활과 사업으로 수입이 지출보다 많은 <strong>유일한 '저축 골든타임'</strong>입니다. 이 시기에 방패를 세우고 종잣돈을 모아두지 않으면 노후가 비참해집니다.
+            </p>
+          </div>
+
+          <!-- 분기점 -->
+          <div class="bg-amber-400/20 p-2.5 rounded-xl border border-amber-400/50 flex items-center justify-between text-xs sm:text-sm">
+            <span class="text-amber-300 font-bold">⚠️ 55세~60세 분기점</span>
+            <span class="text-white font-black">경제적 은퇴 ➕ 자녀 독립/결혼 비용 집중!</span>
+          </div>
+
+          <!-- B구간: 노후 적자 구간 -->
+          <div class="bg-rose-950/70 p-3.5 rounded-2xl border border-rose-500/50">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-rose-300 font-black text-[15px]">② 은퇴 후 노년기 (60세 ~ 90세) [B구간]</span>
+              <span class="text-[11px] bg-rose-600 text-white font-bold px-2 py-0.5 rounded">지출 &gt; 수입 (적자)</span>
+            </div>
+            <p class="text-xs sm:text-sm text-rose-100 leading-relaxed">
+              월급은 0원으로 끊기는데 병원비와 생활비 지출은 30년 넘게 계속 나갑니다. 모아둔 저축이 바닥나면 자녀에게 짐이 되거나 생활고에 빠집니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-3.5 bg-gradient-to-r from-blue-900/80 to-purple-900/80 border border-amber-300/40 rounded-xl text-[14px] text-amber-200 leading-snug text-center font-bold">
+          💡 <strong>핵심 진실:</strong> 은퇴 전 모아둔 <strong>저축(A)</strong>이 은퇴 후 필요한 <strong>지출(B)</strong>보다 무조건 같거나 많아야 편안한 100세 인생을 누릴 수 있습니다!
+        </div>
+      </div>
+    </section>
+
+    <!-- 본문 섹션 3: 한 글자씩 쏙쏙 이해하는 [W·I·S·E] 재무설계 공식 -->
+    <section class="px-5 pt-10">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-2xl">🧩</span>
+        <h2 class="text-[21px] font-black text-slate-900 tracking-tight">
+          "WISE가 무슨 뜻인가요?"
+        </h2>
+      </div>
+      <p class="text-[16px] text-slate-600 font-medium mb-4">
+        월급을 쪼개어 위험을 막고, 미래를 키우고, 인생을 즐기는 <strong>4글자 황금 순서</strong>입니다.
+      </p>
+
+      <!-- 4단계 카드 리스트 -->
+      <div class="space-y-3.5">
+        <!-- W: Wage -->
+        <div class="bg-white border-2 border-slate-200 rounded-2xl p-4 premium-shadow flex items-start gap-3.5">
+          <div class="w-12 h-12 shrink-0 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center text-2xl font-black shadow-sm">
+            💼
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[18px] font-black text-slate-900"><strong class="text-blue-600">W</strong>age (월급 / 수입 관리)</span>
+              <span class="text-[11px] bg-blue-100 text-blue-900 font-bold px-2 py-0.5 rounded">출발점</span>
+            </div>
+            <p class="text-[14px] text-slate-600 mt-1 leading-snug">
+              성실하게 일해서 매달 들어오는 피땀 어린 소득입니다. <strong>통장을 쪼개고 고정 지출을 다이어트</strong>하는 것에서 모든 자산관리가 시작됩니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- I: Insurance -->
+        <div class="bg-gradient-to-br from-rose-50 to-pink-50 border-2 border-rose-300 rounded-2xl p-4 premium-shadow flex items-start gap-3.5">
+          <div class="w-12 h-12 shrink-0 bg-rose-500 text-white rounded-2xl flex items-center justify-center text-2xl font-black shadow-sm">
+            🛡️
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[18px] font-black text-rose-950"><strong class="text-rose-600">I</strong>nsurance (보험 / 위험 방패)</span>
+              <span class="text-[11px] bg-rose-600 text-white font-black px-2 py-0.5 rounded shadow-sm">가장 중요!</span>
+            </div>
+            <p class="text-[14px] text-slate-700 mt-1 leading-snug font-medium">
+              암·뇌·심장 중대질환이나 예기치 못한 사고로 <strong>수천만 원 병원비가 터질 때 내 소중한 자산을 지켜주는 철통 방패</strong>입니다. 방패가 없으면 저축도 밑 빠진 독이 됩니다!
+            </p>
+          </div>
+        </div>
+
+        <!-- S: Saving -->
+        <div class="bg-white border-2 border-slate-200 rounded-2xl p-4 premium-shadow flex items-start gap-3.5">
+          <div class="w-12 h-12 shrink-0 bg-amber-100 text-amber-900 rounded-2xl flex items-center justify-center text-2xl font-black shadow-sm">
+            💰
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[18px] font-black text-slate-900"><strong class="text-amber-600">S</strong>aving (저축 / 투자 관리)</span>
+              <span class="text-[11px] bg-amber-100 text-amber-950 font-bold px-2 py-0.5 rounded">목돈 모으기</span>
+            </div>
+            <p class="text-[14px] text-slate-600 mt-1 leading-snug">
+              안전한 비과세 통장과 연금, 복리 저축, 분산 투자를 통해 <strong>자녀 결혼자금과 평생 은퇴 자금</strong>을 눈덩이처럼 차곡차곡 불려나갑니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- E: Enjoy -->
+        <div class="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-400 rounded-2xl p-4 premium-shadow flex items-start gap-3.5">
+          <div class="w-12 h-12 shrink-0 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl font-black shadow-sm">
+            ✈️
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[18px] font-black text-emerald-950"><strong class="text-emerald-700">E</strong>njoy (여가 / 삶 즐기기)</span>
+              <span class="text-[11px] bg-emerald-600 text-white font-black px-2 py-0.5 rounded shadow-sm">풍요로운 결실</span>
+            </div>
+            <p class="text-[14px] text-slate-700 mt-1 leading-snug font-medium">
+              위험도 막았고 노후 저축도 든든히 채워졌으니, <strong>불안감 없이 가족과 여행을 떠나고 취미생활을 마음껏 누리는 진정한 행복</strong>입니다!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 본문 섹션 4: 한눈에 보는 [재무설계 피라미드] 4층 구조 -->
+    <section class="px-5 pt-10">
+      <div class="text-center mb-6">
+        <span class="bg-amber-100 text-amber-900 text-[13px] font-extrabold px-3.5 py-1.5 rounded-full">
+          무너지지 않는 집짓기 원리
+        </span>
+        <h2 class="text-[22px] font-black text-slate-900 mt-3 leading-snug">
+          "기초 공사 없이 집을 지으면<br>
+          <span class="text-blue-600">작은 바람에도 와르르 무너집니다!"</span>
+        </h2>
+        <p class="text-[15px] text-slate-600 mt-1">
+          재무설계 피라미드는 <strong>반드시 아래에서부터 위로</strong> 쌓아야 안전합니다.
+        </p>
+      </div>
+
+      <!-- 피라미드 시각화 카드 -->
+      <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-950 rounded-3xl p-5 text-white shadow-xl border border-slate-700 space-y-2.5">
+        <!-- 4층: Enjoy -->
+        <div class="bg-pink-500/90 text-white p-3 rounded-2xl text-center shadow border border-pink-300/40 mx-8">
+          <div class="text-[11px] font-extrabold tracking-wide text-pink-100">4층 ➔ 최상층 결실</div>
+          <div class="text-[16px] font-black leading-tight">Enjoy (여가활동 & 문화생활)</div>
+        </div>
+
+        <!-- 3층: Saving -->
+        <div class="bg-gradient-to-r from-rose-500 to-pink-600 text-white p-3.5 rounded-2xl text-center shadow border border-rose-300/40 mx-5">
+          <div class="text-[11px] font-extrabold tracking-wide text-rose-100">3층 ➔ 미래 자산 증식</div>
+          <div class="text-[16px] font-black leading-tight">Saving (저축 & 투자관리)</div>
+        </div>
+
+        <!-- 2층: Insurance -->
+        <div class="bg-gradient-to-r from-red-600 via-rose-700 to-red-600 text-white p-3.5 rounded-2xl text-center shadow-lg border-2 border-amber-300 mx-2">
+          <div class="text-[11px] font-black tracking-wide text-amber-300">2층 ➔ 무너지지 않는 안전 방패 (필수!)</div>
+          <div class="text-[17px] font-black leading-tight">Insurance (부채관리 & RISK 위험 방어)</div>
+        </div>
+
+        <!-- 1층: Work/Wage -->
+        <div class="bg-gradient-to-r from-red-700 via-rose-800 to-red-900 text-white p-4 rounded-2xl text-center shadow border border-red-500/60">
+          <div class="text-[11px] font-extrabold tracking-wide text-slate-300">1층 ➔ 가장 튼튼해야 할 기초 바닥</div>
+          <div class="text-[18px] font-black leading-tight">Work / Wage (월급 관리 & 고정지출 통제)</div>
+        </div>
+
+        <div class="p-3 bg-slate-800/90 rounded-xl border border-slate-600 text-xs text-slate-300 leading-snug mt-3 text-center">
+          ⚠️ <strong>주의:</strong> 1층(월급)에서 2층(보험 방패)을 건너뛰고 곧바로 3층(투자)으로 가면, <strong>질병이나 사고 시 자산이 한순간에 소진</strong>됩니다!
+        </div>
+      </div>
+    </section>
+
+    <!-- 본문 섹션 5: 지혜로운 자의 인생 플랜 (3단계 로드맵) -->
+    <section class="px-5 pt-10">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-2xl">🗺️</span>
+        <h2 class="text-[21px] font-black text-slate-900 tracking-tight">
+          "평생 흔들리지 않는 3단계 로드맵!"
+        </h2>
+      </div>
+      <p class="text-[16px] text-slate-600 font-medium mb-4">
+        나이와 시기에 맞춰 차근차근 완성해 나가는 인생 성공 플랜입니다.
+      </p>
+
+      <div class="space-y-3.5">
+        <!-- 1단계: 재정안정보장 PLAN -->
+        <div class="bg-white border-2 border-slate-200 rounded-2xl p-4 premium-shadow flex items-start gap-3.5">
+          <div class="w-11 h-11 shrink-0 bg-blue-100 text-blue-800 rounded-2xl flex items-center justify-center text-xl font-black">
+            1
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[17px] font-black text-slate-900">1단계: 재정안정보장 PLAN</span>
+              <span class="text-[11px] bg-blue-100 text-blue-900 font-bold px-2 py-0.5 rounded">기초 공사</span>
+            </div>
+            <p class="text-[14px] text-slate-600 mt-1 leading-snug">
+              가장의 조기사망, 중대질환(암·뇌·심장), 의료 실손보험 등 <strong>인생의 기초 체력인 안전망을 가장 먼저 구축</strong>합니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2단계: 재테크 지식정보 중기계획 -->
+        <div class="bg-white border-2 border-slate-200 rounded-2xl p-4 premium-shadow flex items-start gap-3.5">
+          <div class="w-11 h-11 shrink-0 bg-amber-100 text-amber-800 rounded-2xl flex items-center justify-center text-xl font-black">
+            2
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[17px] font-black text-slate-900">2단계: 재테크 지식 쌓기</span>
+              <span class="text-[11px] bg-amber-200 text-amber-950 font-black px-2 py-0.5 rounded">중기 계획</span>
+            </div>
+            <p class="text-[14px] text-slate-600 mt-1 leading-snug">
+              증권, 부동산, 세무, 금융 상식 등 <strong>경제 지식을 차곡차곡 공부하며 자녀 교육과 종잣돈 모으기</strong>를 본격적으로 실천합니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- 3단계: 노후 / 상속 PLAN -->
+        <div class="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-400 rounded-2xl p-4 premium-shadow flex items-start gap-3.5">
+          <div class="w-11 h-11 shrink-0 bg-indigo-600 text-white rounded-2xl flex items-center justify-center text-xl font-black shadow-sm">
+            3
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[17px] font-black text-indigo-950">3단계: 노후 & 상속 PLAN</span>
+              <span class="text-[11px] bg-indigo-600 text-white font-black px-2 py-0.5 rounded shadow-sm">장기 완성</span>
+            </div>
+            <p class="text-[14px] text-slate-700 mt-1 leading-snug font-medium">
+              마르지 않는 평생 연금으로 부부의 품격 있는 은퇴 생활을 누리고, <strong>자녀에게 세금 부담 없는 합법적 상속·증여 플랜</strong>을 완성합니다!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 본문 섹션 6: 한눈에 보는 나의 재정 건강 체크리스트 -->
+    <section class="px-5 pt-10">
+      <div class="bg-slate-900 text-white rounded-3xl p-5 shadow-xl border border-slate-700">
+        <h3 class="text-[18px] font-black text-amber-300 text-center mb-4">
+          📋 1분 자가진단! 내 통장은 안전할까요?
+        </h3>
+
+        <div class="space-y-3 text-[14px]">
+          <div class="bg-slate-800/90 p-3.5 rounded-2xl flex justify-between items-center border border-slate-700">
+            <span class="text-slate-300 font-medium">소득 대비 보험료</span>
+            <div class="text-right">
+              <span class="text-amber-300 font-black">월 소득의 8~10% 수준 적정</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-800/90 p-3.5 rounded-2xl flex justify-between items-center border border-slate-700">
+            <span class="text-slate-300 font-medium">중대질병 보장 방패</span>
+            <div class="text-right">
+              <span class="text-emerald-400 font-black">암·뇌·심장 3대 질병 완비 필수</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-800/90 p-3.5 rounded-2xl flex justify-between items-center border border-slate-700">
+            <span class="text-slate-300 font-medium">노후 개인연금 통장</span>
+            <div class="text-right">
+              <span class="text-cyan-300 font-black">국민연금 외 추가 연금 준비</span>
+            </div>
+          </div>
+
+          <div class="bg-slate-800/90 p-3.5 rounded-2xl flex justify-between items-center border border-slate-700">
+            <span class="text-slate-300 font-medium">자산 배분 균형</span>
+            <div class="text-right">
+              <span class="text-yellow-300 font-black">보장 ➔ 저축 ➔ 여가 순서 실천</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-400 mt-3 text-center">
+          ※ 하나라도 비어있다면 작은 충격에도 집안 경제가 흔들릴 수 있습니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- 본문 섹션 7: 더금융서비스 차상헌 지점장 프로필 (차상헌.jpg 완전 제거 및 골드/네이비 프리미엄 벡터 엠블럼 장착) -->
+    <section class="px-5 pt-10 pb-4">
+      <div class="bg-gradient-to-b from-slate-900 to-indigo-950 text-white rounded-3xl p-6 shadow-2xl relative border border-slate-700 overflow-hidden">
+        <!-- 배경 글로우 장식 -->
+        <div class="absolute -right-8 -top-8 w-36 h-36 bg-blue-500/20 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="flex items-center gap-4 mb-4 relative z-10">
+          <!-- ================================================================
+               [차상헌.jpg 삭제 및 은퇴설계&연금자산 전문 프리미엄 벡터 엠블럼 장착]
+               안전 방패(Shield) + 성장 그래프(Chart) + 월계관(Laurel) + 황금 열쇠/별
+               ================================================================ -->
+          <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-400 via-amber-200 to-yellow-500 p-0.5 shrink-0 shadow-xl flex items-center justify-center">
+            <div class="w-full h-full bg-gradient-to-b from-slate-950 via-indigo-950 to-slate-900 rounded-[14px] flex items-center justify-center p-2">
+              <svg class="w-full h-full text-amber-400" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- 외곽 안전 보장 방패 (Shield) -->
+                <path d="M32 4L48 10V26C48 40.5 41.2 53.6 32 58C22.8 53.6 16 40.5 16 26V10L32 4Z" 
+                      fill="url(#shieldGrad)" stroke="#F59E0B" stroke-width="2.5" stroke-linejoin="round"/>
+                <!-- 중앙 자산 성장 기둥 & 그래프 (Asset Growth) -->
+                <path d="M25 36V28M32 36V22M39 36V17" stroke="#FDE68A" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- 우상향 화살표 선 (Financial Rise) -->
+                <path d="M23 30L31 22L39 16L42 19" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M43 15L43 20M43 15L38 15" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+                <!-- 황금 열쇠 / 부의 별 심볼 -->
+                <circle cx="32" cy="45" r="3" fill="#F59E0B"/>
+                <path d="M32 48V51" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/>
+                <!-- 그라디언트 정의 -->
+                <defs>
+                  <linearGradient id="shieldGrad" x1="16" y1="4" x2="48" y2="58" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#1E293B"/>
+                    <stop offset="0.5" stop-color="#0F172A"/>
+                    <stop offset="1" stop-color="#1E1B4B"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+          </div>
+
+          <div>
+            <span class="inline-block text-[11px] bg-gradient-to-r from-amber-400 to-yellow-300 text-slate-950 font-black px-2.5 py-0.5 rounded-md tracking-tight shadow-sm">
+              은퇴설계 & 연금자산 전문
+            </span>
+            <h3 class="text-[21px] font-black text-white mt-1 leading-tight">
+              차상헌 지점장
+            </h3>
+            <p class="text-[13px] text-blue-200 font-medium mt-0.5">
+              더금융서비스 공인 시니어 파트너
+            </p>
+          </div>
+        </div>
+
+        <!-- 고객 감동 케어 메시지 -->
+        <div class="bg-slate-800/90 border border-slate-700/80 p-4 rounded-2xl mb-5 relative z-10">
+          <p class="text-[15px] leading-relaxed text-slate-200 font-normal">
+            "젊은 시절 아무리 열심히 일해서 돈을 모아도, <strong>예기치 못한 질병이나 은퇴 후 생활비 부족이라는 인생의 파도 앞에서는</strong> 계획 없는 자산이 한순간에 물거품이 될 수 있습니다.<br><br>
+            고객님의 소중한 월급이 단 1원도 헛되이 새나가지 않고, <strong>탄탄한 위험 방패(Insurance)와 풍요로운 저축(Saving)을 거쳐 여유로운 삶(Enjoy)으로 꽃피울 수 있도록</strong> 가족의 일처럼 정직하고 꼼꼼하게 1:1 맞춤 재무 포트폴리오를 점검해 드리겠습니다."
+          </p>
+        </div>
+
+        <!-- 카드 내부 다이렉트 통화 연결 버튼 -->
+        <a href="tel:010-2630-1968" 
+           class="tap-highlight-none flex items-center justify-between bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-300 hover:brightness-105 active:scale-98 transition-all text-slate-950 font-black px-5 py-4 rounded-2xl shadow-lg relative z-10">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">📞</span>
+            <div class="text-left leading-tight">
+              <span class="text-[12px] font-black text-amber-950 block">터치하시면 바로 전화 연결됩니다</span>
+              <span class="text-[21px] tracking-tight font-extrabold text-slate-950">010-2630-1968</span>
+            </div>
+          </div>
+          <span class="bg-slate-950 text-white text-[12px] px-3.5 py-1.5 rounded-xl font-bold">
+            1:1 무료상담
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <!-- 하단 법적 안내문 -->
+    <footer class="px-6 py-4 text-center text-[12px] text-slate-400 font-normal leading-relaxed">
+      ※ 본 안내문은 고객님의 이해를 돕기 위한 종합 재무설계 요약 참고자료입니다.<br>
+      ※ 금융상품 가입 시 개별 상품의 약관 및 상품설명서를 반드시 확인하시기 바라며, 개인의 소득 및 지출 성향에 따라 최적의 설계안은 달라질 수 있습니다.
+    </footer>
+
+    <!-- 하단 상시 고정 바로콜 (iOS 하단 바 여백 safe-area 완벽 대응) -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-4 bottom-safe bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent pointer-events-none">
+      <div class="w-full max-w-[480px] pointer-events-auto">
+        <a href="tel:010-2630-1968" 
+           id="quickCallBottomBar"
+           class="tap-highlight-none call-pulse w-full flex items-center justify-center gap-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 text-white font-black text-[18px] sm:text-[19px] py-4 px-5 rounded-2xl shadow-2xl border-2 border-cyan-300/40 active:scale-[0.98] transition-transform">
+          <svg class="w-6 h-6 fill-current text-amber-300 shrink-0" viewBox="0 0 24 24">
+            <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/>
+          </svg>
+          <span class="truncate">차상헌 지점장 <span class="text-amber-300 underline decoration-amber-300 underline-offset-4">WISE 재무설계 무료상담</span></span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* ================================================================
+       1. 모바일(iOS Safari & Android) 스크롤 간섭 없는 보안 제어
+          - 텍스트 복사/드래그 및 우클릭만 선별 차단
+          - 터치 스크롤이나 tel: 전화 연결은 100% 원활하게 허용
+       ================================================================ */
+
+    // 마우스 우클릭 방지
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    // 텍스트 선택 및 드래그 복사 방지
+    document.addEventListener('selectstart', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    document.addEventListener('dragstart', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    /* ================================================================
+       2. 키보드 단축키 방지 (F12, 소스보기, 저장, 복사 단축키)
+       ================================================================ */
+    window.addEventListener('keydown', function(e) {
+      // F12 개발자도구 방지
+      if (e.key === 'F12' || e.keyCode === 123) {
+        e.preventDefault();
+        return false;
+      }
+
+      // Ctrl 또는 Mac Command 키 조합
+      if (e.ctrlKey || e.metaKey) {
+        const key = e.key ? e.key.toLowerCase() : '';
+        // 소스보기(U), 복사(C), 저장(S), 인쇄(P), 개발자도구(I, J)
+        if (['u', 'c', 's', 'p', 'i', 'j'].indexOf(key) !== -1) {
+          e.preventDefault();
+          return false;
+        }
+      }
+    }, true);
+
+    /* ================================================================
+       3. iOS 사파리 & 안드로이드 전화걸기(tel: 링크) 신뢰성 보장
+       ================================================================ */
+    document.querySelectorAll('a[href^="tel:"]').forEach(function(callBtn) {
+      callBtn.addEventListener('click', function(e) {
+        // 이벤트 버블링으로 인한 차단 스크립트 간섭 배제
+        e.stopPropagation();
+      });
+    });
+  </script>
+</body>
+</html>
