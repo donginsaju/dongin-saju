@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <!-- iOS 사파리 홈바 및 노치 최적화 (viewport-fit=cover) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>돌빵사고 앞유리 자차처리 팩트체크 | 인카금융서비스 김종평 본부장</title>
+
+  <!-- ================================================================
+       [카카오톡 & 모바일 메신저 전용 미리보기(Open Graph) 최적화 메타태그]
+       - 카카오톡, 라인, 밴드, 페이스북 공유 시 고해상도 썸네일 카드 100% 노출
+       - 1200x630 규격의 공인 자동차·보험 보상 전문 고화질 이미지 링크
+       ================================================================ -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="돌빵사고 앞유리 교체 자차처리 팩트체크">
+  <meta property="og:description" content="블랙박스 영상만 있다면 보험료 할증 0원! 100~200만원 자비 낭비 막는 자동차보험 보상 비법">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&h=630&q=85">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="자동차 앞유리 돌빵 자차보험 보상 가이드">
+  <meta property="og:locale" content="ko_KR">
+
+  <!-- 트위터 카드 & 모바일 브라우저 최적화 -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="돌빵사고 앞유리 자차처리 팩트체크 | 김종평 본부장">
+  <meta name="twitter:description" content="블랙박스 있으면 할증 안 됩니다! 과실 0% 무과실 보상 팩트 정리">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&h=630&q=85">
+
+  <!-- 모바일 브라우저 상단바 테마 색상 (iOS Safari & Android Chrome) -->
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Pretendard Font (한글 모바일 최고 가독성 서체) -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+
+  <style>
+    /* 한글 단어 줄바꿈 및 전체 가독성 스타일 */
+    * {
+      box-sizing: border-box;
+      font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", Roboto, sans-serif;
+      word-break: keep-all;
+      line-height: 1.7;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: #0b1120;
+    }
+
+    body {
+      background-color: #0b1120;
+      color: #1e293b;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* 텍스트 무단 긁기 및 복사 차단 (터치 스크롤 및 전화 버튼 터치는 100% 원활) */
+    .protect-content {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    /* 부드러운 카드 섀도우 */
+    .depth-card {
+      box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.1), 0 8px 12px -6px rgba(15, 23, 42, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* 하단 통화 바로콜 펄스 애니메이션 */
+    @keyframes call-glow-pulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 4px 14px rgba(16, 185, 129, 0.4)); }
+      50% { transform: scale(1.02); filter: drop-shadow(0 8px 24px rgba(34, 197, 94, 0.6)); }
+    }
+    .call-pulse {
+      animation: call-glow-pulse 2.3s infinite ease-in-out;
+    }
+
+    /* iOS 아이폰 하단 홈바 세이프 에어리어 완벽 대응 */
+    .pb-safe {
+      padding-bottom: calc(env(safe-area-inset-bottom, 16px) + 90px);
+    }
+    .bottom-safe {
+      padding-bottom: calc(env(safe-area-inset-bottom, 12px) + 12px);
+    }
+
+    .tap-highlight-none {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+  </style>
+</head>
+
+<body class="protect-content flex justify-center items-center min-h-screen">
+
+  <!-- 모바일 100% 최적화 전용 프레임 (최대 너비 600px 보장) -->
+  <div class="w-full max-w-[600px] bg-slate-50 min-h-screen relative pb-safe shadow-2xl flex flex-col">
+
+    <!-- 상단 콘텐츠 컨테이너 -->
+    <main class="p-4 sm:p-7 flex-1">
+      
+      <!-- 상단 경고 뱃지 -->
+      <div class="flex justify-center mb-3 mt-2">
+        <div class="inline-flex items-center gap-2 bg-red-50 border border-red-200 text-red-600 px-4 py-1.5 rounded-full text-xs sm:text-sm font-extrabold shadow-sm">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+          <span>🚨 운전자 90%가 속고 있는 필수 팩트체크</span>
+        </div>
+      </div>
+
+      <!-- 메인 헤드라인 -->
+      <h1 class="text-[23px] sm:text-[27px] font-black text-center text-slate-900 leading-tight mb-5 pb-5 border-b-2 border-slate-900 tracking-tight">
+        돌빵사고 앞유리 교체 자차처리,<br>
+        <span class="text-blue-600 underline decoration-blue-200 underline-offset-8">블랙박스 있으면 할증 안 됩니다!</span> 🚗💥
+      </h1>
+
+      <!-- 돌빵 충격 비주얼 카드 -->
+      <div class="relative bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 rounded-3xl p-5 mb-7 text-white overflow-hidden shadow-xl border border-slate-800">
+        <!-- 배경 앰비언트 글로우 장식 -->
+        <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col items-center text-center">
+          <!-- 돌빵 충격 순간 고해상도 인라인 SVG 일러스트레이션 -->
+          <div class="w-full max-w-[300px] h-[135px] flex items-center justify-center my-1 relative">
+            <svg viewBox="0 0 320 140" class="w-full h-full drop-shadow-xl" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- 자동차 전면 유리 실루엣 -->
+              <path d="M30 110 L70 25 L250 25 L290 110 Z" fill="url(#glassGrad)" stroke="#38bdf8" stroke-width="3" stroke-linejoin="round" opacity="0.85"/>
+              <path d="M45 105 L78 35 L242 35 L275 105 Z" fill="#0369a1" fill-opacity="0.25"/>
+              
+              <!-- 충격 지점 방사형 크랙(금) -->
+              <g transform="translate(160, 65)">
+                <circle cx="0" cy="0" r="11" fill="#ef4444" fill-opacity="0.45" class="animate-pulse" />
+                <circle cx="0" cy="0" r="4.5" fill="#ffffff" />
+                <!-- 크랙 라인들 -->
+                <path d="M0 0 L-25 -20 L-45 -18 M-25 -20 L-30 -35" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M0 0 L30 -15 L55 -28 M30 -15 L45 0" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M0 0 L-18 25 L-35 40 M-18 25 L-5 38" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M0 0 L25 22 L40 32 M25 22 L32 10" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- 비산 파편 효과 -->
+                <circle cx="-12" cy="-10" r="1.5" fill="#facc15"/>
+                <circle cx="15" cy="-8" r="1.5" fill="#facc15"/>
+                <circle cx="-8" cy="14" r="1.5" fill="#facc15"/>
+                <circle cx="18" cy="12" r="1.5" fill="#facc15"/>
+              </g>
+
+              <!-- 날아오는 돌(비래물) 궤적 -->
+              <path d="M280 15 Q210 35 168 60" stroke="#fb923c" stroke-width="2" stroke-dasharray="4 4"/>
+              <polygon points="172,58 178,52 182,58 176,64" fill="#f97316" stroke="#ea580c" stroke-width="1.5"/>
+
+              <defs>
+                <linearGradient id="glassGrad" x1="30" y1="25" x2="290" y2="110" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#0284c7" stop-opacity="0.6"/>
+                  <stop offset="1" stop-color="#0f172a" stop-opacity="0.9"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          
+          <p class="text-amber-300 font-black text-[18px] sm:text-[20px] mt-2 tracking-tight">
+            "유리 교체하면 내년 보험료 폭탄 맞는다?"
+          </p>
+          <p class="text-slate-200 text-[14px] sm:text-[15px] mt-1 font-medium">
+            인터넷과 유튜브의 잘못된 카더라 방송에 더 이상 속지 마세요!
+          </p>
+        </div>
+      </div>
+
+      <!-- 잘못된 상식 바로잡기 박스 -->
+      <div class="bg-red-50 border-l-4 border-red-500 rounded-2xl p-4 sm:p-5 mb-8 shadow-sm">
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center shrink-0 text-red-600 mt-0.5">
+            <i class="fa-solid fa-triangle-exclamation text-base"></i>
+          </div>
+          <div>
+            <p class="text-slate-900 text-base sm:text-lg font-black leading-snug mb-1.5">
+              "돌빵 사고는 무조건 할증되니 내 돈으로 고쳐라?"
+            </p>
+            <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+              이는 <strong>완전히 잘못된 거짓 정보</strong>입니다. 100~200만 원을 호가하는 수입차나 최신 승용차의 전면 유리 교체비, 블랙박스 영상만 있다면 <strong>내 돈 낭비 없이 자차보험으로 안전하게 수리</strong>받으실 수 있습니다.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 핵심 팩트 3가지 타이틀 -->
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-2 h-6 bg-blue-600 rounded-full"></div>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-blue-950 tracking-tight">
+          꼭 기억해야 할 핵심 팩트 3가지
+        </h2>
+      </div>
+
+      <!-- 팩트 카드 그리드 -->
+      <div class="grid grid-cols-1 gap-3.5 mb-8">
+        
+        <!-- 팩트 1: 블랙박스 영상 -->
+        <div class="bg-gradient-to-r from-blue-50 via-white to-white border-2 border-blue-200 rounded-2xl p-4 sm:p-5 flex items-start gap-4 depth-card">
+          <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-blue-600 text-white flex flex-col items-center justify-center shrink-0 shadow-md">
+            <i class="fa-solid fa-video text-xl mb-0.5"></i>
+            <span class="text-[10px] font-bold">필수조건</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="bg-blue-600 text-white text-xs px-2 py-0.5 rounded font-bold">1단계</span>
+              <h3 class="text-base sm:text-lg font-black text-slate-900">블랙박스 충격 영상 확보</h3>
+            </div>
+            <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+              돌이나 낙하물이 유리에 타격되는 순간이 담긴 <strong>블랙박스 영상</strong>이 필수입니다. 영상이 확인되면 운전자의 책임이 없는 <strong>과실 0%(무과실)</strong>로 공식 인정됩니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- 팩트 2: 보험료 할증 0원 -->
+        <div class="bg-gradient-to-r from-emerald-50 via-white to-white border-2 border-emerald-200 rounded-2xl p-4 sm:p-5 flex items-start gap-4 depth-card">
+          <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-emerald-600 text-white flex flex-col items-center justify-center shrink-0 shadow-md">
+            <i class="fa-solid fa-shield-halved text-xl mb-0.5"></i>
+            <span class="text-[10px] font-bold">할증 제로</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="bg-emerald-600 text-white text-xs px-2 py-0.5 rounded font-bold">2단계</span>
+              <h3 class="text-base sm:text-lg font-black text-slate-900">보험료 할증 0원 (할증 없음)</h3>
+            </div>
+            <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+              운전자 잘못이 전혀 없는 무과실 사고이므로 <strong>보험료가 1원도 오르지 않습니다.</strong>
+            </p>
+            <div class="mt-2 bg-emerald-100/80 border border-emerald-300 text-emerald-900 text-xs sm:text-sm px-2.5 py-1.5 rounded-xl inline-block font-semibold">
+              💡 사고건수요율 미적용 (사고 건수 누적으로 인한 불이익도 제로!)
+            </div>
+          </div>
+        </div>
+
+        <!-- 팩트 3: 1년 할인유예 -->
+        <div class="bg-gradient-to-r from-amber-50 via-white to-white border-2 border-amber-200 rounded-2xl p-4 sm:p-5 flex items-start gap-4 depth-card">
+          <div class="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-amber-500 text-white flex flex-col items-center justify-center shrink-0 shadow-md">
+            <i class="fa-solid fa-hourglass-half text-xl mb-0.5"></i>
+            <span class="text-[10px] font-bold">1년 유예</span>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="bg-amber-500 text-white text-xs px-2 py-0.5 rounded font-bold">3단계</span>
+              <h3 class="text-base sm:text-lg font-black text-slate-900">딱 1년만 할인 혜택 유예</h3>
+            </div>
+            <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+              보험료가 비싸지는 것이 아니라, <strong>무사고 할인 등급 상승만 1년 동안 잠깐 쉬어가는 것</strong>입니다. 1년 뒤에는 다시 정상적으로 할인이 진행됩니다.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 선택에 따른 비교 섹션 -->
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-2 h-6 bg-blue-600 rounded-full"></div>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-blue-950 tracking-tight">
+          선택에 따른 비포 & 애프터 비교
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-8">
+        
+        <!-- 비포: 잘못된 소문 믿고 자비 수리 -->
+        <div class="bg-white border-2 border-red-300 rounded-3xl p-5 flex flex-col justify-between depth-card">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="bg-red-500 text-white text-xs font-black px-2.5 py-1 rounded-full uppercase">Before / 오해</span>
+              <i class="fa-solid fa-circle-xmark text-red-500 text-2xl"></i>
+            </div>
+            <div class="text-center my-2">
+              <!-- 당황 캐릭터 컷 -->
+              <svg class="w-20 h-20 mx-auto drop-shadow" viewBox="0 0 100 100" fill="none">
+                <circle cx="50" cy="50" r="45" fill="#fecaca" stroke="#ef4444" stroke-width="3"/>
+                <!-- 눈동자 -->
+                <circle cx="35" cy="40" r="5" fill="#991b1b"/>
+                <circle cx="65" cy="40" r="5" fill="#991b1b"/>
+                <!-- 땀방울 -->
+                <path d="M78 28 C78 24 73 20 73 20 C73 20 68 24 68 28 C68 31 70 33 73 33 C76 33 78 31 78 28 Z" fill="#38bdf8"/>
+                <!-- 울상 입 -->
+                <path d="M35 68 Q50 52 65 68" stroke="#991b1b" stroke-width="4" stroke-linecap="round" fill="none"/>
+              </svg>
+            </div>
+            <h4 class="text-center font-black text-red-600 text-lg mt-2 mb-1">
+              "할증될까 봐 내 쌩돈 지출"
+            </h4>
+            <p class="text-slate-600 text-sm text-center leading-relaxed font-medium">
+              유리 교체비 + 썬팅비<br>
+              <strong class="text-red-600 text-base">80만 ~ 250만 원 자비 손해!</strong>
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-red-200 text-xs text-red-700 font-bold text-center bg-red-50 py-2 rounded-xl">
+            보험료 아끼려다 더 큰돈 날림 😭
+          </div>
+        </div>
+
+        <!-- 애프터: 똑똑하게 자차처리 -->
+        <div class="bg-gradient-to-b from-blue-50/90 to-cyan-50/50 border-2 border-blue-400 rounded-3xl p-5 flex flex-col justify-between depth-card shadow-sm">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="bg-blue-600 text-white text-xs font-black px-2.5 py-1 rounded-full uppercase">After / 현명한 선택</span>
+              <i class="fa-solid fa-circle-check text-blue-600 text-2xl"></i>
+            </div>
+            <div class="text-center my-2">
+              <!-- 안심 미소 캐릭터 컷 -->
+              <svg class="w-20 h-20 mx-auto drop-shadow" viewBox="0 0 100 100" fill="none">
+                <circle cx="50" cy="50" r="45" fill="#bae6fd" stroke="#0284c7" stroke-width="3"/>
+                <!-- 웃는 눈 -->
+                <path d="M28 42 Q36 34 44 42" stroke="#0369a1" stroke-width="4" stroke-linecap="round" fill="none"/>
+                <path d="M56 42 Q64 34 72 42" stroke="#0369a1" stroke-width="4" stroke-linecap="round" fill="none"/>
+                <!-- 활짝 웃는 입 -->
+                <path d="M34 58 Q50 78 66 58" stroke="#0369a1" stroke-width="4" stroke-linecap="round" fill="#ffffff"/>
+                <!-- 볼터치 -->
+                <ellipse cx="28" cy="52" rx="4" ry="2" fill="#f472b6"/>
+                <ellipse cx="72" cy="52" rx="4" ry="2" fill="#f472b6"/>
+              </svg>
+            </div>
+            <h4 class="text-center font-black text-blue-800 text-lg mt-2 mb-1">
+              "자차 무과실로 깔끔 수리"
+            </h4>
+            <p class="text-slate-600 text-sm text-center leading-relaxed font-medium">
+              보험료 할증 0원!<br>
+              <strong class="text-blue-700 text-base">단 1년 할인유예로 수백만원 절약</strong>
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-blue-200 text-xs text-blue-900 font-bold text-center bg-blue-100/80 py-2 rounded-xl">
+            정품 유리 교체 완벽 해결! 😊
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 실제 보험사 보상 전산 공식 결과 -->
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-2 h-6 bg-blue-600 rounded-full"></div>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-blue-950 tracking-tight">
+          실제 보험사 보상 전산 접수 확인
+        </h2>
+      </div>
+
+      <div class="bg-slate-900 rounded-3xl p-5 text-white mb-8 border border-slate-800 shadow-2xl">
+        <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-800 text-xs sm:text-sm">
+          <div class="flex items-center gap-2 font-mono">
+            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+            <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+            <span class="text-slate-300 font-semibold ml-1">보험사 보상전산 공식 결과</span>
+          </div>
+          <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded text-xs font-bold">과실확정: 종결</span>
+        </div>
+
+        <div class="space-y-2.5 text-sm sm:text-base">
+          <div class="flex justify-between items-center bg-slate-850 p-3 rounded-2xl border border-slate-800">
+            <span class="text-slate-400 font-medium">사고 유형 / 원인</span>
+            <span class="font-bold text-white text-right">비래물(돌빵) 충격 앞유리 파손</span>
+          </div>
+          <div class="flex justify-between items-center bg-slate-850 p-3 rounded-2xl border border-slate-800">
+            <span class="text-slate-400 font-medium">운전자 최종 과실</span>
+            <span class="font-black text-emerald-400 text-base sm:text-lg flex items-center gap-1.5">
+              <i class="fa-solid fa-check-circle"></i> 무과실 (0%)
+            </span>
+          </div>
+          <div class="flex justify-between items-center bg-slate-850 p-3 rounded-2xl border border-slate-800">
+            <span class="text-slate-400 font-medium">사고건수요율 반영</span>
+            <span class="font-bold text-emerald-400">미적용 (할증 대상 제외)</span>
+          </div>
+          <div class="flex justify-between items-center bg-slate-850 p-3 rounded-2xl border border-slate-800">
+            <span class="text-slate-400 font-medium">다음 연도 등급 반영</span>
+            <span class="font-bold text-amber-300">표준등급 1년 할인유예만 적용</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10초 요약 정리 카드 -->
+      <div class="bg-amber-50 border-2 border-amber-300 rounded-3xl p-5 mb-8 depth-card">
+        <div class="flex items-center gap-2 mb-3 text-amber-900 font-extrabold text-lg sm:text-xl">
+          <i class="fa-solid fa-lightbulb text-amber-500 text-2xl"></i>
+          <span>중학생도 10초 만에 이해하는 초간단 정리!</span>
+        </div>
+        
+        <div class="space-y-2.5 text-slate-800 text-sm sm:text-base">
+          <div class="flex items-start gap-2 bg-white/70 p-2.5 rounded-xl border border-amber-200">
+            <span class="font-black text-red-600 shrink-0">• 보험료 할증 :</span>
+            <span>내야 할 자동차 보험료가 더 비싸지는 것 <strong class="text-red-600">(해당 없음 ❌)</strong></span>
+          </div>
+          <div class="flex items-start gap-2 bg-white/70 p-2.5 rounded-xl border border-amber-200">
+            <span class="font-black text-emerald-700 shrink-0">• 할인 유예 :</span>
+            <span>내년에 깎아줄 무사고 할인을 1년만 미루는 것 <strong class="text-emerald-700">(이것만 적용 ⭕)</strong></span>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-amber-200 text-xs sm:text-sm text-slate-700 font-semibold leading-relaxed">
+          👉 수십~수백만 원 하는 앞유리 정품 교체비, 억울하게 내 돈 들이지 마시고 <strong>블랙박스 영상 챙겨서 안심하고 자차처리</strong> 받으세요!
+        </div>
+      </div>
+
+      <!-- 전문가 프로필 영역: 인카금융서비스 김종평 본부장 (실제 인물 사진 대신 품격 있는 프리미엄 보상 전문가 SVG 엠블럼 장착) -->
+      <section class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white rounded-3xl p-6 shadow-2xl relative border border-slate-800 overflow-hidden mb-5">
+        <!-- 배경 앰비언트 글로우 장식 -->
+        <div class="absolute -right-8 -top-8 w-40 h-40 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="flex items-center gap-4 mb-4 relative z-10">
+          <!-- ================================================================
+               [프리미엄 금융·보상 전문가 벡터 일러스트 SVG 엠블럼]
+               - 차량 유리 방어 쉴드 + 완벽 보상 체크 + 황금 월계관/별 조합
+               ================================================================ -->
+          <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-emerald-400 via-amber-300 to-yellow-400 p-0.5 shrink-0 shadow-xl flex items-center justify-center">
+            <div class="w-full h-full bg-gradient-to-b from-slate-950 via-slate-900 to-emerald-950 rounded-[14px] flex items-center justify-center p-2">
+              <svg class="w-full h-full text-emerald-400" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- 외곽 안전 보장 방패 (Protection Shield) -->
+                <path d="M32 4L48 10V26C48 40.5 41.2 53.6 32 58C22.8 53.6 16 40.5 16 26V10L32 4Z" 
+                      fill="url(#shieldCompGrad)" stroke="#10B981" stroke-width="2.5" stroke-linejoin="round"/>
+                <!-- 차량 전면 유리 상징 실루엣 (Automotive Windshield) -->
+                <path d="M23 27L28 17H36L41 27Z" stroke="#38BDF8" stroke-width="2" stroke-linejoin="round" fill="#0284c7" fill-opacity="0.3"/>
+                <!-- 중앙 무과실 보상 완료 승인 체크마크 (Zero Fault Approved Check) -->
+                <path d="M25 36L30 41L41 29" stroke="#FDE68A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- 하단 황금 별 (Excellence Emblem) -->
+                <circle cx="32" cy="48" r="2.5" fill="#F59E0B"/>
+                <!-- 그라디언트 정의 -->
+                <defs>
+                  <linearGradient id="shieldCompGrad" x1="16" y1="4" x2="48" y2="58" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#0F172A"/>
+                    <stop offset="0.5" stop-color="#064E3B"/>
+                    <stop offset="1" stop-color="#022C22"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+          </div>
+
+          <div>
+            <span class="inline-block text-[11px] bg-gradient-to-r from-emerald-500 to-green-400 text-slate-950 font-black px-2.5 py-0.5 rounded-md tracking-tight shadow-sm">
+              자동차보험 보상처리 · 자차 수리 전문
+            </span>
+            <h3 class="text-[22px] font-black text-white mt-1 leading-tight">
+              김종평 본부장
+            </h3>
+            <p class="text-[13px] text-emerald-200 font-medium mt-0.5">
+              인카금융서비스 공식 시니어 파트너
+            </p>
+          </div>
+        </div>
+
+        <!-- 고객 감동 케어 메시지 -->
+        <div class="bg-slate-800/90 border border-slate-700/80 p-4 rounded-2xl mb-5 relative z-10">
+          <p class="text-[15px] leading-relaxed text-slate-200 font-normal">
+            "잘못된 카더라 소문 때문에 정당하게 누려야 할 보험 혜택을 놓치고, 피 같은 내 돈 수백만 원을 낭비하는 일이 없어야 합니다.<br><br>
+            고객님의 소중한 자동차와 가계 자산이 억울하게 새나가지 않도록, <strong>정확한 보험 약관과 공식 보상 전산 기준에 맞춰 가장 유리하고 정직한 보상 솔루션</strong>을 1:1로 정확하게 안내해 드리겠습니다."
+          </p>
+        </div>
+
+        <!-- 카드 내부 다이렉트 통화 연결 버튼 -->
+        <a href="tel:010-2246-5802" 
+           class="tap-highlight-none flex items-center justify-between bg-gradient-to-r from-emerald-400 via-emerald-300 to-green-300 hover:brightness-105 active:scale-98 transition-all text-slate-950 font-black px-5 py-4 rounded-2xl shadow-lg relative z-10">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">📞</span>
+            <div class="text-left leading-tight">
+              <span class="text-[12px] font-black text-emerald-950 block">터치하시면 바로 전화 연결됩니다</span>
+              <span class="text-[21px] tracking-tight font-black text-slate-950">010-2246-5802</span>
+            </div>
+          </div>
+          <span class="bg-slate-950 text-white text-[12px] px-3.5 py-1.5 rounded-xl font-bold">
+            1:1 무료상담
+          </span>
+        </a>
+      </section>
+
+      <!-- 하단 법적 안내문 -->
+      <footer class="py-3 text-center text-[12px] text-slate-500 font-normal leading-relaxed">
+        ※ 본 안내문은 고객님의 이해를 돕기 위한 자동차보험 보상 상식 요약 참고자료입니다.<br>
+        ※ 개별 보험사의 가입 조건 및 사고 당시 블랙박스 영상 구비 여부에 따라 과실 판정 및 세부 보상 기준은 차이가 있을 수 있습니다.
+      </footer>
+
+    </main>
+
+    <!-- 하단 상시 고정 바로콜 (iOS 홈바 세이프 에어리어 대응 완벽 플로팅 바) -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-4 bottom-safe bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent pointer-events-none">
+      <div class="w-full max-w-[600px] pointer-events-auto">
+        <a href="tel:010-2246-5802" 
+           id="quickCallBottomBar"
+           class="tap-highlight-none call-pulse w-full flex items-center justify-center gap-2.5 bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-700 hover:from-emerald-500 hover:to-green-500 text-white font-black text-[18px] sm:text-[20px] py-4 px-5 rounded-2xl shadow-2xl border-2 border-emerald-300/40 active:scale-[0.98] transition-transform">
+          <svg class="w-6 h-6 fill-current text-amber-300 shrink-0" viewBox="0 0 24 24">
+            <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/>
+          </svg>
+          <span class="truncate">김종평 본부장 <span class="text-amber-300 underline decoration-amber-300 underline-offset-4">앞유리 자차보상 바로콜</span></span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* ================================================================
+       1. 모바일(iOS Safari & Android) 스크롤 간섭 없는 보안 제어
+          - 텍스트 복사/드래그 및 우클릭만 선별 차단
+          - 터치 스크롤이나 tel: 전화 연결은 100% 원활하게 허용
+       ================================================================ */
+
+    // 마우스 우클릭 방지
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    // 텍스트 선택 및 드래그 복사 방지
+    document.addEventListener('selectstart', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    document.addEventListener('dragstart', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    /* ================================================================
+       2. 키보드 단축키 방지 (F12, 소스보기, 저장, 복사 단축키)
+       ================================================================ */
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'F12' || e.keyCode === 123) {
+        e.preventDefault();
+        return false;
+      }
+      if (e.ctrlKey || e.metaKey) {
+        const key = e.key ? e.key.toLowerCase() : '';
+        if (['u', 'c', 's', 'p', 'i', 'j'].indexOf(key) !== -1) {
+          e.preventDefault();
+          return false;
+        }
+      }
+    }, true);
+
+    /* ================================================================
+       3. iOS 사파리 & 안드로이드 전화걸기(tel: 링크) 신뢰성 보장
+       ================================================================ */
+    document.querySelectorAll('a[href^="tel:"]').forEach(function(callBtn) {
+      callBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+    });
+  </script>
+</body>
+</html>
