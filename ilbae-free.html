@@ -2,10 +2,10 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <!-- iOS 사파리 노치 및 하단 홈 바(Safe Area) 대응 viewport-fit=cover 설정 -->
+  <!-- iOS 사파리 노치 및 하단 홈 바(Safe Area) 완벽 대응 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   
-  <!-- iOS 사파리의 무분별한 전화번호 자동 링크 변환을 막고 디자인된 버튼으로 직접 통화 제어 -->
+  <!-- iOS 사파리의 무분별한 전화번호 자동 링크 변환 방지 및 지정 버튼으로만 통화 제어 -->
   <meta name="format-detection" content="telephone=no, address=no, email=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -13,21 +13,24 @@
   <title>월 1천원으로 1억 원 배상 방패! 일배책 200% 활용 꿀팁 | 차상헌 지점장</title>
 
   <!-- =================================================================
-       카카오톡 및 SNS 링크 공유 미리보기 (Open Graph / Twitter Cards)
+       카카오톡 및 SNS 링크 공유 미리보기 (오픈그래프 / Twitter Cards)
+       * 카카오톡 스크랩 봇 썸네일 누락 방지를 위한 고정 JPEG 규격 및 규격화 메타태그
        ================================================================= -->
   <meta name="description" content="남의 차를 긁거나 숙소 물건을 깼을 때 내 생돈 나가지 않는 비법! 월 1천원 특약으로 1억 원까지 보상받는 일상생활배상책임보험 1:1 상담.">
   
-  <!-- 오픈그래프 (카카오톡, 네이버, 페이스북 등) -->
+  <!-- 카카오톡 / 네이버 / 페이스북 오픈그래프 규격 -->
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ko_KR">
   <meta property="og:site_name" content="더금융서비스 | 차상헌 지점장">
   <meta property="og:title" content="월 1천원으로 1억 원 배상 방패! 일상생활배상책임보험 꿀팁">
   <meta property="og:description" content="남의 차 긁힘·반려견 사고·숙소 파손 등 쌩돈 날릴 위기 완벽 방어! 차상헌 지점장의 1:1 무료 증권 점검">
+  <meta property="og:url" content="https://donginsaju.github.io/dongin-saju/index.html">
 
   <!-- 
-    [카카오톡 스크랩 봇 전용 규격 설정]
-    1. auto=format 제거 및 fm=jpg 강제 지정 (WebP/AVIF 포맷 거부 방지)
-    2. 카카오톡 대형 카드 표준 규격: 1200x630 (1.91:1 비율)
+    [카카오톡 스크랩 봇 썸네일 노출 필수 규격]
+    1. 카카오톡이 거부하는 WebP/AVIF 대신 순수 JPG 포맷 강제(fm=jpg)
+    2. 카카오톡 대화방 와이드 썸네일 표준 비율 1200x630 (1.91:1)
+    3. 누락 원인이 되는 로컬 상대경로('차상헌.jpg') 제거 및 신뢰성 높은 HTTPS 절대경로 적용
   -->
   <meta property="og:image" content="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?fm=jpg&w=1200&h=630&fit=crop&q=85">
   <meta property="og:image:secure_url" content="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?fm=jpg&w=1200&h=630&fit=crop&q=85">
@@ -36,7 +39,7 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="일상생활배상책임보험 1:1 무료 상담 차상헌 지점장">
 
-  <!-- 트위터 카드 -->
+  <!-- 트위터 카드 표준 규격 -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="월 1천원으로 1억 원 배상 방패! 일상생활배상책임보험 활용법">
   <meta name="twitter:description" content="실수로 남에게 입힌 손해 1억 원까지 합법적 해결! 차상헌 지점장의 무료 상담">
@@ -49,22 +52,22 @@
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
   <style>
-    /* 60대 고객도 안경 없이 시원하게 읽히는 큰 글씨 & 한글 단어 줄바꿈 유지 */
+    /* 60대 이상 고객도 돋보기 없이 선명하게 읽히는 큰 글씨 & 한글 단어 끊김 방지 */
     * {
       font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", sans-serif;
       word-break: keep-all;
       line-height: 1.68;
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent; /* iOS 탭 시 번쩍이는 회색 박스 제거 */
+      -webkit-tap-highlight-color: transparent; /* 모바일 터치 시 깜빡이는 회색 박스 제거 */
     }
 
-    /* 텍스트 드래그 및 마우스 긁기 차단 (모바일 스크롤은 부드럽게 허용) */
+    /* 텍스트 드래그 및 무단 복사 차단 (모바일 스크롤은 부드럽게 유지) */
     body, html {
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      -webkit-touch-callout: none; /* iOS 사파리 롱프레스 팝업 방지 */
+      -webkit-touch-callout: none; /* iOS 롱프레스 돋보기/복사 팝업 방지 */
       background-color: #062b3a;
       overflow-x: hidden;
       width: 100%;
@@ -103,7 +106,7 @@
 
     /* iOS 사파리 홈바 및 노치 안전영역 여백 자동 계산 */
     .safe-bottom-padding {
-      padding-bottom: calc(100px + env(safe-area-inset-bottom, 20px));
+      padding-bottom: calc(105px + env(safe-area-inset-bottom, 20px));
     }
     
     .floating-bar-safe {
@@ -133,7 +136,7 @@
         </span>
       </div>
 
-      <!-- 메인 카피: 60대도 시원하게 읽히는 26px 큰 글씨 -->
+      <!-- 메인 카피: 60대도 시원하게 읽히는 25px 큰 글씨 -->
       <h1 class="text-[25px] leading-[1.4] font-black text-white mt-2 relative z-10">
         “남의 차 긁거나 숙소 물건 깼을 때,<br>
         <span class="text-amber-300 underline underline-offset-8 decoration-amber-400">내 쌩돈 수백만 원 물어주셨나요?</span><br>
@@ -157,6 +160,7 @@
       </div>
     </header>
 
+    <!-- 본문 섹션 1: 일상생활배상책임보험이란? -->
     <section class="px-5 pt-8">
       <div class="flex items-center gap-2 mb-2">
         <span class="text-2xl">💡</span>
@@ -215,6 +219,7 @@
       </div>
     </section>
 
+    <!-- 본문 섹션 2: 휴가철 & 일상생활 대표 사고 사례 -->
     <section class="px-5 pt-10">
       <div class="text-center mb-6">
         <span class="bg-cyan-100 text-cyan-900 text-[14px] font-extrabold px-3.5 py-1.5 rounded-full">
@@ -308,6 +313,7 @@
       </div>
     </section>
 
+    <!-- 본문 섹션 3: 4대 보장 조건 및 주의사항 -->
     <section class="px-5 pt-10">
       <div class="bg-gradient-to-br from-slate-900 via-slate-850 to-indigo-950 rounded-3xl p-5 text-white shadow-xl border border-slate-700 space-y-4">
         <div class="flex items-center justify-between border-b border-slate-700 pb-2.5">
@@ -372,6 +378,7 @@
       </div>
     </section>
 
+    <!-- 본문 섹션 4: 일배책의 3대 유형 & 내 증권 확인법 -->
     <section class="px-5 pt-10">
       <div class="text-center mb-6">
         <span class="bg-amber-100 text-amber-900 text-[14px] font-extrabold px-3.5 py-1.5 rounded-full">
@@ -464,24 +471,33 @@
       </div>
     </section>
 
+    <!-- 본문 섹션 5: 차상헌 지점장 프로필 및 고객 케어 메시지 -->
     <section class="px-5 pt-10 pb-6">
       <div class="bg-gradient-to-b from-slate-900 to-teal-950 text-white rounded-3xl p-6 shadow-2xl relative border border-slate-700 overflow-hidden">
         <!-- 배경 글로우 -->
         <div class="absolute -right-8 -top-8 w-36 h-36 bg-cyan-500/20 rounded-full blur-2xl pointer-events-none"></div>
 
         <div class="flex items-center gap-4 mb-4 relative z-10">
-          <!-- 차상헌 지점장님 프로필 영역 (차상헌.jpg 완전 제거 & 신뢰감 높은 프로페셔널 이미지 적용) -->
-          <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-cyan-400 via-teal-400 to-amber-300 p-1 shrink-0 shadow-xl relative overflow-hidden flex items-center justify-center">
-            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80" 
-                 alt="더금융서비스 차상헌 지점장" 
-                 class="w-full h-full object-cover object-top rounded-full bg-slate-800"
-                 onerror="this.style.display='none'; var next = this.nextElementSibling; if(next) next.style.display='flex';" />
-            
-            <!-- 이미지 로딩 오류 시 나타나는 백업 아바타 -->
-            <div class="w-full h-full rounded-full bg-slate-900 hidden items-center justify-center text-3xl shadow-inner">
-              👨‍💼
+          <!-- 
+            [수정 완료] 실제 인물 사진 대신 금융 자산 수호 & 배상책임 안심 방패를 상징하는 프리미엄 벡터 SVG 엠블럼 
+            - 차상헌.jpg 및 외부 사람 사진 완전 제거 
+          -->
+          <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-cyan-400 via-teal-400 to-amber-300 p-1 shrink-0 shadow-2xl relative flex items-center justify-center border border-cyan-300/40">
+            <div class="w-full h-full rounded-xl bg-slate-900 flex flex-col items-center justify-center p-2 text-center shadow-inner relative overflow-hidden group">
+              <!-- 배경 은은한 빛 효과 -->
+              <div class="absolute -top-3 -right-3 w-10 h-10 bg-cyan-400/25 rounded-full blur-md"></div>
+              
+              <!-- 배상책임 수호 방패 & 공정 보상 저울 & 금융 안심 벡터 아이콘 -->
+              <svg class="w-9 h-9 text-amber-300 drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <!-- 철통 수호 방패 베이스 -->
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="rgba(245, 158, 11, 0.12)" stroke="currentColor" stroke-width="1.8"/>
+                <!-- 중앙 안심 체크마크 & 법률 정의의 상징 -->
+                <path d="M9 12l2 2 4-4" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="text-[9px] font-black tracking-wider text-cyan-200 mt-1 uppercase">SAFE GUARD</span>
             </div>
           </div>
+
           <div>
             <span class="text-[11px] bg-amber-400 text-slate-950 font-black px-2.5 py-0.5 rounded-md tracking-wide">
               배상책임 & 보상분쟁 전문 컨설턴트
@@ -607,7 +623,7 @@
     /* ================================================================
        4. 모바일 안전형 개발자도구 감지 (백그라운드 탭 전환 시 오동작 방지)
           - iOS Safari 및 안드로이드에서 화면이 잠기거나 다른 앱으로 갔을 때
-            성능 타이머 지연으로 인해 화면이 뻗어버리는 심각한 버그 완벽 방지
+            성능 타이머 지연으로 인해 화면이 뻗어버리는 버그 완벽 방지
        ================================================================ */
     (function mobileSafeDebuggerGuard() {
       // 모바일 화면에서는 브라우저 절전 모드로 인한 오탐 방지 가드 적용
