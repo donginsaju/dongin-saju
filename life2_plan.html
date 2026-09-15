@@ -724,18 +724,22 @@
 
         <div class="flex items-center gap-4 mb-4 relative z-10">
           <!-- 
-            차상헌.jpg 등 로컬 깨짐 없는 안정적 고화질 프로필 이미지 
-            (네트워크 지연 시 전문 아바타 자동 백업 전환)
+            실제 사람 얼굴 대신 신뢰도 높은 금융 전문가 & 은퇴자산 브랜딩 벡터 엠블럼 적용
           -->
-          <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-cyan-400 via-blue-500 to-amber-300 p-1 shrink-0 shadow-xl relative overflow-hidden flex items-center justify-center">
-            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80" 
-                 alt="더금융서비스 차상헌 지점장" 
-                 class="w-full h-full object-cover object-top rounded-full bg-slate-800"
-                 onerror="this.style.display='none'; var next = this.nextElementSibling; if(next) next.style.display='flex';" />
-            
-            <!-- 이미지 에러 시 나타나는 백업 아바타 -->
-            <div class="w-full h-full rounded-full bg-slate-900 hidden items-center justify-center text-3xl shadow-inner">
-              👨‍💼
+          <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-400 via-yellow-500 to-amber-600 p-1 shrink-0 shadow-2xl relative flex items-center justify-center border border-amber-300/40">
+            <div class="w-full h-full rounded-xl bg-slate-900 flex flex-col items-center justify-center p-2 text-center shadow-inner relative overflow-hidden group">
+              <!-- 배경 은은한 빛 효과 -->
+              <div class="absolute -top-3 -right-3 w-10 h-10 bg-amber-400/20 rounded-full blur-md"></div>
+              
+              <!-- 신뢰를 상징하는 금융 방패 & 성장 자산 벡터 아이콘 -->
+              <svg class="w-9 h-9 text-amber-300 drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <!-- 방패 베이스 -->
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <!-- 상승 그래프 및 골든 라이프 -->
+                <path d="M8 14l3-3 2 2 3-4" stroke="currentColor" stroke-width="2"/>
+                <path d="M16 9h-3v3" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <span class="text-[9px] font-black tracking-wider text-amber-200 mt-1 uppercase">RETIRE PLAN</span>
             </div>
           </div>
           <div>
