@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <!-- iOS 사파리 노치 및 홈바 최적화 (viewport-fit=cover) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>고객님을 위한 명절·귀성길 안심 운전 및 긴급출동 가이드 | 인카금융서비스 김종평 본부장</title>
+
+  <!-- ================================================================
+       [카카오톡 & 모바일 메신저 전용 미리보기(Open Graph) 최적화 메타태그]
+       - 카카오톡, 라인, 페이스북 공유 시 썸네일 카드 100% 노출
+       - 1200x630 고해상도 차량 안심 케어 공식 썸네일 지정
+       ================================================================ -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="명절·귀성길 안심 운전 및 전 보험사 긴급출동 가이드">
+  <meta property="og:description" content="배터리 방전·타이어 펑크 시 터치 한 번으로 출동! 전국 손해보험사 24시간 원터치 긴급출동 번호부">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&h=630&q=85">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="명절 안심운전 및 긴급출동 가이드">
+  <meta property="og:locale" content="ko_KR">
+
+  <!-- 트위터 카드 & 모바일 브라우저 최적화 -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="명절·귀성길 안심 운전 및 긴급출동 가이드">
+  <meta name="twitter:description" content="터치 1번으로 내 보험사 기사님 호출! 11대 손해보험사 다이렉트 출동 번호 총정리">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&h=630&q=85">
+
+  <!-- 모바일 브라우저 상단바 테마 색상 (iOS Safari & Android Chrome) -->
+  <meta name="theme-color" content="#1e1b4b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Pretendard Font (한글 모바일 최고 가독성 서체) -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  
+  <style>
+    /* 60대 어르신도 편안하게 읽히는 한글 행간 및 단어 줄바꿈 */
+    * {
+      font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", Roboto, sans-serif;
+      word-break: keep-all;
+      line-height: 1.68;
+      letter-spacing: -0.02em;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: #0b1120;
+    }
+
+    body {
+      background-color: #0b1120;
+      color: #1e293b;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* 텍스트 긁기 방지 (터치 스크롤 및 전화 버튼 클릭은 100% 보장) */
+    .protect-content {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    /* 부드러운 플로팅 애니메이션 */
+    @keyframes subtle-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .animate-float {
+      animation: subtle-float 2.6s infinite ease-in-out;
+    }
+
+    /* 카드 입체감 그림자 */
+    .card-depth {
+      box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.1), 0 8px 12px -6px rgba(15, 23, 42, 0.05);
+    }
+
+    /* iOS 아이폰 하단 홈바 세이프 에어리어 완벽 대응 */
+    .pb-safe {
+      padding-bottom: calc(env(safe-area-inset-bottom, 16px) + 85px);
+    }
+    .bottom-safe {
+      padding-bottom: calc(env(safe-area-inset-bottom, 12px) + 12px);
+    }
+
+    .tap-highlight-none {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+  </style>
+</head>
+
+<body class="protect-content flex justify-center items-center min-h-screen">
+
+  <!-- 메인 모바일 컨테이너 (최대 480px 규격 보장) -->
+  <main class="w-full max-w-[480px] bg-slate-50 min-h-screen relative pb-safe shadow-2xl flex flex-col">
+
+    <!-- 상단 히어로 헤더 -->
+    <header class="relative bg-gradient-to-br from-blue-700 via-indigo-900 to-slate-950 text-white px-5 pt-8 pb-8 text-center rounded-b-[2.6rem] shadow-xl overflow-hidden shrink-0">
+      <!-- 배경 은은한 빛 효과 -->
+      <div class="absolute -top-12 -left-12 w-48 h-48 bg-blue-400/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-10 -right-10 w-48 h-48 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- 명절 안전운전 뱃지 -->
+      <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-4 py-1.5 rounded-full text-xs sm:text-sm font-extrabold text-amber-300 border border-white/25 mb-3.5 shadow-sm">
+        <span class="text-base">🚗💨</span>
+        <span>행복 가득 귀성·귀경길 필수 보관함</span>
+      </div>
+
+      <!-- 메인 큰 글씨 타이틀 -->
+      <h1 class="text-[26px] sm:text-[29px] font-black leading-snug tracking-tight text-white drop-shadow-sm">
+        “고객님, 고향 가시는 길<br>
+        <span class="text-amber-300 underline decoration-amber-400 decoration-2 underline-offset-8">안전운전</span> 하세요!”
+      </h1>
+
+      <p class="mt-3.5 text-[15px] sm:text-[16px] text-slate-200 font-medium px-1 leading-relaxed">
+        차량이 갑자기 멈추거나 펑크가 나도 당황하지 마세요.<br>
+        <strong class="text-white font-bold">터치 한 번으로 내 보험사 기사님</strong>이 신속하게 달려옵니다.
+      </p>
+
+      <!-- 긴급출동 현황 알림 카드 -->
+      <div class="mt-5 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 flex items-center gap-4 text-left shadow-inner">
+        <!-- 견인차 & 안심 출동 SVG 일러스트 -->
+        <div class="w-14 h-14 bg-amber-400/20 rounded-2xl flex items-center justify-center shrink-0 border border-amber-300/30">
+          <svg class="w-10 h-10 text-amber-300" viewBox="0 0 64 64" fill="none" stroke="currentColor">
+            <rect x="6" y="28" width="30" height="18" rx="3" fill="#FDE047" stroke="#0F172A" stroke-width="2"/>
+            <path d="M36 34 H48 L56 42 V46 H36 Z" fill="#FACC15" stroke="#0F172A" stroke-width="2"/>
+            <path d="M12 28 V18 H22 L30 28" fill="#E2E8F0" stroke="#0F172A" stroke-width="2"/>
+            <path d="M22 18 L6 8" stroke="#EA580C" stroke-width="3" stroke-linecap="round"/>
+            <path d="M6 8 V14" stroke="#EA580C" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="16" cy="46" r="6" fill="#1E293B" stroke="#F8FAFC" stroke-width="2"/>
+            <circle cx="48" cy="46" r="6" fill="#1E293B" stroke="#F8FAFC" stroke-width="2"/>
+          </svg>
+        </div>
+
+        <div>
+          <span class="inline-block bg-amber-400 text-slate-950 font-black text-[11px] px-2.5 py-0.5 rounded-md">
+            24시간 전국 출동 대기
+          </span>
+          <p class="text-[15px] font-bold text-white mt-0.5 leading-tight">
+            명절 연휴 비상대기 100% 가동 중!
+          </p>
+          <p class="text-[12px] text-slate-200 mt-0.5">
+            접수 즉시 계신 고속도로·국도로 즉각 출동
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- 메인 본문 콘텐츠 영역 -->
+    <div class="p-4 sm:p-5 space-y-6 text-slate-800 flex-1">
+
+      <!-- 1. 핵심 안내: 긴급출동 5대 핵심 서비스 -->
+      <section class="space-y-3">
+        <div class="flex items-center gap-2 pb-1 border-b-2 border-indigo-600">
+          <span class="text-2xl">🚨</span>
+          <h2 class="text-[20px] sm:text-[22px] font-black text-slate-900">당황스러운 순간, 바로 부르세요!</h2>
+        </div>
+
+        <p class="text-[15px] text-slate-600 font-medium leading-relaxed">
+          자동차보험에 가입되어 있다면 대부분 연간 무료 횟수 내에서 비용 걱정 없이 즉시 해결됩니다.
+        </p>
+
+        <!-- 5가지 상황 카드 리스트 -->
+        <div class="grid grid-cols-1 gap-2.5 pt-1">
+          
+          <!-- 상황 1: 배터리 방전 -->
+          <div class="bg-amber-50/80 border border-amber-200 rounded-2xl p-3.5 flex items-center gap-3.5 shadow-sm">
+            <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center text-2xl shrink-0 border border-amber-300/60">
+              🔋
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="font-extrabold text-slate-900 text-[15px]">시동이 안 걸릴 때 (배터리 방전)</h3>
+                <span class="text-[11px] bg-amber-200 text-amber-900 font-bold px-2 py-0.5 rounded">점프 시동</span>
+              </div>
+              <p class="text-[13px] text-slate-600 font-medium mt-0.5">
+                날씨가 춥거나 블랙박스로 방전되었을 때 긴급 시동을 지원합니다.
+              </p>
+            </div>
+          </div>
+
+          <!-- 상황 2: 타이어 펑크 -->
+          <div class="bg-rose-50/80 border border-rose-200 rounded-2xl p-3.5 flex items-center gap-3.5 shadow-sm">
+            <div class="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center text-2xl shrink-0 border border-rose-300/60">
+              🛞
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="font-extrabold text-slate-900 text-[15px]">타이어 공기압 경고 & 펑크</h3>
+                <span class="text-[11px] bg-rose-200 text-rose-900 font-bold px-2 py-0.5 rounded">지렁이 땜빵</span>
+              </div>
+              <p class="text-[13px] text-slate-600 font-medium mt-0.5">
+                못이 박혀 바람이 빠졌을 때 현장에서 펑크를 때우거나 스페어 타이어를 교체합니다.
+              </p>
+            </div>
+          </div>
+
+          <!-- 상황 3: 비상 급유 -->
+          <div class="bg-emerald-50/80 border border-emerald-200 rounded-2xl p-3.5 flex items-center gap-3.5 shadow-sm">
+            <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-2xl shrink-0 border border-emerald-300/60">
+              ⛽
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="font-extrabold text-slate-900 text-[15px]">기름이 뚝 떨어졌을 때 (비상 급유)</h3>
+                <span class="text-[11px] bg-emerald-200 text-emerald-900 font-bold px-2 py-0.5 rounded">무료 주유</span>
+              </div>
+              <p class="text-[13px] text-slate-600 font-medium mt-0.5">
+                인근 주유소까지 이동할 수 있도록 <strong>휘발유·경유 약 3리터</strong>를 직접 주유해 드립니다.
+              </p>
+            </div>
+          </div>
+
+          <!-- 상황 4: 문 잠김 -->
+          <div class="bg-sky-50/80 border border-sky-200 rounded-2xl p-3.5 flex items-center gap-3.5 shadow-sm">
+            <div class="w-12 h-12 bg-sky-100 rounded-xl flex items-center justify-center text-2xl shrink-0 border border-sky-300/60">
+              🔑
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="font-extrabold text-slate-900 text-[15px]">차 키를 두고 문이 잠겼을 때</h3>
+                <span class="text-[11px] bg-sky-200 text-sky-900 font-bold px-2 py-0.5 rounded">잠금 해제</span>
+              </div>
+              <p class="text-[13px] text-slate-600 font-medium mt-0.5">
+                차량 흠집이나 파손 없이 특수 장비로 잠긴 문을 안전하게 열어드립니다.
+              </p>
+            </div>
+          </div>
+
+          <!-- 상황 5: 견인 서비스 -->
+          <div class="bg-purple-50/80 border border-purple-200 rounded-2xl p-3.5 flex items-center gap-3.5 shadow-sm">
+            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-2xl shrink-0 border border-purple-300/60">
+              🚛
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="font-extrabold text-slate-900 text-[15px]">차량이 움직이지 않을 때 (긴급 견인)</h3>
+                <span class="text-[11px] bg-purple-200 text-purple-900 font-bold px-2 py-0.5 rounded">견인차 출동</span>
+              </div>
+              <p class="text-[13px] text-slate-600 font-medium mt-0.5">
+                가까운 정비소까지 기본거리(10km~최대 50km 특약) 무상 견인을 지원합니다.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 2. 비포 & 애프터 비교 컷: 모를 때 VS 알고 대비했을 때 -->
+      <section class="space-y-3">
+        <div class="flex items-center gap-2 pb-1 border-b-2 border-emerald-600">
+          <span class="text-2xl">⚖️</span>
+          <h2 class="text-[20px] sm:text-[22px] font-black text-slate-900">비교해보기 : 사고 발생 시 대처법</h2>
+        </div>
+        <p class="text-[14px] text-slate-600 font-medium">
+          미리 번호부를 저장해두면 당황해서 사설 견인차 바가지를 쓰는 일을 100% 방지할 수 있습니다!
+        </p>
+
+        <div class="grid grid-cols-2 gap-2.5 pt-1">
+          <!-- BEFORE 카드 -->
+          <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-3.5 flex flex-col justify-between shadow-sm">
+            <div>
+              <div class="inline-block bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded mb-2">
+                BEFORE (번호 없을 때)
+              </div>
+              <div class="text-3xl my-1.5 text-center">😰💦</div>
+              <h4 class="font-black text-rose-900 text-[13px] sm:text-sm mb-1 text-center">사설 렉카 바가지 위험!</h4>
+              <ul class="text-[11px] sm:text-xs text-rose-800 space-y-1 font-medium list-disc list-inside">
+                <li>무턱대고 견인 고리 걸었다가 수십만 원 청구</li>
+                <li>갓길에서 어쩔 줄 몰라 2차 사고 위험 증가</li>
+                <li>보험사 번호 찾느라 온 가족 발 동동</li>
+              </ul>
+            </div>
+            <div class="mt-3 text-center bg-rose-200/80 rounded-lg py-1 text-[11px] text-rose-950 font-bold">
+              위험천만 & 과다 비용
+            </div>
+          </div>
+
+          <!-- AFTER 카드 -->
+          <div class="bg-emerald-50 border-2 border-emerald-300 rounded-2xl p-3.5 flex flex-col justify-between shadow-sm">
+            <div>
+              <div class="inline-block bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded mb-2">
+                AFTER (가이드 소지 시)
+              </div>
+              <div class="text-3xl my-1.5 text-center">😎👍</div>
+              <h4 class="font-black text-emerald-900 text-[13px] sm:text-sm mb-1 text-center">터치 1번으로 안심 귀가!</h4>
+              <ul class="text-[11px] sm:text-xs text-emerald-800 space-y-1 font-bold list-disc list-inside">
+                <li>내 자동차보험 콜센터로 정식 무상 접수 완료</li>
+                <li>출동 기사님 실시간 GPS 위치 문자로 확인</li>
+                <li>비상등 켜고 가드레일 밖으로 안전 대피</li>
+              </ul>
+            </div>
+            <div class="mt-3 text-center bg-emerald-200 rounded-lg py-1 text-[11px] text-emerald-950 font-black">
+              안전 보장 & 100% 안심
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 손해보험사 전체 콜센터 원터치 전화번호부 -->
+      <section class="space-y-3 bg-slate-100/90 border border-slate-300 rounded-3xl p-4 card-depth">
+        <div class="text-center space-y-1">
+          <div class="inline-flex items-center gap-1 text-[11px] font-black bg-blue-600 text-white px-2.5 py-0.5 rounded-full">
+            <span>📞</span> 터치 시 즉시 통화 연결
+          </div>
+          <h2 class="text-[20px] sm:text-[22px] font-black text-slate-900">전국 손해보험사 24시간 긴급출동</h2>
+          <p class="text-[12px] text-slate-500 font-medium">
+            가입하신 보험사의 버튼을 누르시면 해당 콜센터로 바로 연결됩니다.
+          </p>
+        </div>
+
+        <!-- 11개 보험사 그리드 버튼 -->
+        <div class="grid grid-cols-2 gap-2.5 pt-2">
+
+          <!-- 삼성화재 -->
+          <a href="tel:1588-5114" class="tap-highlight-none bg-white hover:bg-blue-50 border-2 border-slate-200 active:border-blue-600 rounded-2xl p-3 text-center shadow-sm transition-all flex flex-col justify-center items-center active:scale-95">
+            <span class="text-[14px] font-black text-slate-900">삼성화재</span>
+            <span class="text-[17px] font-black text-blue-700 tracking-tight mt-0.5">1588-5114</span>
+            <span class="text-[10px] text-slate-500 font-semibold mt-0.5">애니카 긴급출동</span>
+          </a>
+
+          <!-- 현대해상 -->
+          <a href="tel:1588-5656" class="tap-highlight-none bg-white hover:bg-blue-50 border-2 border-slate-200 active:border-blue-600 rounded-2xl p-3 text-center shadow-sm transition-all flex flex-col justify-center items-center active:scale-95">
+            <span class="text-[14px] font-black text-slate-900">현대해상</span>
+            <span class="text-[17px] font-black text-blue-700 tracking-tight mt-0.5">1588-5656</span>
+            <span class="text-[10px] text-slate-500 font-semibold mt-0.5">하이카 긴급출동</span>
+          </a>
+
+          <!-- KB손해보험 -->
+          <a href="tel:1544-0114" class="tap-highlight-none bg-white hover:bg-blue-50 border-2 border-slate-200 active:border-blue-600 rounded-2xl p-3 text-center shadow-sm transition-all flex flex-col justify-center items-center active:scale-95">
+            <span class="text-[14px] font-black text-slate-900">KB손해보험</span>
+            <span class="text-[17px] font-black text-blue-700 tracking-tight mt-0.5">1544-0114</span>
+            <span class="text-[10px] text-slate-500 font-semibold mt-0.5">매직카 서비스</span>
+          </a>
+
+          <!-- DB손해보험 -->
+          <a href="tel:1588-0100" class="tap-highlight-none bg-white hover:bg-blue-50 border-2 border-slate-200 active:border-blue-600 rounded-2xl p-3 text-center shadow-sm transition-all flex flex-col justify-center items-center active:scale-95">
+            <span class="text-[14px] font-black text-slate-900">DB손해보험</span>
+            <span class="text-[17px] font-black text-blue-700 tracking-tight mt-0.5">1588-0100</span>
+            <span class="text-[10px] text-slate-500 font-semibold mt-0.5">프로미카 긴급출동</span>
+          </a>
+
+          <!-- 메리츠화재 -->
+          <a href="tel:1566-7711" class="tap-highlight-none bg-white hover:bg-blue-50 border-2 border-slate-200 active:border-blue-600 rounded-2xl p-3 text-center shadow-sm transition-all flex flex-col justify-center items-center active:scale-95">
+            <span class="text-[14px] font-black text-slate-900">메리츠화재</span>
+            <span class="text-[17px] font-black text-blue-700 tracking-tight mt-0.5">1566-7711</span>
+            <span class="text-[10px] text-slate-500 font-semibold mt-0.5">레디카 긴급출동</span>
+          </a>
+
+          <!-- AXA손해보험 -->
+          <a href="tel:1566-1566" class="tap-highlight-none bg-white hover:bg-blue-50 border-2 border-slate-200 active:border-blue-600 rounded-2xl p-3 text-center shadow-sm transition-all flex flex-col justify-center items-center active:scale-95">
+            <span class="text-[14px] font-black text-slate-900">AXA손해보험</span>
+            <span class="text-[17px] font-black text-blue-700 tracking-tight mt-0.5">1566-1566</span>
+            <span class="text-[10px] text-slate-500 font-semibold mt-0.5">악사 다이렉트</span>
+          </a>
+
+          <!-- 롯데손해보험 -->
+          <a href="tel:1588-3344" class="tap-highlight-none bg-white hover:bg-blue-50 border-2 border-slate-200 active:border-blue-600 rounded-2xl p-3 text-center shadow-sm transition-all flex flex-col justify-center items-center active:scale-95">
+            <span class="text-[14px] font-black text-slate-900">롯데손해보험</span>
+            <span class="text-[17px] font-black text-blue-700 tracking-tight mt-0.5">1588-3344</span>
+            <span class="text-[10px] text-slate-500 font-semibold mt-0.5">해피카 출동서비스</span>
+          </a>
+
+          <!-- 하나손해보험 -->
+          <a href="tel:1566-3000" class="tap-highlight-none bg-white hover:bg-blue-50 border-2 border-slate-200 active:border-blue-600 rounded-2xl p-3 text-center shadow-sm transition-all flex flex-col justify-center items-center active:scale-95">
+            <span class="text-[14px] font-black text-slate-900">하나손해보험</span>
+            <span class="text-[17px] font-black text-blue-700 tracking-tight mt-0.5">1566-3000</span>
+            <span class="text-[10px] text-slate-500 font-semibold mt-0.5">에듀카 원데이출동</span>
+          </a>
+
+          <!-- 한화손해보험 -->
+          <a href="tel:1566-8000" class="tap-highlight-none bg-white hover:bg-blue-50 border-2 border-slate-200 active:border-blue-600 rounded-2xl p-3 text-center shadow-sm transition-all flex flex-col justify-center items-center active:scale-95">
+            <span class="text-[14px] font-black text-slate-900">한화손해보험</span>
+            <span class="text-[17px] font-black text-blue-700 tracking-tight mt-0.5">1566-8000</span>
+            <span class="text-[10px] text-slate-500 font-semibold mt-0.5">카네비 서비스</span>
+          </a>
+
+          <!-- 흥국화재 -->
+          <a href="tel:1688-1688" class="tap-highlight-none bg-white hover:bg-blue-50 border-2 border-slate-200 active:border-blue-600 rounded-2xl p-3 text-center shadow-sm transition-all flex flex-col justify-center items-center active:scale-95">
+            <span class="text-[14px] font-black text-slate-900">흥국화재</span>
+            <span class="text-[17px] font-black text-blue-700 tracking-tight mt-0.5">1688-1688</span>
+            <span class="text-[10px] text-slate-500 font-semibold mt-0.5">이유다이렉트</span>
+          </a>
+
+          <!-- MG손해보험 -->
+          <a href="tel:1588-5959" class="tap-highlight-none col-span-2 bg-white hover:bg-blue-50 border-2 border-slate-200 active:border-blue-600 rounded-2xl p-3 text-center shadow-sm transition-all flex items-center justify-center gap-3 active:scale-95">
+            <span class="text-[14px] font-black text-slate-900">MG손해보험</span>
+            <span class="text-[17px] font-black text-blue-700 tracking-tight">1588-5959</span>
+            <span class="text-[11px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-medium">조이카 긴급출동</span>
+          </a>
+
+        </div>
+
+        <div class="mt-2.5 p-3 bg-amber-100/90 border border-amber-300/80 rounded-xl text-[12px] text-amber-950 font-bold flex items-center gap-2">
+          <span>💡</span>
+          <span>고속도로 사고 시 한국도로공사 긴급견인(1588-2504) 무료 이용 가능!</span>
+        </div>
+      </section>
+
+      <!-- 4. 고속도로 정차 시 3단계 안전 수칙 -->
+      <section class="bg-blue-50/80 border border-blue-200 rounded-3xl p-4 space-y-3">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">⚠️</span>
+          <h3 class="text-[17px] font-black text-blue-950">꼭 지켜주세요! 사고 났을 때 3단계 요령</h3>
+        </div>
+
+        <div class="space-y-2 text-[14px]">
+          <div class="bg-white p-3 rounded-xl border border-blue-150 flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-blue-700 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
+            <div>
+              <strong class="text-slate-900">비상등 켜고 안전한 갓길로 이동</strong>
+              <p class="text-[12px] text-slate-600 mt-0.5">차량이 주행 가능하다면 신속하게 가장 바깥쪽 갓길로 정차하세요.</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-3 rounded-xl border border-blue-150 flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-blue-700 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
+            <div>
+              <strong class="text-slate-900">탑승자 전원 가드레일 밖 안전 대피</strong>
+              <p class="text-[12px] text-slate-600 mt-0.5">차 안에 머물면 후속 차량 추돌 위험이 큽니다. 가드레일 밖 안전지대로 피하세요.</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-3 rounded-xl border border-blue-150 flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-blue-700 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
+            <div>
+              <strong class="text-slate-900">대피 후 위의 번호로 보험사 접수</strong>
+              <p class="text-[12px] text-slate-600 mt-0.5">안전이 확보된 장소에서 가입 보험사로 전화해 위치를 알려주시면 기사님이 즉시 출동합니다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. 전문가 프로필 영역: 인카금융서비스 김종평 본부장 (실제 인물 사진 대신 고품격 금융/보상 벡터 SVG 엠블럼 장착) -->
+      <section class="relative mt-7 pt-2 mb-2">
+        <div class="text-center mb-3">
+          <span class="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white font-black text-xs px-4 py-1.5 rounded-full shadow-md tracking-wider">
+            ★ 고객 안심 365 케어 파트너 ★
+          </span>
+        </div>
+
+        <div class="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-white rounded-3xl p-5 sm:p-6 shadow-2xl border-2 border-amber-400/50 relative overflow-hidden">
+          <div class="absolute -top-12 -right-12 w-40 h-40 bg-amber-400/15 rounded-full blur-2xl pointer-events-none"></div>
+          <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-indigo-500/20 rounded-full blur-2xl pointer-events-none"></div>
+
+          <!-- 상단 엠블럼 및 직함 -->
+          <div class="flex items-center gap-4 mb-4 relative z-10">
+            <!-- ================================================================
+                 [프리미엄 은퇴설계·연금자산·보상 자산관리 벡터 일러스트 SVG 엠블럼]
+                 안전 방패(Shield) + 우상향 자산 성장 차트(Growth) + 골드 별(Star)
+                 ================================================================ -->
+            <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-400 via-amber-200 to-yellow-500 p-0.5 shrink-0 shadow-xl flex items-center justify-center">
+              <div class="w-full h-full bg-gradient-to-b from-slate-950 via-indigo-950 to-slate-900 rounded-[14px] flex items-center justify-center p-2">
+                <svg class="w-full h-full text-amber-400" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- 외곽 안전 보장 방패 (Protection Shield) -->
+                  <path d="M32 4L48 10V26C48 40.5 41.2 53.6 32 58C22.8 53.6 16 40.5 16 26V10L32 4Z" 
+                        fill="url(#shieldGradIcon)" stroke="#F59E0B" stroke-width="2.5" stroke-linejoin="round"/>
+                  <!-- 중앙 자산 성장 그래프 (Asset Growth) -->
+                  <path d="M25 36V28M32 36V22M39 36V17" stroke="#FDE68A" stroke-width="2.5" stroke-linecap="round"/>
+                  <!-- 우상향 성장 화살표 (Financial Rise) -->
+                  <path d="M23 30L31 22L39 16L42 19" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M43 15L43 20M43 15L38 15" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+                  <!-- 부의 결실을 상징하는 황금 별 심볼 -->
+                  <circle cx="32" cy="45" r="3" fill="#F59E0B"/>
+                  <path d="M32 48V51" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/>
+                  <defs>
+                    <linearGradient id="shieldGradIcon" x1="16" y1="4" x2="48" y2="58" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#1E293B"/>
+                      <stop offset="0.5" stop-color="#0F172A"/>
+                      <stop offset="1" stop-color="#1E1B4B"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+
+            <div>
+              <span class="inline-block text-[11px] bg-gradient-to-r from-amber-400 to-yellow-300 text-slate-950 font-black px-2.5 py-0.5 rounded-md tracking-tight shadow-sm">
+                은퇴설계 & 연금자산 · 자산방어 전문
+              </span>
+              <h3 class="text-[22px] font-black text-white mt-1 leading-tight">
+                김종평 본부장
+              </h3>
+              <p class="text-[13px] text-blue-200 font-medium mt-0.5">
+                인카금융서비스 공인 시니어 파트너
+              </p>
+            </div>
+          </div>
+
+          <!-- 인사말 -->
+          <div class="relative text-left bg-slate-800/80 p-4 rounded-2xl border border-slate-700/70 mb-4">
+            <p class="text-amber-300 font-bold text-[15px] mb-1">
+              “사랑하는 가족을 뵈러 가시는 길, 가장 안전하게 지켜드립니다”
+            </p>
+            <p class="text-slate-300 text-[13px] sm:text-[14px] leading-relaxed font-normal">
+              운전 중 갑작스러운 사고나 고장으로 놀라셨나요? 가입하신 자동차보험의 보장이 충분한지, 단기운전자 특약이나 사고 후 할증 여부가 궁금하시다면 언제든 편안히 문의해 주세요.
+            </p>
+          </div>
+
+          <!-- 맞춤 지원 서비스 리스트 -->
+          <div class="my-4 bg-white/10 backdrop-blur-md rounded-2xl p-3.5 border border-white/15 space-y-2 text-[13px]">
+            <div class="flex items-start gap-2 text-slate-200">
+              <span class="text-amber-400 font-black text-sm shrink-0">✔</span>
+              <p class="leading-relaxed"><strong>내 보험사 긴급출동 확인 & 사고 접수 동행 요령</strong> 무료 안내</p>
+            </div>
+            <div class="flex items-start gap-2 text-slate-200">
+              <span class="text-amber-400 font-black text-sm shrink-0">✔</span>
+              <p class="leading-relaxed"><strong>명절 교대 운전(단기운전자 특약) & 다른 차 운전</strong> 사전 점검</p>
+            </div>
+            <div class="flex items-start gap-2 text-slate-200">
+              <span class="text-amber-400 font-black text-sm shrink-0">✔</span>
+              <p class="leading-relaxed"><strong>은퇴자산·연금설계 및 자동차·운전자보험 비교 분석</strong> 1:1 맞춤 컨설팅</p>
+            </div>
+          </div>
+
+          <!-- 카드 내부 직통 바로콜 버튼 -->
+          <a href="tel:010-2246-5802" class="tap-highlight-none block w-full bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-300 hover:brightness-105 active:scale-[0.98] text-slate-950 font-black text-[17px] sm:text-[18px] py-3.5 px-4 rounded-2xl shadow-lg transition-transform text-center mt-2">
+            <span class="mr-1">📞</span> 김종평 본부장 직통 상담 (010-2246-5802)
+          </a>
+
+          <p class="text-[11px] text-center text-slate-400 mt-3 leading-normal">
+            인카금융서비스는 모든 손해보험·생명보험사를 꼼꼼히 비교하여 고객님께 가장 유리한 솔루션을 찾아드립니다.
+          </p>
+
+        </div>
+      </section>
+
+      <!-- 푸터 -->
+      <footer class="text-center pt-3 pb-4 text-[12px] text-slate-400 border-t border-slate-200 space-y-1">
+        <p class="font-medium text-slate-500">
+          본 안내문은 명절 귀성·귀경길 및 일상 주행 시 안전을 위한 공익적 가이드입니다.
+        </p>
+        <p>
+          전 좌석 안전벨트 착용과 충분한 휴식으로 행복한 여정 되시길 기원합니다.
+        </p>
+      </footer>
+
+    </div>
+
+    <!-- 하단 고정 전화 상담 바 (모바일 전용 간편 원터치 바) -->
+    <aside class="sticky bottom-0 bg-white/95 backdrop-blur-md border-t border-slate-300/80 p-3 px-4 flex items-center justify-between z-50 shadow-[0_-4px_15px_rgba(0,0,0,0.06)] bottom-safe">
+      <div class="text-left">
+        <span class="text-[11px] font-extrabold text-amber-600 block">인카금융서비스 김종평 본부장</span>
+        <span class="text-[14px] font-black text-slate-900">운행 중 긴급·보험 상담</span>
+      </div>
+      <a href="tel:010-2246-5802" class="tap-highlight-none bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-600 hover:to-indigo-600 text-white font-black text-[14px] py-2.5 px-4 rounded-xl shadow-md flex items-center gap-1.5 active:scale-95 transition-all">
+        <svg class="w-4 h-4 text-amber-300" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 4V3z"/>
+        </svg>
+        <span>바로 통화연결</span>
+      </a>
+    </aside>
+
+  </main>
+
+  <script>
+    /* ================================================================
+       1. 모바일(iOS Safari & Android) 스크롤 간섭 없는 보안 제어
+          - 텍스트 복사/드래그 및 우클릭만 선별 차단
+          - 터치 스크롤이나 tel: 전화 연결은 100% 원활하게 허용
+       ================================================================ */
+
+    // 마우스 우클릭 방지
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    // 텍스트 선택 및 드래그 복사 방지
+    document.addEventListener('selectstart', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    document.addEventListener('dragstart', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    /* ================================================================
+       2. 키보드 단축키 방지 (F12, 소스보기, 저장, 복사 단축키)
+       ================================================================ */
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'F12' || e.keyCode === 123) {
+        e.preventDefault();
+        return false;
+      }
+      if (e.ctrlKey || e.metaKey) {
+        const key = e.key ? e.key.toLowerCase() : '';
+        if (['u', 'c', 's', 'p', 'i', 'j'].indexOf(key) !== -1) {
+          e.preventDefault();
+          return false;
+        }
+      }
+    }, true);
+
+    /* ================================================================
+       3. iOS 사파리 & 안드로이드 전화걸기(tel: 링크) 신뢰성 보장
+       ================================================================ */
+    document.querySelectorAll('a[href^="tel:"]').forEach(function(callBtn) {
+      callBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+    });
+  </script>
+</body>
+</html>
