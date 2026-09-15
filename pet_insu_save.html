@@ -2,32 +2,78 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>사랑하는 우리 아이 병원비 폭탄 막기! 펫보험 vs 펫적금 완벽 가이드 | 차상헌 지점장</title>
+  <!-- iOS 사파리 노치 및 하단 홈 바(Safe Area) 완벽 대응 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   
+  <!-- iOS 사파리의 무분별한 전화번호 자동 변환 방지 및 지정 버튼으로만 안전 통화 제어 -->
+  <meta name="format-detection" content="telephone=no, address=no, email=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <title>사랑하는 우리 아이 병원비 폭탄 막기! 펫보험 vs 펫적금 완벽 가이드 | 차상헌 지점장</title>
+
+  <!-- =================================================================
+       카카오톡 및 SNS 링크 공유 미리보기 (오픈그래프 / Twitter Cards)
+       * 카카오톡 대화방 와이드 썸네일 누락 방지를 위한 고정 JPEG 규격 및 메타태그
+       ================================================================= -->
+  <meta name="description" content="슬개골 탈구·응급 수술비 수백만 원 완벽 방어! 펫보험 50% ➕ 펫적금 50% 황금 믹스 솔루션. 차상헌 지점장의 1:1 무료 맞춤 상담.">
+  
+  <!-- 카카오톡 / 네이버 / 페이스북 오픈그래프 규격 -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:site_name" content="더금융서비스 | 차상헌 지점장">
+  <meta property="og:title" content="우리 아이 병원비 폭탄 막기! 펫보험 vs 펫적금 완벽 가이드">
+  <meta property="og:description" content="갑자기 터지는 수백만 원 수술비, 보험이 맞을까 적금이 맞을까? 50:50 황금 솔루션 (차상헌 지점장 1:1 무료 상담)">
+  <meta property="og:url" content="https://donginsaju.github.io/dongin-saju/pet_care.html">
+
+  <!-- 
+    [카카오톡 스크랩 봇 썸네일 노출 필수 규격]
+    1. 카카오톡이 거부하는 WebP/AVIF 대신 순수 JPG 포맷 강제(fm=jpg)
+    2. 카카오톡 대화방 와이드 썸네일 표준 비율 1200x630 (1.91:1)
+    3. 누락 원인이 되는 로컬 상대경로('차상헌.jpg') 완전 제거 및 HTTPS 절대경로 적용
+  -->
+  <meta property="og:image" content="https://images.unsplash.com/photo-1548767797-d8c844163c4c?fm=jpg&w=1200&h=630&fit=crop&q=85">
+  <meta property="og:image:secure_url" content="https://images.unsplash.com/photo-1548767797-d8c844163c4c?fm=jpg&w=1200&h=630&fit=crop&q=85">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="펫보험 vs 펫적금 1:1 무료 상담 차상헌 지점장">
+
+  <!-- 트위터 카드 표준 규격 -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="우리 아이 병원비 폭탄 막기! 펫보험 vs 펫적금 완벽 가이드">
+  <meta name="twitter:description" content="목돈 수술비 방어와 비상금 통장을 동시에! 펫보험 50% + 펫적금 50% 황금 믹스 솔루션">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1548767797-d8c844163c4c?fm=jpg&w=1200&h=630&fit=crop&q=85">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
+
   <!-- Pretendard Font (한글 모바일 최고 가독성 서체) -->
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-  
+
   <style>
-    /* 60대 어르신도 돋보기 없이 선명하게 읽히는 큰 글씨 & 한글 단어 줄바꿈 유지 */
+    /* 60대 이상 고객도 돋보기 없이 선명하게 읽히는 큰 글씨 & 한글 단어 끊김 방지 */
     * {
-      font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-      word-break: keep-all; /* 한글 단어 중간 끊김 방지 */
+      font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", sans-serif;
+      word-break: keep-all;
       line-height: 1.68;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    /* 텍스트 드래그 및 마우스 긁기 원천 차단 */
+    /* 텍스트 드래그 및 무단 복사 차단 (모바일 부드러운 스크롤은 100% 보장) */
     body, html {
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      -webkit-touch-callout: none; /* 스마트폰 길게 누르기 복사 팝업 방지 */
+      -webkit-touch-callout: none;
       background-color: #1e1b4b;
       overflow-x: hidden;
+      width: 100%;
+      min-height: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     /* 프리미엄 카드 섀도우 & 글로우 효과 */
@@ -43,30 +89,35 @@
       box-shadow: 0 10px 30px -4px rgba(244, 63, 94, 0.35);
     }
 
-    .glow-emerald {
-      box-shadow: 0 10px 30px -4px rgba(16, 185, 129, 0.35);
-    }
-
     /* 하단 통화 바로콜 펄스 애니메이션 */
     @keyframes heartbeat-pulse {
-      0% { transform: scale(0.97); opacity: 0.92; }
+      0% { transform: scale(0.98); opacity: 0.95; }
       50% { transform: scale(1.02); opacity: 1; }
-      100% { transform: scale(0.97); opacity: 0.92; }
+      100% { transform: scale(0.98); opacity: 0.95; }
     }
     .call-pulse {
       animation: heartbeat-pulse 2.2s infinite ease-in-out;
     }
 
     .call-link-target {
-      -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
+      cursor: pointer;
+    }
+
+    /* iOS 사파리 홈바 및 노치 안전영역 여백 자동 계산 */
+    .safe-bottom-padding {
+      padding-bottom: calc(105px + env(safe-area-inset-bottom, 20px));
+    }
+    
+    .floating-bar-safe {
+      padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
     }
   </style>
 </head>
 
 <body class="bg-slate-950 text-slate-800 flex justify-center min-h-screen">
   <!-- 모바일 100% 전용 프레임 (최대 480px) -->
-  <div class="w-full max-w-[480px] bg-slate-50 min-h-screen relative pb-36 shadow-2xl">
+  <div class="w-full max-w-[480px] bg-slate-50 min-h-screen relative safe-bottom-padding shadow-2xl">
 
     <!-- 상단 프리미엄 헤더: 펫보험 vs 펫적금 완벽 가이드 -->
     <header class="bg-gradient-to-br from-amber-600 via-orange-700 to-slate-950 text-white px-5 pt-8 pb-10 rounded-b-[2.8rem] relative overflow-hidden">
@@ -76,7 +127,7 @@
 
       <!-- 상단 전문 인증 배지 -->
       <div class="flex items-center justify-between gap-2 mb-4 relative z-10">
-        <span class="inline-flex items-center gap-1.5 bg-black/30 border border-amber-300/40 text-amber-200 text-[13px] font-bold px-3.5 py-1.5 rounded-full backdrop-blur-sm">
+        <span class="inline-flex items-center gap-1.5 bg-black/35 border border-amber-300/40 text-amber-200 text-[13px] font-bold px-3.5 py-1.5 rounded-full backdrop-blur-sm">
           <span class="w-2 h-2 rounded-full bg-amber-300 animate-ping"></span>
           반려가족 의료비 케어 가이드
         </span>
@@ -85,21 +136,21 @@
         </span>
       </div>
 
-      <!-- 메인 카피: 60대도 시원하게 읽히는 26px 큰 글씨 -->
-      <h1 class="text-[26px] leading-[1.38] font-black text-white mt-2 relative z-10">
+      <!-- 메인 카피: 60대도 시원하게 읽히는 25px 큰 글씨 -->
+      <h1 class="text-[25px] leading-[1.38] font-black text-white mt-2 relative z-10">
         “우리 강아지·고양이,<br>
         <span class="text-amber-300 underline underline-offset-8 decoration-amber-400">갑자기 수백만 원 수술비</span> 터지면<br>
         <span class="text-yellow-200 underline underline-offset-8 decoration-yellow-400">적금이 나을까? 보험이 나을까?</span>”
       </h1>
 
-      <p class="mt-4 text-[17px] text-amber-100 font-medium leading-relaxed relative z-10">
-        말 못 하는 반려동물은 건강보험이 없어 병원비가 사람보다 훨씬 무섭습니다!<br>
-        <strong>"적금만 모으다 큰 병 터져 낭패 볼까, 보험료만 내다 아까울까?"</strong> 고민되셨죠?<br>
-        중학생도 3분 만에 쏙쏙 이해하는 <strong>'펫보험 vs 펫적금' 완벽 비교와 50:50 황금 솔루션</strong>을 쉽게 풀어드립니다.
+      <p class="mt-4 text-[16px] text-amber-100 font-medium leading-relaxed relative z-10">
+        말 못 하는 반려동물은 국민건강보험 혜택이 없어 병원비가 사람보다 훨씬 무섭습니다!<br>
+        <strong>"적금만 붓다가 큰 병 터져 피눈물 흘릴까, 보험료만 날릴까?"</strong> 고민되셨죠?<br>
+        누구나 3분 만에 쏙쏙 이해하는 <strong>'펫보험 vs 펫적금' 장단점 비교와 50:50 황금 솔루션</strong>을 알기 쉽게 풀어드립니다.
       </p>
 
       <!-- 핵심 요약 플로팅 카드 -->
-      <div class="mt-6 bg-black/30 backdrop-blur-md border border-amber-200/30 p-4 rounded-2xl flex items-center gap-4 relative z-10">
+      <div class="mt-6 bg-black/35 backdrop-blur-md border border-amber-200/30 p-4 rounded-2xl flex items-center gap-4 relative z-10 shadow-lg">
         <div class="w-14 h-14 shrink-0 bg-gradient-to-tr from-amber-400 to-yellow-300 text-slate-950 rounded-2xl flex items-center justify-center text-3xl shadow-lg font-black">
           🐶
         </div>
@@ -139,12 +190,12 @@
           <div class="grid grid-cols-2 gap-3 text-center">
             <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700">
               <span class="text-xs text-slate-400 font-bold block">2021년 치료비</span>
-              <span class="text-[20px] font-black text-slate-300 mt-1 block">46.8만 원</span>
+              <span class="text-[19px] font-black text-slate-300 mt-1 block">46.8만 원</span>
               <span class="text-[11px] text-slate-500">단순 감기/기본치료</span>
             </div>
             <div class="bg-slate-900/80 p-3 rounded-xl border border-rose-500/50 bg-rose-950/30">
               <span class="text-xs text-rose-300 font-bold block">2023년 치료비</span>
-              <span class="text-[20px] font-black text-rose-400 mt-1 block">78.7만 원</span>
+              <span class="text-[19px] font-black text-rose-400 mt-1 block">78.7만 원</span>
               <span class="text-[11px] text-rose-300">68.2% 대폭 상승 ↑</span>
             </div>
           </div>
@@ -200,23 +251,23 @@
           <div class="flex items-center justify-between pb-3 border-b border-amber-200">
             <div class="flex items-center gap-2">
               <span class="text-2xl">🛡️</span>
-              <h3 class="text-[20px] font-black text-amber-950">펫보험 (목돈 수술비 방패)</h3>
+              <h3 class="text-[19px] font-black text-amber-950">펫보험 (목돈 수술비 방패)</h3>
             </div>
             <span class="text-xs bg-amber-400 text-slate-950 font-black px-2.5 py-1 rounded-full">큰 병 해결</span>
           </div>
 
           <div class="mt-3.5 space-y-2 text-[15px]">
             <div class="flex items-start gap-2">
-              <span class="text-amber-700 font-black">💵 납입:</span>
+              <span class="text-amber-700 font-black shrink-0">💵 납입:</span>
               <span class="text-slate-800">매월 3만 ~ 6만 원 선</span>
             </div>
             <div class="flex items-start gap-2">
-              <span class="text-emerald-700 font-black">👍 장점:</span>
+              <span class="text-emerald-700 font-black shrink-0">👍 장점:</span>
               <span class="text-slate-800">가입 즉시 <strong>수백만 원대 큰 수술이나 입원비의 70~90%를 환급</strong>받아 집안 경제가 흔들리지 않습니다!</span>
             </div>
             <div class="flex items-start gap-2">
-              <span class="text-rose-700 font-black">⚠️ 단점:</span>
-              <span class="text-slate-750 text-[14px]">아프지 않고 건강하면 <strong>낸 돈이 소멸</strong>되어 아깝게 느껴질 수 있고 나이에 따라 갱신됩니다.</span>
+              <span class="text-rose-700 font-black shrink-0">⚠️ 단점:</span>
+              <span class="text-slate-700 text-[14px]">아프지 않고 건강하면 <strong>낸 돈이 소멸</strong>되어 아깝게 느껴질 수 있고 나이에 따라 갱신됩니다.</span>
             </div>
           </div>
         </div>
@@ -226,23 +277,23 @@
           <div class="flex items-center justify-between pb-3 border-b border-slate-200">
             <div class="flex items-center gap-2">
               <span class="text-2xl">🐷</span>
-              <h3 class="text-[20px] font-black text-slate-900">펫적금 (자유로운 비상금)</h3>
+              <h3 class="text-[19px] font-black text-slate-900">펫적금 (자유로운 비상금)</h3>
             </div>
             <span class="text-xs bg-blue-100 text-blue-900 font-black px-2.5 py-1 rounded-full">원금 보존</span>
           </div>
 
           <div class="mt-3.5 space-y-2 text-[15px]">
             <div class="flex items-start gap-2">
-              <span class="text-blue-700 font-black">💵 납입:</span>
+              <span class="text-blue-700 font-black shrink-0">💵 납입:</span>
               <span class="text-slate-800">매월 5만 ~ 10만 원 자유 저축</span>
             </div>
             <div class="flex items-start gap-2">
-              <span class="text-emerald-700 font-black">👍 장점:</span>
+              <span class="text-emerald-700 font-black shrink-0">👍 장점:</span>
               <span class="text-slate-800">아프지 않으면 <strong>이자까지 붙어 100% 내 돈</strong>이 되며, 사료나 여행비로 자유롭게 쓸 수 있습니다.</span>
             </div>
             <div class="flex items-start gap-2">
-              <span class="text-rose-700 font-black">⚠️ 단점:</span>
-              <span class="text-slate-750 text-[14px]"><strong>가입 초기에 큰 병(슬개골, 이물삼킴 등)</strong>이 터지면 모아둔 돈이 20~30만 원뿐이라 전혀 대처가 불가능합니다!</span>
+              <span class="text-rose-700 font-black shrink-0">⚠️ 단점:</span>
+              <span class="text-slate-700 text-[14px]"><strong>가입 초기에 큰 병(슬개골, 이물삼킴 등)</strong>이 터지면 모아둔 돈이 20~30만 원뿐이라 전혀 대처가 불가능합니다!</span>
             </div>
           </div>
         </div>
@@ -502,17 +553,27 @@
         <div class="absolute -right-8 -top-8 w-36 h-36 bg-amber-500/20 rounded-full blur-2xl pointer-events-none"></div>
 
         <div class="flex items-center gap-4 mb-4 relative z-10">
-          <!-- 차상헌 지점장님 실제 프로필 사진 (황금비율 원형 프레임 & 스마트 백업 로딩) -->
-          <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-cyan-400 via-amber-400 to-yellow-300 p-1 shrink-0 shadow-xl relative overflow-hidden flex items-center justify-center">
-            <!-- 1) 실제 사진이 있을 때 (동일 폴더 차상헌.jpg 존재 시 100% 로딩) -->
-            <img src="차상헌.jpg" 
-                 alt="더금융서비스 차상헌 지점장" 
-                 class="w-full h-full object-cover object-top rounded-full bg-slate-800"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-            
-            <!-- 2) 미리보기 환경이나 사진 파일이 없을 때 물음표 대신 나타나는 전문 아바타 백업 -->
-            <div class="w-full h-full rounded-full bg-slate-900 hidden items-center justify-center text-3xl shadow-inner">
-              👨‍💼
+          <!-- 
+            [수정 완료] 실제 사람 얼굴 사진 대신, '반려동물 케어 & 금융 자산 수호'를 상징하는 
+            프리미엄 벡터 SVG 그래픽 엠블럼 적용 (차상헌.jpg 완전 제거)
+          -->
+          <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-400 via-yellow-500 to-orange-500 p-1 shrink-0 shadow-2xl relative flex items-center justify-center border border-amber-300/40">
+            <div class="w-full h-full rounded-xl bg-slate-900 flex flex-col items-center justify-center p-2 text-center shadow-inner relative overflow-hidden group">
+              <!-- 배경 은은한 빛 효과 -->
+              <div class="absolute -top-3 -right-3 w-10 h-10 bg-amber-400/25 rounded-full blur-md"></div>
+              
+              <!-- 반려동물 발바닥 하트 + 철통 수호 방패 벡터 SVG -->
+              <svg class="w-9 h-9 text-amber-300 drop-shadow-md" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <!-- 철통 수호 방패 외곽선 -->
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="rgba(245, 158, 11, 0.12)"/>
+                <!-- 중앙 반려동물 발바닥 & 사랑의 하트 심볼 -->
+                <circle cx="9" cy="9" r="1" fill="#fef08a"/>
+                <circle cx="15" cy="9" r="1" fill="#fef08a"/>
+                <circle cx="7" cy="12" r="0.9" fill="#fef08a"/>
+                <circle cx="17" cy="12" r="0.9" fill="#fef08a"/>
+                <path d="M12 11.5c-1.5 0-2.8 1.2-2.8 2.5 0 1.8 2.8 3.5 2.8 3.5s2.8-1.7 2.8-3.5c0-1.3-1.3-2.5-2.8-2.5z" fill="#f59e0b" stroke="#fde047" stroke-width="1"/>
+              </svg>
+              <span class="text-[9px] font-black tracking-wider text-amber-200 mt-1 uppercase">PET CARE</span>
             </div>
           </div>
           <div>
@@ -530,14 +591,14 @@
 
         <!-- 고객 감동 케어 메시지 -->
         <div class="bg-slate-800/90 border border-slate-700/80 p-4 rounded-2xl mb-5 relative z-10">
-          <p class="text-[16px] leading-relaxed text-slate-200 font-normal">
+          <p class="text-[15px] leading-relaxed text-slate-200 font-normal">
             "말도 못 하고 아픔을 꾹 참는 우리 반려동물이 갑작스러운 사고나 중병으로 수술대에 올랐을 때, <strong>수백만 원의 병원비 걱정 때문에 가슴을 졸이시는 보호자님들의 마음</strong>을 너무나 잘 알고 있습니다.<br><br>
-            사랑하는 아이의 <strong>견종/묘종 특성, 현재 나이, 유전 질환 가능성</strong>을 꼼꼼하게 따져서 <strong>'적금과 보험을 가장 현명한 황금비율로 매칭'</strong>해 드리겠습니다. 우리 가족의 든든한 울타리를 위해 편안한 마음으로 언제든 연락 주세요!"
+            사랑하는 아이의 <strong>견종/묘종 특성, 현재 나이, 유전 질환 가능성</strong>을 꼼꼼하게 따져서 <strong>'적금과 보험을 가장 현명한 50:50 황금비율로 매칭'</strong>해 드리겠습니다. 우리 가족의 든든한 울타리를 위해 편안한 마음으로 언제든 연락 주세요!"
           </p>
         </div>
 
-        <!-- 카드 내부 다이렉트 통화 연결 박스 -->
-        <a href="tel:010-2630-1968" class="call-link-target flex items-center justify-between bg-gradient-to-r from-amber-400 to-yellow-300 hover:from-yellow-300 hover:to-amber-200 active:scale-95 transition-all text-slate-950 font-black px-5 py-4 rounded-2xl shadow-lg relative z-10">
+        <!-- 카드 내부 다이렉트 통화 연결 박스 (iOS WebKit 및 안드로이드 최적화) -->
+        <a href="tel:01026301968" class="call-link-target flex items-center justify-between bg-gradient-to-r from-amber-400 to-yellow-300 hover:from-yellow-300 hover:to-amber-200 active:scale-95 transition-all text-slate-950 font-black px-5 py-4 rounded-2xl shadow-lg relative z-10">
           <div class="flex items-center gap-3">
             <span class="text-2xl">📞</span>
             <div class="text-left leading-tight">
@@ -553,21 +614,21 @@
     </section>
 
     <!-- 하단 법적 안내문 -->
-    <footer class="px-6 py-4 text-center text-[12px] text-slate-500 font-normal leading-relaxed">
+    <footer class="px-6 py-4 text-center text-[12px] text-slate-400 font-normal leading-relaxed">
       ※ 본 안내문은 반려인의 이해를 돕기 위한 펫금융 요약 참고자료입니다.<br>
       ※ 보험 상품별 보장 한도, 자기부담금, 면책 조건 및 적금 금리는 해당 금융회사의 개별 약관 및 공시 기준에 따릅니다.
     </footer>
 
-    <!-- 하단 상시 고정 바로콜 (Floating Call Bar) -->
-    <div class="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-4 pb-4 pt-2 bg-gradient-to-t from-slate-950 via-slate-900/95 to-transparent pointer-events-none">
+    <!-- 하단 상시 고정 바로콜 (iOS 사파리 홈바 완벽 호환 Safe Area 적용) -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 flex justify-center px-4 floating-bar-safe bg-gradient-to-t from-slate-950 via-slate-900/95 to-transparent pointer-events-none">
       <div class="w-full max-w-[480px] pointer-events-auto">
-        <a href="tel:010-2630-1968" 
+        <a href="tel:01026301968" 
            id="quickCallBottomBar"
-           class="call-link-target call-pulse w-full flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-[20px] py-4 px-6 rounded-2xl shadow-2xl border-2 border-yellow-300 active:scale-[0.98] transition-transform">
-          <svg class="w-7 h-7 fill-current text-slate-950" viewBox="0 0 24 24">
+           class="call-link-target call-pulse w-full flex items-center justify-center gap-3 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-[19px] py-4 px-6 rounded-2xl shadow-2xl border-2 border-yellow-300 active:scale-[0.98] transition-transform">
+          <svg class="w-6 h-6 fill-current text-slate-950 shrink-0" viewBox="0 0 24 24">
             <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/>
           </svg>
-          <span>차상헌 지점장 <span class="underline decoration-slate-950 underline-offset-4">펫보험·적금 무료상담</span></span>
+          <span class="truncate">차상헌 지점장 <span class="underline decoration-slate-950 underline-offset-4">펫보험·적금 무료상담</span></span>
         </a>
       </div>
     </div>
@@ -576,17 +637,23 @@
 
   <script>
     /* ================================================================
-       1. 화면 드래그, 텍스트 긁기, 스마트폰 롱프레스 복사 메뉴 원천 차단
-       (단, 010-2630-1968 전화걸기는 100% 즉시 정상 작동)
+       1. 전화걸기(tel:01026301968) iOS Safari / 안드로이드 100% 정상 작동 보장
        ================================================================ */
+    document.querySelectorAll('a[href^="tel:"]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        // iOS WebKit 터치 간섭을 배제하고 즉시 다이얼러 호출
+        e.stopPropagation();
+      }, { passive: true });
+    });
 
-    // 마우스 우클릭 차단
+    /* ================================================================
+       2. 화면 드래그, 텍스트 무단 긁기 차단 (모바일 터치 스크롤은 정상 보장)
+       ================================================================ */
     document.addEventListener('contextmenu', function(e) {
       e.preventDefault();
       return false;
-    }, { passive: false });
+    });
 
-    // 화면 텍스트 선택 및 드래그 차단
     document.addEventListener('selectstart', function(e) {
       e.preventDefault();
       return false;
@@ -597,66 +664,24 @@
       return false;
     });
 
-    // 스마트폰 롱프레스(길게 누르기) 메뉴 팝업 차단
-    window.addEventListener('touchstart', function(e) {
-      if (e.target.closest('a[href^="tel:"]')) {
-        return true; // 차상헌 지점장님 바로콜 링크는 즉시 터치 허용
-      }
-    }, { passive: true });
-
     /* ================================================================
-       2. 키보드 단축키 및 개발자 도구 원천 봉쇄
-          (F12, Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+C, Ctrl+A, Ctrl+S, Ctrl+P)
+       3. PC 브라우저용 단축키 방어 (F12, Ctrl+U, Ctrl+C, Ctrl+A, Ctrl+S, Ctrl+P)
        ================================================================ */
     window.addEventListener('keydown', function(e) {
-      // F12 키 차단
       if (e.key === 'F12' || e.keyCode === 123) {
         e.preventDefault();
         e.stopPropagation();
         return false;
       }
 
-      // Windows의 Ctrl 또는 Mac의 Command(Meta) 키 조합 차단
       if (e.ctrlKey || e.metaKey) {
-        const key = e.key.toLowerCase();
-        
-        // 개발자 도구 (Ctrl + Shift + I / J / C)
+        const key = (e.key || '').toLowerCase();
         if (e.shiftKey && (key === 'i' || key === 'j' || key === 'c')) {
           e.preventDefault();
           e.stopPropagation();
           return false;
         }
-
-        // 소스 보기 (Ctrl + U)
-        if (key === 'u') {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }
-
-        // 복사하기 (Ctrl + C)
-        if (key === 'c') {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }
-
-        // 전체 선택 (Ctrl + A)
-        if (key === 'a') {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }
-
-        // 페이지 저장 (Ctrl + S)
-        if (key === 's') {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
-        }
-
-        // 인쇄 및 PDF 저장 (Ctrl + P)
-        if (key === 'p') {
+        if (['u', 'c', 'a', 's', 'p'].includes(key)) {
           e.preventDefault();
           e.stopPropagation();
           return false;
@@ -665,29 +690,40 @@
     }, true);
 
     /* ================================================================
-       3. 개발자 도구 감지 트랩 (무한 루프 debugger)
+       4. 모바일 안전형 개발자도구 감지 (iOS 화면 잠금 및 탭 전환 시 오동작 방지)
+          - 모바일 기기에서 절전 모드 타이머 지연으로 인해 화면이 갑자기 
+            차단되는 치명적 버그를 원천 차단
        ================================================================ */
-    (function antiDebugTrap() {
-      function checkDebuggerStatus() {
-        const startTime = performance.now();
-        /* debugger; */
-        const endTime = performance.now();
-        if (endTime - startTime > 100) {
-          // 콘솔을 열어 소스코드를 분석하려는 행위 감지 시 차단 화면 출력
-          document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#1e1b4b;color:#fff;font-size:20px;text-align:center;padding:24px;font-weight:bold;">보안 정책에 의해 소스 분석이 차단되었습니다.</div>';
-        }
+    (function mobileSafeDebuggerGuard() {
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (isMobile) {
+        return; // 모바일은 메타태그와 CSS 터치 정책으로 안전하게 제어
       }
-      setInterval(checkDebuggerStatus, 1000);
-    })();
 
-    /* ================================================================
-       4. 차상헌 지점장님 010-2630-1968 전화걸기 100% 정상 작동 보장
-       ================================================================ */
-    document.querySelectorAll('a[href^="tel:"]').forEach(function(link) {
-      link.addEventListener('click', function(e) {
-        e.stopPropagation(); // 보안 이벤트 간섭 배제, 전화 다이얼러 즉시 호출
+      let checkInterval;
+      function startCheck() {
+        checkInterval = setInterval(function() {
+          if (document.hidden) return;
+          const start = performance.now();
+          /* debugger; */
+          const end = performance.now();
+          if (end - start > 150) {
+            document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#1e1b4b;color:#fff;font-size:18px;text-align:center;padding:24px;font-weight:bold;">보안 정책에 의해 소스 분석이 차단되었습니다.</div>';
+            clearInterval(checkInterval);
+          }
+        }, 1500);
+      }
+
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          clearInterval(checkInterval);
+        } else {
+          startCheck();
+        }
       });
-    });
+
+      startCheck();
+    })();
   </script>
 </body>
 </html>
